@@ -23,7 +23,7 @@ public class ProdottoJDBCTemp {
     
     public ArrayList<Prodotto> ritornaProdotto() {
         try {
-            String query = "SELECT * FROM prodotti";
+            String query = "SELECT * FROM prodotto";
             return jdbcTemplateObject.query(query, new ResultSetExtractor<ArrayList<Prodotto>>() {
                 @Override
                 public ArrayList<Prodotto> extractData(ResultSet rs) throws SQLException {
@@ -51,11 +51,11 @@ public class ProdottoJDBCTemp {
   
 
     	// Query SQL per verificare se la tabella esiste
-        String checkTableQuery = "SHOW TABLES LIKE 'prodotti'";
+        String checkTableQuery = "SHOW TABLES LIKE 'prodotto'";
      	
      	
         // Query SQL per creare una nuova tabella
-        String query = "CREATE TABLE prodotti (" +
+        String query = "CREATE TABLE prodotto (" +
                 "id INT AUTO_INCREMENT PRIMARY KEY," +
                 "nome_prodotto VARCHAR(255)," +
                 "categoria VARCHAR(255)," +
