@@ -6,11 +6,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+
+
 @Configuration
 public class DatabaseConfig {
 
     @Bean
     public DataSource dataSource() {
+        
+
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
@@ -19,8 +23,8 @@ public class DatabaseConfig {
             + "?useSSL=true&requireSSL=true&serverTimezone=UTC&allowPublicKeyRetrieval=true");
 
         // Recupera da variabili d'ambiente
-        dataSource.setUsername(System.getenv("DB_USERNAME")); 
-        dataSource.setPassword(System.getenv("DB_PASSWORD"));
+        dataSource.setUsername(System.getenv("username")); 
+        dataSource.setPassword(System.getenv("password"));
 
         return dataSource;
     }
