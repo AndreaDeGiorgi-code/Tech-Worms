@@ -14,6 +14,8 @@ public class DatabaseConfig {
     @Bean
     public DataSource dataSource() {
         
+        String password="AVNS_gtzdZQp_tqmCcDF2CLW";
+        String username="avnadmin";
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
