@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vetrina Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f3f3;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .header {
+            background-color: #4CAF50;
+            padding: 20px;
+            color: white;
+            font-size: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logout-btn {
+            background-color: #f44336;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 30px;
+            max-width: 600px;
+            margin: 50px auto;
+        }
+
+        .big-button {
+            background-color: #2196F3;
+            color: white;
+            font-size: 24px;
+            padding: 40px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .big-button:hover {
+            background-color: #1976D2;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+    <div>Benvenuto, <span th:text="${userLoggato.username}">Utente</span>!</div>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>  
+
+    <div class="container">
+        <form th:action="@{/profilo}" method="get">
+            <button class="big-button">Profilo</button>
+        </form>
+
+        <form th:action="@{/libri}" method="get">
+            <button class="big-button">Libri</button>
+        </form>
+
+        <form th:action="@{/challenge}" method="get">
+            <button class="big-button">Challenge</button>
+        </form>
+
+        <form th:action="@{/utenti}" method="get">
+            <button class="big-button">Utenti</button>
+        </form>
+    </div>
+
+</body>
+</html>
