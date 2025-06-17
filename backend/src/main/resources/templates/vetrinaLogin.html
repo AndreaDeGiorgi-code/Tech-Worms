@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vetrina Login</title>
+      <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        /* Contenitore per mettere i form (pulsanti) in linea */
+        .container {
+            display: flex;
+            gap: 15px; /* spazio tra i pulsanti */
+            margin-bottom: 30px;
+        }
+
+        /* Stile per i pulsanti grandi */
+        .big-button {
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .big-button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .imgCopertina {
+            width: 50px;
+        }
+
+        .top-libri-section {
+            margin-top: 20px;
+        }
+
+        .top-libri-title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+   <form th:action="@{/logout}" method="post">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+        
+    </div>  
+
+    <nav style="background-color: #007bff; padding: 10px;">
+  <form th:action="@{/}" method="get" style="display: inline;">
+    <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
+      Home
+    </button>
+  </form>
+
+  <form th:action="@{/preProfilo}" method="get" style="display: inline;">
+    <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
+      Profilo
+    </button>
+  </form>
+
+  <form th:action="@{/preChallenge}" method="get" style="display: inline;">
+    <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
+      Challenge
+    </button>
+  </form>
+  
+</nav>
+
+ <div><h1>Benvenuto, <span th:text="${userLoggato.username}">Utente</span>!</h1></div>
+
+     <!-- Pulsanti in linea -->
+    <div class="container">
+        <form th:action="@{/preProfilo}" method="get">
+            <button class="big-button" type="submit">Profilo</button>
+        </form>
+
+        <form th:action="@{/libri}" method="get">
+            <button class="big-button" type="submit">Libri</button>
+        </form>
+
+        <form th:action="@{/preChallenge}" method="get">
+            <button class="big-button" type="submit">Challenge</button>
+        </form>
+    </div>
+
+    <!-- Sezione Top 3 Libri più letti -->
+    <div class="top-libri-section">
+        <div class="top-libri-title">Top 3 Libri più letti</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Titolo</th>
+                    <th>Genere</th>
+                    <th>Autore</th>
+                    <th>Letture</th>
+                    <th>Copertina</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="libro : ${topLibri}">
+                    <td th:text="${libro.id}">ID</td>
+                    <td th:text="${libro.titolo}">Titolo</td>
+                    <td th:text="${libro.genere}">Genere</td>
+                    <td th:text="${libro.autore}">Autore</td>
+                    <td th:text="${libro.letture}">Letture</td>
+                    <td><img class="imgCopertina" th:src="${libro.copertina}" alt="copertina"/></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

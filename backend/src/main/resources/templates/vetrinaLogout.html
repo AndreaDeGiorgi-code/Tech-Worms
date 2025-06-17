@@ -34,21 +34,27 @@
         th {
             background-color: #f2f2f2;
         }
+        .imgCopertina {
+            width: 50px;
+            
+        }
     </style>
 </head>
 <body>
     <div class="button-container">
-        <a th:href="@{/login}">Login</a>
-        <a th:href="@{/register}">Iscriviti</a>
+        <a th:href="@{/loginPage}">Login</a>
+        <a th:href="@{/registerPage}">Iscriviti</a>
     </div>
 
-    <h2>Lista Utenti</h2>
+    <h1>Home page utente NON loggato</h1>
     <table>
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Username</th>
                 <th>Email</th>
+                <th>Password</th>
+                <th>nomeLibreria</th>
                 <th>Punteggio</th>
             </tr>
         </thead>
@@ -57,7 +63,43 @@
                 <td th:text="${user.userId}">ID</td>
                 <td th:text="${user.username}">Username</td>
                 <td th:text="${user.email}">Email</td>
+                <td th:text="${user.password}">Email</td>
+                <td th:text="${user.nomeLibreria}">nomeLibreria</td>
                 <td th:text="${user.punteggio}">Punteggio</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h1>Lista Challanger</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID challange</th>
+                <th>Data</th>
+                <th>Data Fine</th>
+                <th>Nome challange</th>
+                <th>Condizione</th>
+                <th>vincitore</th>
+                <th>Punti</th>
+                <th>Stato</th>
+            </tr>
+        </thead>
+       <tbody>
+            <!-- Riga per ogni challenge -->
+            <tr th:each="challange : ${listaStorico}">
+                <td th:text="${challange.idChallange}">ID</td>
+                <td th:text="${challange.data}">Data</td>
+                <td th:text="${challange.dataFine}">Data Fine</td>
+                <td th:text="${challange.nomeChallange}">nome</td>
+                <td th:text="${challange.condizione}">Condizione</td>
+                <td th:text="${challange.nomeVincitore}">Vincitore</td>
+                <td th:text="${challange.punti}">Punti</td>
+                <td th:text="${challange.stato == 0 ? 'in corso' : 'terminata'}">Stato</td>
+            </tr>
+
+            <!-- Riga visibile solo se la lista è vuota -->
+            <tr th:if="${#lists.isEmpty(listaStorico)}">
+                <td colspan="7">Nessuna challenge presente.</td>
             </tr>
         </tbody>
     </table>
@@ -67,17 +109,21 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Nome Prodotto</th>
-                <th>Categoria</th>
+                <th>Titolo</th>
+                <th>Genere</th>
                 <th>Autore</th>
+                <th>Letture</th>
+                <th>Copertina</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="prodotto : ${lista}">
                 <td th:text="${prodotto.id}">ID</td>
-                <td th:text="${prodotto.nomeProdotto}">Nome Prodotto</td>
-                <td th:text="${prodotto.categoria}">Categoria</td>
+                <td th:text="${prodotto.titolo}">Nome Prodotto</td>
+                <td th:text="${prodotto.genere}">Categoria</td>
                 <td th:text="${prodotto.autore}">Autore</td>
+                <td th:text="${prodotto.letture}">Letture</td>
+                <td><img class="imgCopertina" th:src="${prodotto.copertina}"></td>
             </tr>
         </tbody>
     </table>

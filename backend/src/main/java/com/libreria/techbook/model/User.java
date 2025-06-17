@@ -1,4 +1,4 @@
-package com.libreria.techbook;
+package com.libreria.techbook.model;
 
 public class User {
 	
@@ -6,11 +6,13 @@ public class User {
 	 private String username;
 	 private String email;
 	 private String password;
+	 private String nomeLibreria;
      private int punteggio;
      
 	public int getUserId() {
 		return userId;
 	}
+	
 	public void setUserId(int userid) {
 		this.userId = userid;
 	}
@@ -31,6 +33,12 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getNomeLibreria() {
+		return nomeLibreria;
+	}
+	public void setNomeLibreria(String nomeLibreria) {
+		this.nomeLibreria = nomeLibreria;
 	}
 	public int getPunteggio() {
 		return punteggio;

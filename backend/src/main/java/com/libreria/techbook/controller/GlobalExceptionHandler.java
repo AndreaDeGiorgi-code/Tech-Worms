@@ -1,4 +1,4 @@
-package com.libreria.techbook;
+package com.libreria.techbook.controller;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
