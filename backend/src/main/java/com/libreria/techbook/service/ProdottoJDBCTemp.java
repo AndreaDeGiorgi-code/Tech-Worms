@@ -73,6 +73,18 @@ public class ProdottoJDBCTemp {
         }
     }
 
+   
+    
+    /**
+     * Ritorna una lista di oggetti Moderatore contenenti i dati presenti
+     * nella tabella "moderatore" del database.
+     * La lista contiene oggetti di tipo Moderatore, ciascuno dei quali
+     * rappresenta un libro con i propri attributi: id, userMod, titoloMod,
+     * genereMod, autoreMod e copertinaMod.
+     * Se si verifica un errore durante l'esecuzione della query, viene
+     * ritornata una lista vuota.
+     * @return lista di oggetti Moderatore
+     */
     public ArrayList<Moderatore> ritornaTabModeratore() {
         try {
             String query = "SELECT * FROM moderatore";
@@ -260,6 +272,14 @@ public class ProdottoJDBCTemp {
        
     }
 
+    /**
+     * Crea una nuova tabella chiamata "moderatore" nel database 
+     * se essa non esiste gia. La tabella ha 6 colonne: 
+     * id, user_mod, titolo_mod, genere_mod, autore_mod, copertina_mod.
+     * La tabella e' utilizzata per contenere le richieste di moderazione dei libri.
+     * 
+     * @author Alessandro Bugatti
+     */
     public void creaNuovaTabModeratore() {
   
 
@@ -378,6 +398,15 @@ public class ProdottoJDBCTemp {
        
     }
 
+    /**
+     * Crea una nuova tabella chiamata "storico_challange" nel database 
+     * se essa non esiste gia. La tabella ha 8 colonne: 
+     * id_challange, data, data_fine, nome_challange, condizione, nome_vincitore, punti, stato.
+     * La tabella e' utilizzata per contenere le informazioni relative alle sfide create 
+     * dagli utenti.
+     * 
+     * @author Alessandro Bugatti
+     */
     public void creaStoricoChallanger() {
   
 
@@ -448,11 +477,27 @@ public class ProdottoJDBCTemp {
 
 
 
+    /**
+     * Ritorna il libro con l'ID specificato.
+     * La funzione esegue una query per selezionare il libro
+     * con l'ID specificato e lo ritorna come oggetto Prodotto.
+     * @param idLibro l'ID del libro da selezionare
+     * @return l'oggetto Prodotto corrispondente al libro selezionato
+     */
     public Prodotto getLibroById(int idLibro) {
         String query = "SELECT * FROM libri WHERE id = ?";
         return jdbcTemplateObject.queryForObject(query, new BeanPropertyRowMapper<>(Prodotto.class), idLibro);
     }
 
+    
+     
+    /**
+     * Ritorna il libro con l'ID specificato dal database.
+     * La funzione esegue una query per selezionare il libro
+     * con l'ID specificato e lo ritorna come oggetto Moderatore.
+     * @param idLibro l'ID del libro da selezionare
+     * @return l'oggetto Moderatore corrispondente al libro selezionato
+     */
     public Moderatore getLibroModeratoreById(int idLibro) {
         String query = "SELECT * FROM moderatore WHERE id = ?";
         return jdbcTemplateObject.queryForObject(query, new BeanPropertyRowMapper<>(Moderatore.class), idLibro);
@@ -469,6 +514,17 @@ public class ProdottoJDBCTemp {
      * @throws SQLException se si verifica un errore durante l'esecuzione della query
      */
 
+    /**
+     * Rimuove un libro dalla libreria specificata.
+     * La funzione esegue una query per eliminare il libro identificato da idLibro
+     * dalla tabella corrispondente al nome della libreria fornito.
+     * L'operazione di eliminazione viene eseguita utilizzando un JDBC Template.
+     * Se si verifica un errore durante l'esecuzione della query, viene
+     * sollevata un'eccezione di tipo SQLException.
+     * @param nomeLibreria il nome della tabella che rappresenta la libreria da cui rimuovere il libro
+     * @param idLibro l'ID del libro da rimuovere
+     * @throws SQLException se si verifica un errore durante l'esecuzione della query
+     */
     public void rimuoviLibroDaLibreria(String nomeLibreria, int idLibro) throws SQLException {
         String sql = "DELETE FROM " + nomeLibreria + " WHERE idLibro = ?";
         jdbcTemplateObject.update(sql, idLibro);
@@ -607,18 +663,51 @@ public class ProdottoJDBCTemp {
         jdbcTemplateObject.update(query, user.getUsername(), user.getEmail(), user.getPassword(), user.getNomeLibreria(), user.getPunteggio());
     }
 
+    /**
+     * Inserisce un nuovo partecipante alla challenge.
+     * La funzione riceve come parametri il nome della challenge, l'oggetto Challange che rappresenta il partecipante, la data di inizio, il nome del partecipante e il punteggio iniziale.
+     * La funzione esegue una query di inserimento per aggiungere il nuovo partecipante alla tabella della challenge.
+     * @param nomeChallange il nome della challenge
+     * @param challange l'oggetto Challange che rappresenta il partecipante
+     * @param dataInizio la data di inizio della challenge
+     * @param nomePartecipante il nome del partecipante
+     * @param punteggio il punteggio iniziale del partecipante
+     */
     public void insertUserCallange(String nomeChallange, Challange challange, LocalDate dataInizio,  String nomePartecipante, int punteggio) {
         
         String query = "INSERT INTO " + nomeChallange + " (data_inizio, nome_partecipante, punteggio) VALUES (?, ?, ?)";
         jdbcTemplateObject.update(query, challange.getDataInizio(), challange.getNomePartecipante(), challange.getPunteggio());
     }
 
+    /**
+     * Inserisce un nuovo storico della challenge.
+     * La funzione riceve come parametri l'oggetto Storico che rappresenta il nuovo storico, la data di inizio, la data di fine, il nome della challenge, la condizione, il nome del vincitore, il punteggio e lo stato.
+     * La funzione esegue una query di inserimento per aggiungere il nuovo storico alla tabella storico_challange.
+     * @param storico l'oggetto Storico che rappresenta il nuovo storico
+     * @param data la data di inizio della challenge
+     * @param dataFine la data di fine della challenge
+     * @param nomeChallange il nome della challenge
+     * @param condizione la condizione della challenge
+     * @param nomeVincitore il nome del vincitore
+     * @param punteggio il punteggio del vincitore
+     * @param stato lo stato della challenge
+     */
      public void insertStoricoCallange(Storico storico, LocalDate data, LocalDate dataFine,  String nomeChallange, String condizione, String nomeVincitore, int punteggio, int stato) {
         
         String query = "INSERT INTO storico_challange (data, data_fine, nome_challange, condizione, nome_vincitore, punti, stato) VALUES (?, ?, ?, ?, ?, ?, ?)";
         jdbcTemplateObject.update(query, storico.getData(), storico.getDataFine(), storico.getNomeChallange(), storico.getCondizione(), storico.getNomeVincitore(), storico.getPunti(), storico.getStato());
     }
 
+    /**
+     * Verifica se l'utente con il nome specificato partecipa alla challenge con il nome specificato.
+     * La funzione esegue una query di tipo SELECT per contare il numero di righe con il nome partecipante specificato
+     * nella tabella della challenge.
+     * Se il numero di righe è maggiore di zero, la funzione restituisce true, altrimenti restituisce false.
+     * Se si verifica un errore durante l'esecuzione della query, la funzione restituisce false per sicurezza.
+     * @param nomeChallange il nome della challenge
+     * @param nomeUtente il nome dell'utente
+     * @return true se l'utente partecipa, false altrimenti
+     */
     public boolean isUserPartecipante(String nomeChallange, String nomeUtente) {
     // Query che verifica se esiste una riga con quel nome partecipante nella tabella della challenge
     String query = "SELECT COUNT(*) FROM `" + nomeChallange + "` WHERE nome_partecipante = ?";
@@ -633,6 +722,17 @@ public class ProdottoJDBCTemp {
     }
 }
 
+    /**
+     * Aggiorna lo stato di una challenge.
+     * La funzione riceve come parametri l'id della challenge, il nome del vincitore, il punteggio e lo stato.
+     * La funzione esegue una query di UPDATE per aggiornare lo stato della challenge.
+     * Se la query fallisce, la funzione restituisce 0 per sicurezza.
+     * @param idChallange l'id della challenge
+     * @param NomeVincitore il nome del vincitore
+     * @param punti il punteggio del vincitore
+     * @param stato lo stato della challenge
+     * @return il numero di righe aggiornate
+     */
     public int updateStatoStorico(int idChallange, String NomeVincitore, int punti, int stato) {
         try {
             String query = "UPDATE storico_challange SET nome_vincitore = ?, punti = ?, stato = ? WHERE id_challange = ?";
@@ -643,6 +743,15 @@ public class ProdottoJDBCTemp {
         }
     }
 
+    /**
+     * Aggiorna le letture di un libro.
+     * La funzione riceve come parametri l'id del libro e il nuovo numero di letture.
+     * La funzione esegue una query di UPDATE per aggiornare le letture del libro.
+     * Se la query fallisce, la funzione restituisce 0 per sicurezza.
+     * @param idLibro l'id del libro
+     * @param letture il nuovo numero di letture
+     * @return il numero di righe aggiornate
+     */
     public int updateLettureLibro(int idLibro, int letture) {
         try {
             String query = "UPDATE libri SET letture = ? WHERE id = ?";
@@ -653,6 +762,15 @@ public class ProdottoJDBCTemp {
         }
     }
 
+    /**
+     * Aggiorna il punteggio dell'utente con username specificato.
+     * La funzione riceve come parametri il nome dell'utente e il nuovo punteggio.
+     * La funzione esegue una query di UPDATE per aggiornare il punteggio dell'utente.
+     * Se la query fallisce, la funzione restituisce 0 per sicurezza.
+     * @param username il nome dell'utente
+     * @param punteggio il nuovo punteggio dell'utente
+     * @return il numero di righe aggiornate
+     */
     public int updatePunteggioUser(String username, int punteggio) {
         try {
             String query = "UPDATE users SET punteggio = ? WHERE username = ?";
@@ -663,6 +781,16 @@ public class ProdottoJDBCTemp {
         }
     }
 
+    /**
+     * Aggiorna il punteggio di un partecipante a una challenge.
+     * La funzione riceve come parametri il nome della challenge, il nome del partecipante e il nuovo punteggio.
+     * La funzione esegue una query di UPDATE per aggiornare il punteggio del partecipante.
+     * Se la query fallisce, la funzione restituisce 0 per sicurezza.
+     * @param nomeChallange il nome della challenge
+     * @param nomePartecipante il nome del partecipante
+     * @param punteggio il nuovo punteggio del partecipante
+     * @return il numero di righe aggiornate
+     */
     public int updatePunteggioChallange(String nomeChallange, String nomePartecipante, int punteggio) {
         try {
             String query = "UPDATE " + nomeChallange + " SET punteggio = ? WHERE nome_partecipante = ?";
@@ -673,6 +801,13 @@ public class ProdottoJDBCTemp {
         }
     }
 
+    /**
+     * Elimina il libro con l'id specificato.
+     * La funzione esegue una query di DELETE per eliminare il libro.
+     * Se la query fallisce, la funzione restituisce 0 per sicurezza.
+     * @param idLibro l'id del libro da eliminare
+     * @return il numero di righe eliminate
+     */
     public int eliminaModLibro(int idLibro) {
         try {
             String query = "DELETE FROM libri WHERE id = ?";
@@ -683,6 +818,13 @@ public class ProdottoJDBCTemp {
         }
     }
 
+    /**
+     * Elimina il libro con l'id specificato dalla tabella moderatore.
+     * La funzione esegue una query di DELETE per eliminare il libro.
+     * Se la query fallisce, la funzione restituisce 0 per sicurezza.
+     * @param idLibro l'id del libro da eliminare
+     * @return il numero di righe eliminate
+     */
     public int eliminaLibroDaTabMod(int idLibro) {
         try {
             String query = "DELETE FROM moderatore WHERE id = ?";
@@ -693,17 +835,41 @@ public class ProdottoJDBCTemp {
         }
     }
     
+    /**
+     * Crea un nuovo libro nel database.
+     * La funzione inserisce un nuovo record nella tabella "libri"
+     * utilizzando i dati forniti dall'oggetto Prodotto.
+     * 
+     * @param libro l'oggetto Prodotto contenente i dati del libro da inserire
+     */
+
     public void creaLibro(Prodotto libro) {
         
         String query = "INSERT INTO libri (titolo, genere, autore, letture, copertina) VALUES (?, ?, ?, ?, ?)";
         jdbcTemplateObject.update(query, libro.getTitolo(), libro.getGenere(), libro.getAutore(), libro.getLetture(), libro.getCopertina());
     }
 
+    /**
+     * Crea un nuovo libro nel database moderatore.
+     * La funzione inserisce un nuovo record nella tabella "moderatore"
+     * utilizzando i dati forniti dall'oggetto Moderatore.
+     * 
+     * @param libro l'oggetto Moderatore contenente i dati del libro da inserire
+     */
      public void creaLibroModeratore(Moderatore libro) {
         
         String query = "INSERT INTO moderatore (user_mod, titolo_mod, genere_mod, autore_mod, copertina_mod) VALUES (?, ?, ?, ?, ?)";
         jdbcTemplateObject.update(query, libro.getUserMod(), libro.getTitoloMod(), libro.getGenereMod(), libro.getAutoreMod(), libro.getCopertinaMod());
     }
+
+    /**
+     * Elimina una challenge dal database.
+     * La funzione rimuove il record associato al nome della challenge specificata
+     * dalla tabella "storico_challange" e elimina la tabella con il nome della challenge.
+     * 
+     * @param nomeChallange il nome della challenge da eliminare
+     * @throws SQLException se si verifica un errore durante l'esecuzione delle query
+     */
 
       public void adminEliminaChallange(String nomeChallange) throws SQLException {
         

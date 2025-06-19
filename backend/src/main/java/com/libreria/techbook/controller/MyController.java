@@ -10,17 +10,15 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import jakarta.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.libreria.techbook.model.Challange;
 import com.libreria.techbook.model.LibreriaUser;
 import com.libreria.techbook.model.Moderatore;
@@ -29,8 +27,7 @@ import com.libreria.techbook.model.Storico;
 import com.libreria.techbook.model.User;
 import com.libreria.techbook.service.ProdottoJDBCTemp;
 
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -235,11 +232,33 @@ public class MyController {
         return "libreriaPage";
     }
 
+   
+    /**
+     * Mostra la pagina per proporre un libro da aggiungere alla libreria dell'utente.
+     * La funzione restituisce la stringa "proponiLibroPage" che indica la pagina da visualizzare.
+     * @param model il modello passato alla vista
+     * @param session la sessione dell'utente corrente
+     * @return la stringa "proponiLibroPage" che indica la pagina da visualizzare
+     */
     @GetMapping("/proponiLibro")
     public String getProponiLibro(Model model, HttpSession session) {
         return "proponiLibroPage";
     }
     
+    
+     
+    /**
+     * Aggiunge il libro proposto dall'utente alla lista dei libri in attesa di approvazione.
+     * La funzione crea un oggetto di tipo Moderatore e lo aggiunge alla lista dei libri in attesa di approvazione.
+     * La funzione redirige alla pagina della libreria dell'utente.
+     * @param model il modello passato alla vista
+     * @param session la sessione dell'utente corrente
+     * @param titolo il titolo del libro
+     * @param autore l'autore del libro
+     * @param genere il genere del libro
+     * @param immagineCopertina l'immagine della copertina del libro
+     * @return la stringa "redirect:/libreria" che indica la pagina da visualizzare
+     */
     @PostMapping("/proponiCrealibro")
     public String postProponiCrealibro(Model model, HttpSession session, @RequestParam("titolo") String titolo, @RequestParam("autore") String autore, @RequestParam("genere") String genere, @RequestParam("immagineCopertina") String immagineCopertina) {
         User userLoggato = (User) session.getAttribute("userLoggato");
@@ -403,6 +422,18 @@ public class MyController {
     
 
 
+    /**
+     * Crea una challenge con il nome specificato e il tempo di durata e condizione specificati.
+     * La funzione riceve come parametri il nome della challenge, il tempo di durata e la condizione.
+     * La funzione crea una nuova challenge con i parametri ricevuti e la inserisce nel database.
+     * La funzione restituisce la stringa "creaChallangeConfermata" che indica la pagina da visualizzare con i dati della challenge appena creata.
+     * @param challenge il nome della challenge
+     * @param tempoSelect il tempo di durata della challenge
+     * @param condizione la condizione della challenge
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @return la stringa "creaChallangeConfermata" che indica la pagina da visualizzare
+     */
     @GetMapping("/creaChallenge")
     public String getCreaChallenge(@RequestParam ("challange") String challenge, @RequestParam ("tempo") String tempoSelect, @RequestParam ("scelta") String condizione, Model model, HttpSession session) {
        
@@ -457,6 +488,15 @@ public class MyController {
         return "creaChallangeConfermata";
     }
 
+    /**
+     * Mostra la pagina di creazione di una challenge.
+     * La funzione riceve come parametri il modello e l'oggetto session contenente l'utente corrente.
+     * La funzione recupera la lista di tutti i libri e crea due set per gli autori e generi unici.
+     * La funzione aggiunge i set al modello e restituisce la stringa "preCreaChallangePage" che indica la pagina da visualizzare.
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @return la stringa "preCreaChallangePage" che indica la pagina da visualizzare
+     */
     @GetMapping("/preCreaChallange")
 public String getMethodName(Model model, HttpSession session) {
     User userLoggato = (User) session.getAttribute("userLoggato");
@@ -483,11 +523,32 @@ public String getMethodName(Model model, HttpSession session) {
 }
 
     
+    /**
+     * Mostra la pagina di scelta tra creazione di una challenge e visualizzazione di quelle attive.
+     * La funzione riceve come parametri il modello e l'oggetto session contenente l'utente corrente.
+     * La funzione restituisce la stringa "preChallengePage" che indica la pagina da visualizzare.
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @return la stringa "preChallengePage" che indica la pagina da visualizzare
+     */
     @GetMapping("/preChallenge")
     public String getPreCreaChallenge(Model model, HttpSession session) {
         return "preChallengePage";
     }
 
+    /**
+     * Mostra la pagina di visualizzazione delle challenge.
+     * La funzione riceve come parametri il modello e l'oggetto session contenente l'utente corrente.
+     * La funzione restituisce la stringa "vediChallangePage" che indica la pagina da visualizzare.
+     * La funzione:
+     * - Aggiorna lo stato delle challenge concluse
+     * - Imposta vincitore e stato
+     * - Aggiorna nel DB
+     * - Aggiunge listaStorico e userLoggato al modello
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @return la stringa "vediChallangePage" che indica la pagina da visualizzare
+     */
     @GetMapping("/vediChallange")
     public String getVediChallange(Model model, HttpSession session) {
         User userLoggato = (User) session.getAttribute("userLoggato");
@@ -528,6 +589,17 @@ public String getMethodName(Model model, HttpSession session) {
         return "vediChallangePage";
     }
     
+    /**
+     * Mostra la pagina di dettagli di una challenge.
+     * La funzione riceve come parametri il modello, l'oggetto session contenente l'utente corrente e il nome della challenge.
+     * La funzione ordina la lista delle partecipazioni per punteggio decrescente e aggiunge listaChallange, userLoggato, nomeChallange e fineChallange al modello.
+     * La funzione restituisce la stringa "dettagliChallangePage" che indica la pagina da visualizzare.
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @param nomeChallange il nome della challenge da visualizzare
+     * @param fineChallange la data di fine della challenge
+     * @return la stringa "dettagliChallangePage" che indica la pagina da visualizzare
+     */
    @PostMapping("/dettagliChallange")
 public String getDettagliChallange(Model model, HttpSession session,
                                    @RequestParam("nomeChallange") String nomeChallange,
@@ -547,6 +619,21 @@ public String getDettagliChallange(Model model, HttpSession session,
 }
 
     
+    /**
+     * Aggiunge un partecipante a una challenge.
+     * La funzione riceve come parametri il modello, il nome della challenge, la data di fine della challenge, l'oggetto session contenente l'utente corrente e l'oggetto RedirectAttributes.
+     * La funzione controlla se l'utente è loggato e se la challenge è già terminata.
+     * Se l'utente non è loggato, reindirizza alla pagina di login.
+     * Se la challenge è già terminata, reindirizza alla pagina di challenge terminato.
+     * Se l'utente ha già partecipato alla challenge, reindirizza alla pagina di partecipazione già effettuata.
+     * Se l'utente non ha ancora partecipato alla challenge, crea un nuovo oggetto Challange e lo aggiunge alla lista delle partecipazioni, poi reindirizza alla pagina di conferma partecipazione.
+     * @param model il modello passato alla vista
+     * @param nomeChallange il nome della challenge
+     * @param fineChallange la data di fine della challenge
+     * @param session l'oggetto session contenente l'utente corrente
+     * @param redirectAttributes l'oggetto RedirectAttributes che contiene gli attributi da passare alla pagina successiva
+     * @return la stringa "confermaPartecipazione" che indica la pagina da visualizzare
+     */
 @PostMapping("/addPartecipante")
 public String addPartecipante(Model model, @RequestParam("nomeChallange") String nomeChallange, @RequestParam("fineChallange") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fineChallange, HttpSession session, RedirectAttributes redirectAttributes) {
     User userLoggato = (User) session.getAttribute("userLoggato");
@@ -596,6 +683,17 @@ public String addPartecipante(Model model, @RequestParam("nomeChallange") String
 
 
 
+    /**
+     * Mostra la classifica globale degli utenti.
+     * La classifica viene mostrata in ordine decrescente per punteggio.
+     * La funzione prende in input il modello e l'oggetto session contenente l'utente corrente.
+     * La funzione aggiunge all'oggetto modello l'attributo "userLoggato" con l'utente corrente e l'attributo "classifica" con la lista degli utenti 
+     * ordinati per punteggio decrescente.
+     * La funzione ritorna la stringa "classificaGlobalePage" che indica la pagina da visualizzare.
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @return la stringa "classificaGlobalePage" che indica la pagina da visualizzare
+     */
  @GetMapping("/classificaGlobale") 
 public String getClassificaGlobale(Model model, HttpSession session) {
     User userLoggato = (User) session.getAttribute("userLoggato");
@@ -611,6 +709,15 @@ public String getClassificaGlobale(Model model, HttpSession session) {
     return "classificaGlobalePage";
 }
 
+    /**
+     * Mostra la pagina delle challenge dell'utente loggato.
+     * La funzione prende in input il modello e l'oggetto session contenente l'utente corrente.
+     * La funzione aggiorna lo stato delle challenge concluse e aggiunge all'oggetto modello l'attributo "userLoggato" con l'utente corrente e l'attributo "listaMioStorico" con la lista delle challenge dell'utente loggato.
+     * La funzione ritorna la stringa "mieChallengePage" che indica la pagina da visualizzare.
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @return la stringa "mieChallengePage" che indica la pagina da visualizzare
+     */
     @GetMapping("/mieChallange")
     public String getMieChallange(Model model, HttpSession session) {
         User userLoggato = (User) session.getAttribute("userLoggato");
@@ -666,6 +773,20 @@ public String getClassificaGlobale(Model model, HttpSession session) {
     }
 
 
+
+ 
+    /**
+     * Mostra la pagina dei dettagli di una challenge.
+     * La funzione prende in input il modello, l'oggetto session contenente l'utente corrente, il nome della challenge e la data di fine della challenge.
+     * La funzione aggiorna lo stato delle challenge concluse e aggiunge all'oggetto modello l'attributo "challange" con la lista delle challenge dell'utente loggato,
+     * l'attributo "userLoggato" con l'utente corrente, l'attributo "nomeChallange" con il nome della challenge e l'attributo "fineChallange" con la data di fine della challenge.
+     * La funzione ritorna la stringa "dettagliMiaChallangePage" che indica la pagina da visualizzare.
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @param nomeChallange il nome della challenge
+     * @param fineChallange la data di fine della challenge
+     * @return la stringa "dettagliMiaChallangePage" che indica la pagina da visualizzare
+     */
 @PostMapping("/dettagliMiaChallange")
 public String getDettagliMiaChallange(Model model, HttpSession session,
                                    @RequestParam("nomeChallange") String nomeChallange,
@@ -683,6 +804,17 @@ public String getDettagliMiaChallange(Model model, HttpSession session,
     return "dettagliMiaChallangePage";
 }
 
+    /**
+     * Mostra la pagina di conferma lettura di un libro.
+     * La funzione prende in input il modello, l'oggetto session contenente l'utente corrente, l'id del libro letto e la lista delle challenge dell'utente loggato.
+     * La funzione aggiorna le letture del libro, il punteggio dell'utente e il punteggio delle challenge se l'utente partecipa e la condizione è soddisfatta.
+     * La funzione aggiunge all'oggetto modello l'attributo "userLoggato" con l'utente corrente, l'attributo "libroLetto" con il libro letto e l'attributo "nomeChallange" con il nome della challenge.
+     * La funzione ritorna la stringa "confermaLibroLettoPage" che indica la pagina da visualizzare.
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @param idLibro l'id del libro letto
+     * @return la stringa "confermaLibroLettoPage" che indica la pagina da visualizzare
+     */
 @PostMapping("/confermaLibroLetto")
 public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idLibro") int idLibro) {
     User userLoggato = (User) session.getAttribute("userLoggato");
@@ -749,6 +881,15 @@ public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idL
 /* **************************************************************************************************************** */
 
 
+    /**
+     * Mostra la pagina degli utenti dell'amministratore.
+     * La funzione prende in input il modello e l'oggetto session contenente l'utente corrente.
+     * La funzione aggiunge all'oggetto modello l'attributo "userLoggato" con l'utente corrente e l'attributo "listaUsers" con la lista degli utenti.
+     * La funzione ritorna la stringa "adminUsersPage" che indica la pagina da visualizzare.
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @return la stringa "adminUsersPage" che indica la pagina da visualizzare
+     */
     @GetMapping("/adminUsers")
     public String getAdminUsers(Model model, HttpSession session) {
         User userLoggato = (User) session.getAttribute("userLoggato");
@@ -759,6 +900,17 @@ public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idL
         return "adminUsersPage";
     }
 
+    /**
+     * Mostra la pagina di conferma dell'eliminazione di un utente.
+     * La funzione prende in input il modello, l'oggetto session contenente l'utente corrente, il nome della libreria dell'utente da eliminare e il suo username.
+     * La funzione aggiunge all'oggetto modello l'attributo "nomeLibreria" con il nome della libreria dell'utente da eliminare e l'attributo "username" con il suo username.
+     * La funzione ritorna la stringa "adminRimuoviUtentePage" che indica la pagina da visualizzare.
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @param nomeLibreria il nome della libreria dell'utente da eliminare
+     * @param username il username dell'utente da eliminare
+     * @return la stringa "adminRimuoviUtentePage" che indica la pagina da visualizzare
+     */
     @PostMapping("/adminRimuoviUtente")
     public String postRimuoviUtente(Model model, HttpSession session, @RequestParam("nomeLibreria") String nomeLibreria, @RequestParam("username") String username) {
         
@@ -767,12 +919,17 @@ public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idL
         return "adminRimuoviUtentePage";
     }
 
-    /*@PostMapping("adminEliminaProfilo")
-    public String getEliminaProfilo(Model model) {
-         return "confermaEliminazioneUserPage";
-    }*/
-
-    
+   
+    /**
+     * Elimina l'utente con il nome della libreria specificata e reindirizza alla pagina "adminUsersPage".
+     * La funzione prende in input il modello, l'oggetto session contenente l'utente corrente e il nome della libreria dell'utente da eliminare.
+     * La funzione elimina l'utente con il nome della libreria specificata e invalida la sessione.
+     * La funzione ritorna la stringa "redirect:/adminUsers" che indica la pagina da visualizzare.
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @param nomeLibreria il nome della libreria dell'utente da eliminare
+     * @return la stringa "redirect:/adminUsers" che indica la pagina da visualizzare
+     */
     @PostMapping("adminEliminazioneConfermata")
     public String getAdminEliminazioneConfermata(Model model, HttpSession session, @RequestParam("nomeLibreria") String nomeLibreria) {
         User userLoggato = (User) session.getAttribute("userLoggato");
@@ -788,6 +945,15 @@ public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idL
     }
     
 
+    /**
+     * Mostra la pagina dei libri dell'amministratore.
+     * La funzione recupera la lista dei libri presenti nel database e la lista dei moderatori presenti nel database.
+     * La funzione passa alla vista "adminLibriPage" l'oggetto utente, la lista dei libri e la lista dei moderatori.
+     * La funzione ritorna la stringa "adminLibriPage" che indica la pagina da visualizzare.
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @return la stringa "adminLibriPage" che indica la pagina da visualizzare
+     */
     @GetMapping("/adminLibri")
     public String getAdminLibri(Model model, HttpSession session) {
         User userLoggato = (User) session.getAttribute("userLoggato");
@@ -802,6 +968,16 @@ public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idL
         
     }
 
+    /**
+     * Elimina il libro con l'id specificato e reindirizza alla pagina "adminLibriPage".
+     * La funzione prende in input il modello, l'oggetto session contenente l'utente corrente e l'id del libro da eliminare.
+     * La funzione elimina il libro con l'id specificato.
+     * La funzione ritorna la stringa "redirect:/adminLibri" che indica la pagina da visualizzare.
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @param idLibro l'id del libro da eliminare
+     * @return la stringa "redirect:/adminLibri" che indica la pagina da visualizzare
+     */
     @PostMapping("/eliminaLibro")
     public String postMethodName(Model model, HttpSession session, @RequestParam("idLibro") int idLibro) {
 
@@ -811,11 +987,34 @@ public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idL
         return "redirect:/adminLibri";
     }
 
+    /**
+     * La funzione ritorna la stringa "adminPreCreaLibroPage" che indica la pagina da visualizzare.
+     * La funzione viene chiamata quando l'admin vuole creare un nuovo libro.
+     * La funzione prende in input il modello e l'oggetto session contenente l'utente corrente.
+     * La funzione non fa nulla.
+     * La funzione ritorna la stringa "adminPreCreaLibroPage" che indica la pagina da visualizzare.
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @return la stringa "adminPreCreaLibroPage" che indica la pagina da visualizzare
+     */
     @GetMapping("/adminPreCreaLibro")
     public String getAdminPreCreaLibro(Model model, HttpSession session) {
         return "adminPreCreaLibroPage";
     }
     
+    /**
+     * La funzione crea un nuovo libro con i parametri specificati e lo aggiunge alla lista dei libri.
+     * La funzione prende in input il modello, l'oggetto session contenente l'utente corrente, il titolo, l'autore, il genere e l'immagine di copertina del libro.
+     * La funzione crea un nuovo oggetto Prodotto e lo aggiunge alla lista dei libri.
+     * La funzione ritorna la stringa "redirect:/adminLibri" che indica la pagina da visualizzare.
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @param titolo il titolo del libro
+     * @param autore l'autore del libro
+     * @param genere il genere del libro
+     * @param immagineCopertina l'immagine di copertina del libro
+     * @return la stringa "redirect:/adminLibri" che indica la pagina da visualizzare
+     */
     @PostMapping("/adminCrealibro")
     public String postAdminCrealibro(Model model, HttpSession session, @RequestParam("titolo") String titolo, @RequestParam("autore") String autore, @RequestParam("genere") String genere, @RequestParam("immagineCopertina") String immagineCopertina) {
 
@@ -833,6 +1032,16 @@ public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idL
 
     
     
+    /**
+     * La funzione si occupa di visualizzare i dettagli di un libro.
+     * La funzione prende in input il modello, l'oggetto session contenente l'utente corrente e l'id del libro.
+     * La funzione ricava l'oggetto libro corrispondente all'id specificato e lo aggiunge al modello.
+     * La funzione ritorna la stringa "adminDettagliLibroPage" che indica la pagina da visualizzare.
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @param idLibro l'id del libro da visualizzare
+     * @return la stringa "adminDettagliLibroPage" che indica la pagina da visualizzare
+     */
     @PostMapping("/adminDettagliLibro")
     public String getAdminDettagliLibro(Model model, HttpSession session, @RequestParam("idLibroModeratore") int idLibro) {
     User user = (User) session.getAttribute("userLoggato");
@@ -845,6 +1054,19 @@ public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idL
         return "adminDettagliLibroPage";
     }
 
+     
+     
+    /**
+     * La funzione si occupa di confermare la creazione di un libro.
+     * La funzione prende in input il modello, l'oggetto session contenente l'utente corrente e l'id del libro.
+     * La funzione crea un nuovo oggetto Prodotto e lo aggiunge alla lista dei libri.
+     * La funzione elimina il libro con l'id specificato dalla tabella moderatore.
+     * La funzione ritorna la stringa "adminLibriPage" che indica la pagina da visualizzare.
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @param idLibro l'id del libro da confermare
+     * @return la stringa "adminLibriPage" che indica la pagina da visualizzare
+     */
     @PostMapping("/adminConfermaLibro")
     public String getAdminConfermaLibro(Model model, HttpSession session, @RequestParam("idLibroModeratore") int idLibro) {
         System.out.println("idLibro: " + idLibro);
@@ -869,6 +1091,20 @@ public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idL
         return "adminLibriPage";
     }
 
+/**
+ * Rimuove il libro con l'id specificato dalla tabella dei moderatori e ritorna
+ * alla pagina "adminLibriPage".
+ * 
+ * La funzione prende in input il modello, l'oggetto session contenente l'utente
+ * corrente e l'id del libro da rimuovere. Dopo la rimozione, aggiorna la lista
+ * dei libri e la lista dei moderatori nel modello.
+ * 
+ * @param model il modello passato alla vista
+ * @param session l'oggetto session contenente l'utente corrente
+ * @param idLibro l'id del libro da rimuovere dalla tabella moderatori
+ * @return la stringa "adminLibriPage" che indica la pagina da visualizzare
+ */
+
     @PostMapping("/adminRimuoviLibro")
     public String postAdminRimuoviLibro(Model model, HttpSession session, @RequestParam("idLibroModeratore") int idLibro) {
         User userLoggato = (User) session.getAttribute("userLoggato");
@@ -883,6 +1119,15 @@ public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idL
         return "adminLibriPage";
     }
     
+    /**
+     * La funzione si occupa di visualizzare le challenge.
+     * La funzione prende in input il modello e l'oggetto session contenente l'utente corrente.
+     * La funzione ricava la lista delle challenge e la aggiunge al modello.
+     * La funzione ritorna la stringa "adminChallengePage" che indica la pagina da visualizzare.
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @return la stringa "adminChallengePage" che indica la pagina da visualizzare
+     */
     @GetMapping("adminChallenge")
     public String getAdminChallenge(Model model, HttpSession session) {
         User userLoggato = (User) session.getAttribute("userLoggato");
@@ -893,6 +1138,16 @@ public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idL
         return "adminChallengePage";
     }
 
+    /**
+     * La funzione si occupa di rimuovere una challenge.
+     * La funzione prende in input il modello, l'oggetto session contenente l'utente corrente e il nome della challenge da rimuovere.
+     * La funzione prova a rimuovere la challenge e aggiorna la lista delle challenge.
+     * La funzione ritorna la stringa "adminChallengePage" che indica la pagina da visualizzare.
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @param nomeChallange il nome della challenge da rimuovere
+     * @return la stringa "adminChallengePage" che indica la pagina da visualizzare
+     */
     @PostMapping("/adminRimuoviChallange")
     public String postAdminRimuoviChallange(Model model, HttpSession session, @RequestParam("nomeChallange") String nomeChallange) {
         User userLoggato = (User) session.getAttribute("userLoggato");
@@ -911,6 +1166,18 @@ public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idL
         return "adminChallengePage";
     }
     
+    /**
+     * La funzione si occupa di creare una challenge con il nome specificato e il tempo di durata e condizione specificati.
+     * La funzione prende in input il modello, l'oggetto session contenente l'utente corrente, il nome della challenge, il tempo di durata e la condizione.
+     * La funzione crea una nuova challenge con i parametri ricevuti e la inserisce nel database.
+     * La funzione restituisce la stringa "creaChallangeConfermata" che indica la pagina da visualizzare con i dati della challenge appena creata.
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @param challenge il nome della challenge
+     * @param tempoSelect il tempo di durata della challenge
+     * @param condizione la condizione della challenge
+     * @return la stringa "creaChallangeConfermata" che indica la pagina da visualizzare
+     */
     @GetMapping("/adminCreaChallenge")
     public String getAdminCreaChallenge(@RequestParam ("challange") String challenge, @RequestParam ("tempo") String tempoSelect, @RequestParam ("scelta") String condizione, Model model, HttpSession session) {
        
@@ -965,6 +1232,15 @@ public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idL
         return "adminCreaChallangeConfermataPage";
     }
 
+    /**
+     * Mostra la pagina per creare una nuova challenge.
+     * Prende la lista dei libri dal database e la suddivide in due insiemi,
+     * uno per i generi e uno per gli autori, per creare le select per la
+     * scelta della condizione.
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @return la stringa "adminPreCreaChallangePage" che indica la pagina da visualizzare
+     */
     @GetMapping("/adminPreCreaChallange")
 public String getAdminPreCreaChallange(Model model, HttpSession session) {
     User userLoggato = (User) session.getAttribute("userLoggato");
