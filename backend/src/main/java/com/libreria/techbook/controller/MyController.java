@@ -1,23 +1,37 @@
 package com.libreria.techbook.controller;
 
+
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+import com.libreria.techbook.model.Challange;
 import com.libreria.techbook.model.LibreriaUser;
+import com.libreria.techbook.model.Moderatore;
 import com.libreria.techbook.model.Prodotto;
+import com.libreria.techbook.model.Storico;
 import com.libreria.techbook.model.User;
 import com.libreria.techbook.service.ProdottoJDBCTemp;
 
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 public class MyController {
@@ -47,6 +61,8 @@ public class MyController {
         
         prodottoJDBCTemp.creaNuovaTabUsers();
         prodottoJDBCTemp.creaNuovaTabLibri();
+        prodottoJDBCTemp.creaStoricoChallanger();
+        prodottoJDBCTemp.creaNuovaTabModeratore();
 
         User userLoggato = (User) session.getAttribute("userLoggato");
         
@@ -54,6 +70,8 @@ public class MyController {
             // Utente non loggato
             List<User> listUsers = prodottoJDBCTemp.ritornaUsers();
             ArrayList<Prodotto> lista = prodottoJDBCTemp.ritornaProdotto();
+            List<Storico> listaStorico = prodottoJDBCTemp.ritornaStorico();
+            model.addAttribute("listaStorico", listaStorico);
             model.addAttribute("listUsers", listUsers);
             model.addAttribute("lista", lista);
             return "vetrinaLogout";
@@ -64,7 +82,16 @@ public class MyController {
         }
         else {
             // Utente loggato
-           model.addAttribute("userLoggato", userLoggato);
+              // memorizza l'utente in sessione come utente
+            List<Prodotto> listProdotto = prodottoJDBCTemp.ritornaProdotto();
+            List<Prodotto> topLibri = listProdotto.stream()
+                .sorted((p1, p2) -> Integer.compare(p2.getLetture(), p1.getLetture()))
+                .limit(3)
+                .collect(Collectors.toList());
+
+                model.addAttribute("topLibri", topLibri);
+                
+                model.addAttribute("userLoggato", userLoggato);
             return "vetrinaLogin";
         }
     }
@@ -79,6 +106,17 @@ public class MyController {
     @GetMapping("/loginPage")
     public String loginPage() {
         return "loginPage";
+    }
+
+    /**
+     * Mostra la pagina di registrazione.
+     * La pagina di registrazione richiede all'utente di inserire le credenziali per creare un nuovo utente.
+     * La pagina e vuota e non effettua alcuna operazione.
+     * @return la pagina di registrazione
+     */
+    @GetMapping("/registerPage")
+    public String registerPage() {
+        return "registerPage";
     }
 
     /* Questa rotta serve per effettuare il login riceve i dati dalla pagina loginPage e li confronta per vedere se sono corretti
@@ -102,14 +140,22 @@ public class MyController {
                               Model model,
                               HttpSession session) {
         List<User> listUsers = prodottoJDBCTemp.ritornaUsers();
+        List<Prodotto> listProdotto = prodottoJDBCTemp.ritornaProdotto();
 
         for (User user : listUsers) {
             if((user.getUsername().equals(username) && username.equals("admin")) && (user.getPassword().equals(password) && password.equals("admin"))) {
                 session.setAttribute("userLoggato", user);  // memorizza l'utente in sessione come amministratore
+                model.addAttribute("userLoggato", user);
                 return "vetrinaAdmin";
             }
             else if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 session.setAttribute("userLoggato", user);  // memorizza l'utente in sessione come utente
+                List<Prodotto> topLibri = listProdotto.stream()
+                .sorted((p1, p2) -> Integer.compare(p2.getLetture(), p1.getLetture()))
+                .limit(3)
+                .collect(Collectors.toList());
+
+                model.addAttribute("topLibri", topLibri);
                 model.addAttribute("userLoggato", user);
                 return "vetrinaLogin";
             }
@@ -158,7 +204,61 @@ public class MyController {
     }
 
     /**
-     * Mostra la pagina del profilo dell'utente loggato, visualizzando le informazioni dell'utente e la lista delle librerie associate all'utente.
+     * Mostra la pagina pre-profilo dell'utente, visualizzando le informazioni dell'utente e offrendo la possibilita' di accedere
+     * alla sua libreria o di creare una challenge.
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @return la stringa "preProfiloPage" che indica la pagina da visualizzare
+     */
+    @GetMapping("/preProfilo")
+    public String getPreProfilo(Model model,
+                              HttpSession session) {
+        User userLoggato = (User) session.getAttribute("userLoggato");
+        model.addAttribute("userLoggato", userLoggato);
+        return "preProfiloPage";
+    }
+
+    /**
+     * Mostra la pagina della libreria dell'utente loggato.
+     * La funzione recupera la lista dei libri presenti nella libreria dell'utente
+     * e la passa alla vista "libreriaPage" insieme all'oggetto utente.
+     * @param model il modello passato alla vista
+     * @param session la sessione dell'utente corrente
+     * @return la stringa "libreriaPage" che indica la pagina da visualizzare
+     */
+    @GetMapping("/libreria")
+    public String getLibreria(Model model, HttpSession session) {
+        User userLoggato = (User) session.getAttribute("userLoggato");
+        ArrayList<LibreriaUser> listaLibrerie = prodottoJDBCTemp.ritornaLibreria(userLoggato.getNomeLibreria());
+        model.addAttribute("userLoggato", userLoggato);
+        model.addAttribute("listaLibrerie", listaLibrerie);
+        return "libreriaPage";
+    }
+
+    @GetMapping("/proponiLibro")
+    public String getProponiLibro(Model model, HttpSession session) {
+        return "proponiLibroPage";
+    }
+    
+    @PostMapping("/proponiCrealibro")
+    public String postProponiCrealibro(Model model, HttpSession session, @RequestParam("titolo") String titolo, @RequestParam("autore") String autore, @RequestParam("genere") String genere, @RequestParam("immagineCopertina") String immagineCopertina) {
+        User userLoggato = (User) session.getAttribute("userLoggato");
+        Moderatore entity = new Moderatore();
+        entity.setUserMod(userLoggato.getUsername());
+        entity.setTitoloMod(titolo);
+        entity.setGenereMod(genere);
+        entity.setAutoreMod(autore);
+        
+        entity.setCopertinaMod(immagineCopertina);
+        prodottoJDBCTemp.creaLibroModeratore(entity);
+        
+        return "redirect:/libreria";
+    }
+    
+    
+
+    /**
+     * Mostra la pagina del profilo dell'utente loggato, visualizzando le informazioni dell'utente.
      * @param model il modello passato alla vista
      * @param session la sessione dell'utente corrente
      * @return la stringa "profiloPage" che indica la pagina da visualizzare
@@ -167,20 +267,19 @@ public class MyController {
     public String getProfilo(Model model,
                               HttpSession session) {
         User userLoggato = (User) session.getAttribute("userLoggato");
-        ArrayList<LibreriaUser> listaLibrerie = prodottoJDBCTemp.ritornaLibreria(userLoggato.getNomeLibreria());
-
         model.addAttribute("userLoggato", userLoggato);
-        model.addAttribute("listaLibrerie", listaLibrerie);
-
         return "profiloPage";
     }
 
+    /**
+     * Mostra la pagina di conferma dell'eliminazione dell'utente loggato.
+     * La funzione reindirizza alla pagina di conferma dell'eliminazione dell'utente.
+     * @param model il modello passato alla vista
+     * @return la stringa "confermaEliminazioneUserPage" che indica la pagina da visualizzare
+     */
     @PostMapping("eliminaProfilo")
     public String getEliminaProfilo(Model model) {
-        
-        
-    
-        return "confermaEliminazioneUserPage";
+         return "confermaEliminazioneUserPage";
     }
 
     
@@ -237,11 +336,13 @@ public class MyController {
      * @return la stringa "/libriPage" che indica la pagina da visualizzare
      */
     @PostMapping("/aggiungiLibro")
-    public String aggiungiLibro(@RequestParam("idLibro") int idLibro, HttpSession session) {
+    public String aggiungiLibro(@RequestParam("idLibro") int idLibro,Model model, HttpSession session) {
         User user = (User) session.getAttribute("userLoggato");
         if (user != null) {
             prodottoJDBCTemp.aggiungiLibroAllaLibreria(user.getNomeLibreria(), idLibro);
     }
+     ArrayList<Prodotto> listaLibri = prodottoJDBCTemp.ritornaProdotto();
+        model.addAttribute("listaLibri", listaLibri);
     return "/libriPage"; // oppure altra vista
     }
     
@@ -258,7 +359,7 @@ public class MyController {
  * @return la stringa "/profiloPage" o "/" che indica la pagina da visualizzare
  */
     @PostMapping("/rimuoviLibro")
-    public String rimuoviLibro(@RequestParam("idLibro") int idLibro,Model model, HttpSession session) {
+    public String rimuoviLibro(@RequestParam("idLibro") int idLibro, Model model, HttpSession session) {
         User user = (User) session.getAttribute("userLoggato");
             if (user != null) {
                 try {
@@ -271,12 +372,623 @@ public class MyController {
 
                 model.addAttribute("userLoggato", user);
                 model.addAttribute("listaLibrerie", listaLibrerie);
-                return "/profiloPage"; 
+                return "/libreriaPage"; 
             }
     
        return "/";
     }
 
+    /**
+     * Mostra la pagina di lettura di un libro specificato.
+     * La funzione riceve come parametro l'id del libro da visualizzare e verifica se l'utente è loggato.
+     * Se l'utente è loggato, recupera il libro con l'id specificato e lo aggiunge al modello.
+     * Restituisce la stringa "leggiLibroPage" che indica la pagina da visualizzare con il libro.
+     * @param idLibro l'id del libro da visualizzare
+     * @param model il modello passato alla vista
+     * @param session l'oggetto session contenente l'utente corrente
+     * @return la stringa "leggiLibroPage" che indica la pagina da visualizzare
+     */
+    @GetMapping("/leggiLibro")
+    public String getMethodName(@RequestParam("idLibro") int idLibro, Model model, HttpSession session) {
+        User user = (User) session.getAttribute("userLoggato");
+        
+      
+        Prodotto libro = prodottoJDBCTemp.getLibroById(idLibro);
+            
+        model.addAttribute("libro", libro);
+        
+
+        return "leggiLibroPage";
+    }
+    
+
+
+    @GetMapping("/creaChallenge")
+    public String getCreaChallenge(@RequestParam ("challange") String challenge, @RequestParam ("tempo") String tempoSelect, @RequestParam ("scelta") String condizione, Model model, HttpSession session) {
+       
+        int tempo = 0;
+        switch (tempoSelect) {
+            case "settimana":
+                tempo = 7;
+                break;
+            case "dieci":
+                tempo = 10;
+                break;
+            case "mese":
+                tempo = 30;
+                break;
+            default:
+                tempo = 5;
+                break;
+        }
+       
+        String alertStato;
+        User userLoggato = (User) session.getAttribute("userLoggato");
+        Storico storico = new Storico();
+        Challange newChallange = new Challange();
+        String challengeName = prodottoJDBCTemp.creaChallangeName(challenge);
+        prodottoJDBCTemp.creaTabellaChallange(challengeName);
+        newChallange.setDataInizio(LocalDate.now());
+        newChallange.setNomePartecipante(userLoggato.getUsername());
+        newChallange.setPunteggio(0);
+        prodottoJDBCTemp.insertUserCallange(challengeName, newChallange, newChallange.getDataInizio(), newChallange.getNomePartecipante(), newChallange.getPunteggio());
+
+        storico.setData(newChallange.getDataInizio());
+        storico.setDataFine(newChallange.getDataInizio().plusDays(tempo));
+        storico.setNomeChallange(challengeName);
+        storico.setCondizione(condizione);
+        storico.setNomeVincitore("In Corso");
+        storico.setPunti(0);
+        storico.setStato(0);
+        if (storico.getStato() == 0) {
+            alertStato = "In Corso";
+        }else {
+            alertStato = "Terminato";
+        }
+        prodottoJDBCTemp.insertStoricoCallange(storico, storico.getData(), storico.getDataFine(), storico.getNomeChallange(), storico.getCondizione(), storico.getNomeVincitore(), storico.getPunti(), storico.getStato());
+
+        model.addAttribute("dataFine", storico.getDataFine());
+        model.addAttribute("newChallange", newChallange);
+        model.addAttribute("storico", storico);
+        model.addAttribute("alertStato", alertStato);
+
+
+
+        return "creaChallangeConfermata";
+    }
+
+    @GetMapping("/preCreaChallange")
+public String getMethodName(Model model, HttpSession session) {
+    User userLoggato = (User) session.getAttribute("userLoggato");
+    ArrayList<Prodotto> lista = prodottoJDBCTemp.ritornaProdotto();
+
+    Set<String> generiUnici = new TreeSet<>();
+    Set<String> autoriUnici = new TreeSet<>();
+
+    for (Prodotto p : lista) {
+        if (p.getGenere() != null && !p.getGenere().isBlank()) {
+            generiUnici.add(p.getGenere());
+        }
+        if (p.getAutore() != null && !p.getAutore().isBlank()) {
+            autoriUnici.add(p.getAutore());
+        }
+    }
+
+
+    model.addAttribute("genereLibri", generiUnici);
+    model.addAttribute("autoreLibri", autoriUnici);
+    model.addAttribute("userLoggato", userLoggato);
+
+    return "preCreaChallangePage";
+}
+
+    
+    @GetMapping("/preChallenge")
+    public String getPreCreaChallenge(Model model, HttpSession session) {
+        return "preChallengePage";
+    }
+
+    @GetMapping("/vediChallange")
+    public String getVediChallange(Model model, HttpSession session) {
+        User userLoggato = (User) session.getAttribute("userLoggato");
+
+        
+       // 1. Aggiorna lo stato delle challenge concluse
+        List<Storico> listaStoricoFine = prodottoJDBCTemp.ritornaStorico();
+        for (Storico storico : listaStoricoFine) {
+            if (storico.getStato() != 1 && !storico.getDataFine().isAfter(LocalDate.now())) {
+                List<Challange> listaPartecipazioni = prodottoJDBCTemp.ritornaChallange(storico.getNomeChallange());
+
+                if (listaPartecipazioni != null && !listaPartecipazioni.isEmpty()) {
+                    // Ordina per punteggio decrescente
+                    listaPartecipazioni.sort(Comparator.comparingInt(Challange::getPunteggio).reversed());
+
+                    // Imposta vincitore e stato
+                    Challange vincitore = listaPartecipazioni.get(0);
+                    storico.setStato(1);
+                    storico.setNomeVincitore(vincitore.getNomePartecipante());
+                    storico.setPunti(vincitore.getPunteggio());
+
+                    // Aggiorna nel DB
+                    prodottoJDBCTemp.updateStatoStorico(
+                        storico.getIdChallange(),
+                        storico.getNomeVincitore(),
+                        storico.getPunti(),
+                        storico.getStato()
+                    );
+                }
+            }
+        }
+
+        List<Storico> listaStorico = prodottoJDBCTemp.ritornaStorico();
+
+
+        model.addAttribute("listaStorico", listaStorico);
+        model.addAttribute("userLoggato", userLoggato);
+        return "vediChallangePage";
+    }
+    
+   @PostMapping("/dettagliChallange")
+public String getDettagliChallange(Model model, HttpSession session,
+                                   @RequestParam("nomeChallange") String nomeChallange,
+                                   @RequestParam("fineChallange") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fineChallange) {
+    User userLoggato = (User) session.getAttribute("userLoggato");
+    List<Challange> challange = prodottoJDBCTemp.ritornaChallange(nomeChallange);
+
+    // Ordina la lista per punteggio decrescente
+    challange.sort(Comparator.comparingInt(Challange::getPunteggio).reversed());
+
+    model.addAttribute("challange", challange);
+    model.addAttribute("userLoggato", userLoggato);
+    model.addAttribute("nomeChallange", nomeChallange);
+    model.addAttribute("fineChallange", fineChallange);
+
+    return "dettagliChallangePage";
+}
+
+    
+@PostMapping("/addPartecipante")
+public String addPartecipante(Model model, @RequestParam("nomeChallange") String nomeChallange, @RequestParam("fineChallange") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fineChallange, HttpSession session, RedirectAttributes redirectAttributes) {
+    User userLoggato = (User) session.getAttribute("userLoggato");
+    Challange partecipante = new Challange();
+    Storico storico = new Storico();
+    ArrayList<Storico> listaStorico = prodottoJDBCTemp.ritornaStorico();
+    for (Storico s : listaStorico) { 
+        if (s.getNomeChallange().equals(nomeChallange)) {
+            storico.setStato(s.getStato());
+         }
+    }
+
+    System.out.println(storico.getStato());
+    if (userLoggato == null) {
+        // Se l'utente non è loggato, reindirizza alla login o altra pagina
+        return "redirect:/login";
+    }
+    if (storico.getStato() > 0) {
+         model.addAttribute("userLoggato", userLoggato);
+        model.addAttribute("nomeChallange", nomeChallange);
+        return "challangeTerminatoPage";
+
+    }
+    boolean isPartecipante = prodottoJDBCTemp.isUserPartecipante(nomeChallange, userLoggato.getUsername());
+     if (isPartecipante) {
+         model.addAttribute("userLoggato", userLoggato);
+        model.addAttribute("nomeChallange", nomeChallange);
+        return "partecipazioneGiaEffettuata";
+    } else {
+        // Aggiungi il partecipante usando il metodo del prodottoJDBCTemp
+        partecipante.setDataInizio(LocalDate.now());
+        partecipante.setNomePartecipante(userLoggato.getUsername());
+        partecipante.setPunteggio(0);
+        prodottoJDBCTemp.insertUserCallange(nomeChallange, partecipante, partecipante.getDataInizio(), partecipante.getNomePartecipante(), partecipante.getPunteggio());
+
+       
+        model.addAttribute("userLoggato", userLoggato);
+        model.addAttribute("nomeChallange", nomeChallange);
+        model.addAttribute("fineChallange", fineChallange);
+
+    }
+
+   
+    return "confermaPartecipazione";
+}
+
+
+
+
+ @GetMapping("/classificaGlobale") 
+public String getClassificaGlobale(Model model, HttpSession session) {
+    User userLoggato = (User) session.getAttribute("userLoggato");
+    model.addAttribute("userLoggato", userLoggato);
+
+    List<User> listUsers = prodottoJDBCTemp.ritornaUsers();
+
+    // Ordina per punteggio decrescente
+    listUsers.sort((u1, u2) -> Integer.compare(u2.getPunteggio(), u1.getPunteggio()));
+
+    model.addAttribute("classifica", listUsers);
+
+    return "classificaGlobalePage";
+}
+
+    @GetMapping("/mieChallange")
+    public String getMieChallange(Model model, HttpSession session) {
+        User userLoggato = (User) session.getAttribute("userLoggato");
+
+        List<Challange> listaMieChallange = new ArrayList<>();
+        List<Storico> listaMioStorico = new ArrayList<>();
+
+        // 1. Aggiorna lo stato delle challenge concluse
+        List<Storico> listaStoricoFine = prodottoJDBCTemp.ritornaStorico();
+        for (Storico storico : listaStoricoFine) {
+            if (storico.getStato() != 1 && !storico.getDataFine().isAfter(LocalDate.now())) {
+                List<Challange> listaPartecipazioni = prodottoJDBCTemp.ritornaChallange(storico.getNomeChallange());
+
+                if (listaPartecipazioni != null && !listaPartecipazioni.isEmpty()) {
+                    // Ordina per punteggio decrescente
+                    listaPartecipazioni.sort(Comparator.comparingInt(Challange::getPunteggio).reversed());
+
+                    // Imposta vincitore e stato
+                    Challange vincitore = listaPartecipazioni.get(0);
+                    storico.setStato(1);
+                    storico.setNomeVincitore(vincitore.getNomePartecipante());
+                    storico.setPunti(vincitore.getPunteggio());
+
+                    // Aggiorna nel DB
+                    prodottoJDBCTemp.updateStatoStorico(
+                        storico.getIdChallange(),
+                        storico.getNomeVincitore(),
+                        storico.getPunti(),
+                        storico.getStato()
+                    );
+                }
+            }
+        }
+
+        // 2. Estrai le challenge dell'utente loggato
+        List<Storico> listaStorico = prodottoJDBCTemp.ritornaStorico();
+        for (Storico storico : listaStorico) {
+            List<Challange> partecipazioni = prodottoJDBCTemp.ritornaChallange(storico.getNomeChallange());
+
+            for (Challange c : partecipazioni) {
+                if (c.getNomePartecipante().equals(userLoggato.getUsername())) {
+                    listaMieChallange.add(c);
+                    listaMioStorico.add(storico);
+                }
+            }
+        }
+        
+        // 3. Aggiungi attributi al model
+        model.addAttribute("userLoggato", userLoggato);
+        model.addAttribute("listaMioStorico", listaMioStorico);
+
+        return "mieChallengePage";
+    }
+
+
+@PostMapping("/dettagliMiaChallange")
+public String getDettagliMiaChallange(Model model, HttpSession session,
+                                   @RequestParam("nomeChallange") String nomeChallange,
+                                   @RequestParam("fineChallange") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fineChallange) {
+    User userLoggato = (User) session.getAttribute("userLoggato");
+    List<Challange> challange = prodottoJDBCTemp.ritornaChallange(nomeChallange);
+
+    // Ordina la lista per punteggio decrescente
+    challange.sort(Comparator.comparingInt(Challange::getPunteggio).reversed());
+
+    model.addAttribute("challange", challange);
+    model.addAttribute("userLoggato", userLoggato);
+    model.addAttribute("nomeChallange", nomeChallange);
+    model.addAttribute("fineChallange", fineChallange);
+    return "dettagliMiaChallangePage";
+}
+
+@PostMapping("/confermaLibroLetto")
+public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idLibro") int idLibro) {
+    User userLoggato = (User) session.getAttribute("userLoggato");
+    List<Storico> storico = prodottoJDBCTemp.ritornaStorico();
+    ArrayList<Prodotto> listaLibri = prodottoJDBCTemp.ritornaProdotto();
+    Prodotto libroLetto = null;
+
+    for (Prodotto libro : listaLibri) {
+        if (libro.getId() == idLibro) {
+            // Aggiorna le letture del libro
+            libro.setLetture(libro.getLetture() + 1);
+            prodottoJDBCTemp.updateLettureLibro(libro.getId(), libro.getLetture());
+            libroLetto = libro;
+            break;
+        }
+    }
+
+    // Se il libro non è stato trovato, reindirizza a errore
+    if (libroLetto == null) {
+        return "redirect:/errore"; // oppure una pagina che gestisce l'errore
+    }
+
+    // Aggiorna punteggio utente
+    userLoggato.setPunteggio(userLoggato.getPunteggio() + 1);
+    prodottoJDBCTemp.updatePunteggioUser(userLoggato.getUsername(), userLoggato.getPunteggio());
+
+    // Aggiorna punteggio challenge se l'utente partecipa e la condizione è soddisfatta
+    for (Storico s : storico) {
+        if (s.getStato() != 0) continue;
+
+        List<Challange> partecipazioni = prodottoJDBCTemp.ritornaChallange(s.getNomeChallange());
+        for (Challange c : partecipazioni) {
+            if (!c.getNomePartecipante().equals(userLoggato.getUsername())) continue;
+
+            boolean soddisfaCondizione = false;
+
+            if ("nessuna".equalsIgnoreCase(s.getCondizione())) {
+                soddisfaCondizione = true;
+            } else {
+                String condizione = s.getCondizione();
+                String genere = libroLetto.getGenere();
+                String autore = libroLetto.getAutore();
+
+                if ((genere != null && genere.equalsIgnoreCase(condizione)) ||
+                    (autore != null && autore.equalsIgnoreCase(condizione))) {
+                    soddisfaCondizione = true;
+                }
+            }
+
+            if (soddisfaCondizione) {
+                c.setPunteggio(c.getPunteggio() + 1);
+                prodottoJDBCTemp.updatePunteggioChallange(s.getNomeChallange(), c.getNomePartecipante(), c.getPunteggio());
+            }
+        }
+    }
+
+    model.addAttribute("userLoggato", userLoggato);
+    model.addAttribute("libroLetto", libroLetto);
+    return "confermaLibroLettoPage";
+}
+
+/* **************************************************************************************************************** */
+/* ********************************   ADMIN   ************************************************************************ */
+/* **************************************************************************************************************** */
+
+
+    @GetMapping("/adminUsers")
+    public String getAdminUsers(Model model, HttpSession session) {
+        User userLoggato = (User) session.getAttribute("userLoggato");
+        List<User> listaUsers = prodottoJDBCTemp.ritornaUsers();
+
+        model.addAttribute("userLoggato", userLoggato);
+        model.addAttribute("listaUsers", listaUsers);
+        return "adminUsersPage";
+    }
+
+    @PostMapping("/adminRimuoviUtente")
+    public String postRimuoviUtente(Model model, HttpSession session, @RequestParam("nomeLibreria") String nomeLibreria, @RequestParam("username") String username) {
+        
+        model.addAttribute("nomeLibreria", nomeLibreria);
+        model.addAttribute("username", username);
+        return "adminRimuoviUtentePage";
+    }
+
+    /*@PostMapping("adminEliminaProfilo")
+    public String getEliminaProfilo(Model model) {
+         return "confermaEliminazioneUserPage";
+    }*/
+
+    
+    @PostMapping("adminEliminazioneConfermata")
+    public String getAdminEliminazioneConfermata(Model model, HttpSession session, @RequestParam("nomeLibreria") String nomeLibreria) {
+        User userLoggato = (User) session.getAttribute("userLoggato");
+        
+        try {
+            prodottoJDBCTemp.eliminaUser(nomeLibreria);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        session.invalidate();
+        return "redirect:/adminUsers";
+    }
+    
+
+    @GetMapping("/adminLibri")
+    public String getAdminLibri(Model model, HttpSession session) {
+        User userLoggato = (User) session.getAttribute("userLoggato");
+        ArrayList<Prodotto> listaLibri = prodottoJDBCTemp.ritornaProdotto();
+        ArrayList<Moderatore> listaModeratore = prodottoJDBCTemp.ritornaTabModeratore();
+
+        model.addAttribute("userLoggato", userLoggato);
+        model.addAttribute("listaLibri", listaLibri);
+        model.addAttribute("listaModeratore", listaModeratore);
+
+        return "adminLibriPage";
+        
+    }
+
+    @PostMapping("/eliminaLibro")
+    public String postMethodName(Model model, HttpSession session, @RequestParam("idLibro") int idLibro) {
+
+        prodottoJDBCTemp.eliminaModLibro(idLibro);
+      
+        
+        return "redirect:/adminLibri";
+    }
+
+    @GetMapping("/adminPreCreaLibro")
+    public String getAdminPreCreaLibro(Model model, HttpSession session) {
+        return "adminPreCreaLibroPage";
+    }
+    
+    @PostMapping("/adminCrealibro")
+    public String postAdminCrealibro(Model model, HttpSession session, @RequestParam("titolo") String titolo, @RequestParam("autore") String autore, @RequestParam("genere") String genere, @RequestParam("immagineCopertina") String immagineCopertina) {
+
+        Prodotto entity = new Prodotto();
+        entity.setTitolo(titolo);
+        entity.setGenere(genere);
+        entity.setAutore(autore);
+        entity.setLetture(0);
+        entity.setCopertina(immagineCopertina);
+        prodottoJDBCTemp.creaLibro(entity);
+        
+        return "redirect:/adminLibri";
+    }
+    
+
+    
+    
+    @PostMapping("/adminDettagliLibro")
+    public String getAdminDettagliLibro(Model model, HttpSession session, @RequestParam("idLibroModeratore") int idLibro) {
+    User user = (User) session.getAttribute("userLoggato");
+        
+      
+        Moderatore libro = prodottoJDBCTemp.getLibroModeratoreById(idLibro);
+            
+        model.addAttribute("libro", libro);
+
+        return "adminDettagliLibroPage";
+    }
+
+    @PostMapping("/adminConfermaLibro")
+    public String getAdminConfermaLibro(Model model, HttpSession session, @RequestParam("idLibroModeratore") int idLibro) {
+        System.out.println("idLibro: " + idLibro);
+        User userLoggato = (User) session.getAttribute("userLoggato");
+        Moderatore libro = prodottoJDBCTemp.getLibroModeratoreById(idLibro);
+        Prodotto entity = new Prodotto();
+        entity.setTitolo(libro.getTitoloMod());
+        entity.setGenere(libro.getGenereMod());
+        entity.setAutore(libro.getAutoreMod());
+        entity.setLetture(0);
+        entity.setCopertina(libro.getCopertinaMod());
+        prodottoJDBCTemp.creaLibro(entity);
+        prodottoJDBCTemp.eliminaLibroDaTabMod(idLibro);
+
+        ArrayList<Prodotto> listaLibri = prodottoJDBCTemp.ritornaProdotto();
+        ArrayList<Moderatore> listaModeratore = prodottoJDBCTemp.ritornaTabModeratore();
+
+        model.addAttribute("userLoggato", userLoggato);
+        model.addAttribute("listaLibri", listaLibri);
+        model.addAttribute("listaModeratore", listaModeratore);
+        
+        return "adminLibriPage";
+    }
+
+    @PostMapping("/adminRimuoviLibro")
+    public String postAdminRimuoviLibro(Model model, HttpSession session, @RequestParam("idLibroModeratore") int idLibro) {
+        User userLoggato = (User) session.getAttribute("userLoggato");
+        prodottoJDBCTemp.eliminaLibroDaTabMod(idLibro);
+
+        ArrayList<Prodotto> listaLibri = prodottoJDBCTemp.ritornaProdotto();
+        ArrayList<Moderatore> listaModeratore = prodottoJDBCTemp.ritornaTabModeratore();
+
+        model.addAttribute("userLoggato", userLoggato);
+        model.addAttribute("listaLibri", listaLibri);
+        model.addAttribute("listaModeratore", listaModeratore);
+        return "adminLibriPage";
+    }
+    
+    @GetMapping("adminChallenge")
+    public String getAdminChallenge(Model model, HttpSession session) {
+        User userLoggato = (User) session.getAttribute("userLoggato");
+        List<Storico> listaStorico = prodottoJDBCTemp.ritornaStorico();
+        
+        model.addAttribute("userLoggato", userLoggato);
+        model.addAttribute("listaStorico", listaStorico);
+        return "adminChallengePage";
+    }
+
+    @PostMapping("/adminRimuoviChallange")
+    public String postAdminRimuoviChallange(Model model, HttpSession session, @RequestParam("nomeChallange") String nomeChallange) {
+        User userLoggato = (User) session.getAttribute("userLoggato");
+        try {
+            prodottoJDBCTemp.adminEliminaChallange(nomeChallange);
+        } catch (SQLException e) {
+            
+            e.printStackTrace();
+        }
+        
+        List<Storico> listaStorico = prodottoJDBCTemp.ritornaStorico();
+        
+        model.addAttribute("userLoggato", userLoggato);
+        model.addAttribute("listaStorico", listaStorico);
+        
+        return "adminChallengePage";
+    }
+    
+    @GetMapping("/adminCreaChallenge")
+    public String getAdminCreaChallenge(@RequestParam ("challange") String challenge, @RequestParam ("tempo") String tempoSelect, @RequestParam ("scelta") String condizione, Model model, HttpSession session) {
+       
+        int tempo = 0;
+        switch (tempoSelect) {
+            case "settimana":
+                tempo = 7;
+                break;
+            case "dieci":
+                tempo = 10;
+                break;
+            case "mese":
+                tempo = 30;
+                break;
+            default:
+                tempo = 5;
+                break;
+        }
+       
+        String alertStato;
+        User userLoggato = (User) session.getAttribute("userLoggato");
+        Storico storico = new Storico();
+        Challange newChallange = new Challange();
+        String challengeName = prodottoJDBCTemp.creaChallangeName(challenge);
+        prodottoJDBCTemp.creaTabellaChallange(challengeName);
+        newChallange.setDataInizio(LocalDate.now());
+        newChallange.setNomePartecipante(userLoggato.getUsername());
+        newChallange.setPunteggio(0);
+        
+
+        storico.setData(newChallange.getDataInizio());
+        storico.setDataFine(newChallange.getDataInizio().plusDays(tempo));
+        storico.setNomeChallange(challengeName);
+        storico.setCondizione(condizione);
+        storico.setNomeVincitore("In Corso");
+        storico.setPunti(0);
+        storico.setStato(0);
+        if (storico.getStato() == 0) {
+            alertStato = "In Corso";
+        }else {
+            alertStato = "Terminato";
+        }
+        prodottoJDBCTemp.insertStoricoCallange(storico, storico.getData(), storico.getDataFine(), storico.getNomeChallange(), storico.getCondizione(), storico.getNomeVincitore(), storico.getPunti(), storico.getStato());
+
+        model.addAttribute("dataFine", storico.getDataFine());
+        model.addAttribute("newChallange", newChallange);
+        model.addAttribute("storico", storico);
+        model.addAttribute("alertStato", alertStato);
+
+
+
+        return "adminCreaChallangeConfermataPage";
+    }
+
+    @GetMapping("/adminPreCreaChallange")
+public String getAdminPreCreaChallange(Model model, HttpSession session) {
+    User userLoggato = (User) session.getAttribute("userLoggato");
+    ArrayList<Prodotto> lista = prodottoJDBCTemp.ritornaProdotto();
+
+    Set<String> generiUnici = new TreeSet<>();
+    Set<String> autoriUnici = new TreeSet<>();
+
+    for (Prodotto p : lista) {
+        if (p.getGenere() != null && !p.getGenere().isBlank()) {
+            generiUnici.add(p.getGenere());
+        }
+        if (p.getAutore() != null && !p.getAutore().isBlank()) {
+            autoriUnici.add(p.getAutore());
+        }
+    }
+
+
+    model.addAttribute("genereLibri", generiUnici);
+    model.addAttribute("autoreLibri", autoriUnici);
+    model.addAttribute("userLoggato", userLoggato);
+
+    return "adminPreCreaChallangePage";
+}
 
 
     /* questa rotta serve per effettuare il logout dalla sessione */

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Utenti disponibili</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="header">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>  
+
+    <nav style="background-color: #007bff; padding: 10px;">
+        <form th:action="@{/}" method="get" style="display: inline;">
+            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
+                Home
+            </button>
+        </form>
+
+        <form th:action="@{/adminUsers}" method="get" style="display: inline;">
+            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
+                Utenti
+            </button>
+        </form>
+
+        <form th:action="@{/adminLibri}" method="get" style="display: inline;">
+            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
+                Libri
+            </button>
+        </form>
+
+        <form th:action="@{/adminChallenge}" method="get" style="display: inline;">
+            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
+                Challenge
+            </button>
+        </form>
+    </nav>
+
+    <div class="container">
+        <h2>Conferma Eliminazione</h2>
+        <p>Sei sicuro di voler eliminare l'utente <strong><span th:text="${username}">Username</span></strong></p>
+        <p>Questa azione eliminerà l'utente e tutti i dati collegati, inclusa la sua libreria.</p>
+
+        <form th:action="@{/adminEliminazioneConfermata}" method="post">
+            <input type="hidden" name="nomeLibreria" th:value="${nomeLibreria}" />
+            <input type="hidden" name="username" th:value="${username}" />
+            
+            <button type="submit">Sì, elimina</button>
+            <a th:href="@{/adminUsers}"><button type="button">No, annulla</button></a>
+        </form>
+    </div>
+
+</body>
+</html>

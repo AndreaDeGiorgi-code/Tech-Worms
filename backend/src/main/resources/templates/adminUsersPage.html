@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Utenti disponibili</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="header">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>  
+
+    <nav style="background-color: #007bff; padding: 10px;">
+        <form th:action="@{/}" method="get" style="display: inline;">
+            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
+                Home
+            </button>
+        </form>
+
+        <form th:action="@{/adminUsers}" method="get" style="display: inline;">
+            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
+                Utenti
+            </button>
+        </form>
+
+        <form th:action="@{/adminLibri}" method="get" style="display: inline;">
+            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
+                Libri
+            </button>
+        </form>
+
+        <form th:action="@{/adminChallenge}" method="get" style="display: inline;">
+            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
+                Challenge
+            </button>
+        </form>
+    </nav>
+
+    <h1>Lista Utenti</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>nomeLibreria</th>
+                <th>Punteggio</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${listaUsers}">
+                <td th:text="${user.userId}">ID</td>
+                <td th:text="${user.username}">Username</td>
+                <td th:text="${user.email}">Email</td>
+                <td th:text="${user.password}">Password</td>
+                <td th:text="${user.nomeLibreria}">nomeLibreria</td>
+                <td th:text="${user.punteggio}">Punteggio</td>
+                <td>
+                    <form th:action="@{/adminRimuoviUtente}" method="post" th:object="${user}">
+                        <input type="hidden" name="nomeLibreria" th:value="${user.nomeLibreria}" />
+                        <input type="hidden" name="username" th:value="${user.username}" />
+                        <button type="submit" class="delete-profile-btn">Rimuovi</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

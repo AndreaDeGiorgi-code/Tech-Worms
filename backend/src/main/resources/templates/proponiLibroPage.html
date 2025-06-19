@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profilo Utente</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        .contenitore {
+            width: 600px
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        form div {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    label {
+        flex: 0 0 160px;
+        text-align: right;
+        font-weight: 600;
+        color: #555;
+    }
+
+    input[type="text"] {
+        flex: 1;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        transition: border 0.3s ease;
+    }
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+        
+    </style>
+</head>
+<body>
+<nav style="background-color: #007bff; padding: 10px;">
+      <form th:action="@{/}" method="get" style="display: inline;">
+        <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
+          Home
+        </button>
+      </form>
+
+      <form th:action="@{/preProfilo}" method="get" style="display: inline;">
+        <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
+          Profilo
+        </button>
+      </form>
+
+      <form th:action="@{/preChallenge}" method="get" style="display: inline;">
+        <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
+          Challenge
+        </button>
+      </form>
+      
+    </nav>
+
+    <div class="header">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
+
+
+
+    <h2>Aggiungi i Dati Del Libro Che Vuoi Inserire</h2>
+
+    <div class="contenitore">
+
+        <form th:action="@{/proponiCrealibro}" method="post">
+    <div>
+        <label for="titolo">Titolo:</label>
+        <input type="text" id="titolo" name="titolo" required />
+    </div>
+
+    <div>
+        <label for="genere">Genere:</label>
+        <input type="text" id="genere" name="genere" required>
+    </div>
+
+    <div>
+        <label for="autore">Autore:</label>
+        <input type="text" id="autore" name="autore" required>
+    </div>
+
+    <div>
+        <label for="immagineCopertina">URL Immagine Copertina:</label>
+        <input type="text" id="immagineCopertina" name="immagineCopertina" required>
+    </div>
+
+    <button type="submit">Salva</button>
+</form>
+
+</div>
+    
+
+</body>
+</html>

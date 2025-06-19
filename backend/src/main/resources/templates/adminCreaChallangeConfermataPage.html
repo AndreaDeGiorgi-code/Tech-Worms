@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Conferma Creazione Challenge</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 50%;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .buttons a {
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #4285f4;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .buttons a:hover {
+            background-color: #3367d6;
+        }
+    </style>
+</head>
+<body>
+  <div class="header">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>  
+
+            <nav style="background-color: #007bff; padding: 10px;">
+        <form th:action="@{/}" method="get" style="display: inline;">
+            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
+            Home
+            </button>
+        </form>
+
+        <form th:action="@{/adminUsers}" method="get" style="display: inline;">
+            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
+            Utenti
+            </button>
+        </form>
+
+        <form th:action="@{/adminLibri}" method="get" style="display: inline;">
+            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
+            Libri
+            </button>
+        </form>
+
+        <form th:action="@{/adminChallenge}" method="get" style="display: inline;">
+            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
+            Challenge
+            </button>
+        </form>
+        
+        </nav>
+
+    <h2>Challenge creata con successo!</h2>
+
+    <table>
+        <tr>
+            
+            <th>Data Inizio</th>
+            <th>Nome Partecipante</th>
+            <th>Punteggio</th>
+        </tr>
+        <tr>
+            
+            <td th:text="${#temporals.format(newChallange.dataInizio, 'dd/MM/yyyy')}">02/06/2025</td>
+            <td>nessuno</td>
+            <td>0</td>
+        </tr>
+    </table>
+       <h3>Questa Challange sarà attiva fino al <span th:text="${#temporals.format(dataFine, 'dd/MM/yyyy')}"></span></h3>
+    <div class="buttons">
+        
+        <a th:href="@{/adminChallenge}">Vai alla Challenge Page</a>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Libri disponibili</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+        <div class="header">
+        <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+                
+            </div>  
+
+            <nav style="background-color: #007bff; padding: 10px;">
+        <form th:action="@{/}" method="get" style="display: inline;">
+            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
+            Home
+            </button>
+        </form>
+
+        <form th:action="@{/adminUsers}" method="get" style="display: inline;">
+            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
+            Utenti
+            </button>
+        </form>
+
+        <form th:action="@{/adminLibri}" method="get" style="display: inline;">
+            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
+            Libri
+            </button>
+        </form>
+
+        <form th:action="@{/adminChallenge}" method="get" style="display: inline;">
+            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
+            Challenge
+            </button>
+        </form>
+        
+        </nav>
+
+    
+
+    <h1>Libri disponibili</h1>
+
+    <h2>Libri in attesa di approvazione</h2>
+
+    <table border="1" cellpadding="10">
+        <thead>
+            <tr>
+                <th>Proposto da</th>
+                <th>Titolo</th>
+                <th>Autore</th>
+                <th>Genere</th>
+            
+                <th>Copertina</th>
+                <th>Dettagli</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="libroMod : ${listaModeratore}">
+                <td th:text="${libroMod.userMod}">Titolo</td>
+                <td th:text="${libroMod.titoloMod}">Titolo</td>
+                <td th:text="${libroMod.autoreMod}">Autore</td>
+                <td th:text="${libroMod.genereMod}">Genere</td>
+             
+                
+                <td><img class="imgCopertina" th:src="${libroMod.copertinaMod}"></td>
+                <td>
+                    <form th:action="@{/adminDettagliLibro}" method="post">
+                        <input type="hidden" name="idLibroModeratore" th:value="${libroMod.id}">
+                        <button type="submit">Seleziona</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+   <h2>Libri Disponibili</h2>
+
+    <!-- Tabella dei libri -->
+    <table border="1" cellpadding="10">
+        <thead>
+            <tr>
+                <th>Titolo</th>
+                <th>Autore</th>
+                <th>Genere</th>
+                <th>Letture utenti</th>
+                <th>Copertina</th>
+                <th>Aggiungi alla tua libreria</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="libro : ${listaLibri}">
+                <td th:text="${libro.titolo}">Titolo</td>
+                <td th:text="${libro.autore}">Autore</td>
+                <td th:text="${libro.genere}">Genere</td>
+                <td th:text="${libro.letture}">Letture</td>
+                
+                <td><img class="imgCopertina" th:src="${libro.copertina}"></td>
+                <td>
+                    <form th:action="@{/eliminaLibro}" method="post">
+                        <input type="hidden" name="idLibro" th:value="${libro.id}">
+                        <button type="submit" class="delete-profile-btn"> Elimina</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Crea nuovo libro</h2>
+
+    <form th:action="@{/adminPreCreaLibro}" method="get">
+        <button type="submit">Aggiungi</button>
+    </form>
+
+
+</body>
+</html>

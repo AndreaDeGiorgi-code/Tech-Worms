@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title> Approva Libro</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+
+        .libro-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .copertina {
+            width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+            margin-bottom: 30px;
+        }
+
+        .info {
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        .letture {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 40px;
+        }
+
+        .btn-conferma {
+            margin-top: 30px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-conferma:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>  
+
+            <nav style="background-color: #007bff; padding: 10px;">
+        <form th:action="@{/}" method="get" style="display: inline;">
+            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
+            Home
+            </button>
+        </form>
+
+        <form th:action="@{/adminUsers}" method="get" style="display: inline;">
+            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
+            Utenti
+            </button>
+        </form>
+
+        <form th:action="@{/adminLibri}" method="get" style="display: inline;">
+            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
+            Libri
+            </button>
+        </form>
+
+        <form th:action="@{/adminChallenge}" method="get" style="display: inline;">
+            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
+            Challenge
+            </button>
+        </form>
+        
+        </nav>
+
+<div class="libro-container">
+    <h1 th:text="${libro.titoloMod}">Titolo Libro</h1>
+
+    <img class="copertina" th:src="${libro.copertinaMod}" alt="Copertina del libro"/>
+
+    <div class="info">
+        <p><strong>Autore:</strong> <span th:text="${libro.autoreMod}">Autore</span></p>
+        <p><strong>Genere:</strong> <span th:text="${libro.genereMod}">Genere</span></p>
+    </div>
+
+    
+
+    <form th:action="@{/adminConfermaLibro}" method="post">
+        <input type="hidden" name="idLibroModeratore" th:value="${libro.id}">
+        <button type="submit" class="btn-conferma">Conferma Libro</button>
+    </form>
+
+    <form th:action="@{/adminRimuoviLibro}" method="post">
+        <input type="hidden" name="idLibroModeratore" th:value="${libro.id}">
+        <button type="submit" class="delete-profile-btn">Rimuovi Libro</button>
+    </form>
+
+
+</div>
+
+</body>
+</html>
