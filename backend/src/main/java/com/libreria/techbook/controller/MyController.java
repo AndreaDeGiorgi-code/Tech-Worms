@@ -499,6 +499,7 @@ public class MyController {
         User userLoggato = (User) session.getAttribute("userLoggato");
         Storico storico = new Storico();
         Challange newChallange = new Challange();
+        String soprannome = challenge;
         String challengeName = prodottoJDBCTemp.creaChallangeName(challenge);
         prodottoJDBCTemp.creaTabellaChallange(challengeName);
         newChallange.setDataInizio(LocalDate.now());
@@ -509,6 +510,7 @@ public class MyController {
         storico.setData(newChallange.getDataInizio());
         storico.setDataFine(newChallange.getDataInizio().plusDays(tempo));
         storico.setNomeChallange(challengeName);
+        storico.setSoprannome(soprannome);
         storico.setCondizione(condizione);
         storico.setNomeVincitore("In Corso");
         storico.setPunti(0);
@@ -518,7 +520,7 @@ public class MyController {
         }else {
             alertStato = "Terminato";
         }
-        prodottoJDBCTemp.insertStoricoCallange(storico, storico.getData(), storico.getDataFine(), storico.getNomeChallange(), storico.getCondizione(), storico.getNomeVincitore(), storico.getPunti(), storico.getStato());
+        prodottoJDBCTemp.insertStoricoCallange(storico, storico.getData(), storico.getDataFine(), storico.getNomeChallange(), storico.getSoprannome(), storico.getCondizione(), storico.getNomeVincitore(), storico.getPunti(), storico.getStato());
 
         model.addAttribute("dataFine", storico.getDataFine());
         model.addAttribute("newChallange", newChallange);
@@ -1269,6 +1271,7 @@ public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idL
         User userLoggato = (User) session.getAttribute("userLoggato");
         Storico storico = new Storico();
         Challange newChallange = new Challange();
+        String soprannome = challenge;
         String challengeName = prodottoJDBCTemp.creaChallangeName(challenge);
         prodottoJDBCTemp.creaTabellaChallange(challengeName);
         newChallange.setDataInizio(LocalDate.now());
@@ -1279,6 +1282,7 @@ public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idL
         storico.setData(newChallange.getDataInizio());
         storico.setDataFine(newChallange.getDataInizio().plusDays(tempo));
         storico.setNomeChallange(challengeName);
+        storico.setSoprannome(soprannome);
         storico.setCondizione(condizione);
         storico.setNomeVincitore("In Corso");
         storico.setPunti(0);
@@ -1288,7 +1292,7 @@ public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idL
         }else {
             alertStato = "Terminato";
         }
-        prodottoJDBCTemp.insertStoricoCallange(storico, storico.getData(), storico.getDataFine(), storico.getNomeChallange(), storico.getCondizione(), storico.getNomeVincitore(), storico.getPunti(), storico.getStato());
+        prodottoJDBCTemp.insertStoricoCallange(storico, storico.getData(), storico.getDataFine(), storico.getNomeChallange(), storico.getSoprannome(), storico.getCondizione(), storico.getNomeVincitore(), storico.getPunti(), storico.getStato());
 
         model.addAttribute("dataFine", storico.getDataFine());
         model.addAttribute("newChallange", newChallange);

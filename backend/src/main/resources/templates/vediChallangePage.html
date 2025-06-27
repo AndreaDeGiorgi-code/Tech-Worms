@@ -50,7 +50,7 @@
 
     <div class="card-container" th:if="${not #lists.isEmpty(listaStorico)}">
         <div class="challenge-card" th:each="challange : ${listaStorico}">
-            <div class="card-row"><strong>Nome:</strong> <span class="challenge-name" th:text="${challange.nomeChallange}">Nome Challenge</span></div>
+            <div class="card-row"><strong>Nome:</strong> <span class="challenge-name" th:text="${challange.soprannome}">Nome Challenge</span></div>
             <div class="card-row"><strong>Data Inizio:</strong> <span th:text="${challange.data}">Data</span></div>
             <div class="card-row"><strong>Data Fine:</strong> <span th:text="${challange.dataFine}">Data Fine</span></div>
             
