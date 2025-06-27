@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ & Supporto</title>
+    <style>
+        /* CSS styles start here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #F4F7F6; /* Light background for the page */
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3em;
+            color: #8D99AE; /* Pastel grey-blue for the main title */
+            letter-spacing: 4px;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 1.2em;
+            color: #778899; /* Darker grey-blue for readability */
+            line-height: 1.7;
+            font-style: italic;
+            margin: 15px 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column; /* Stack forms in a column */
+            align-items: center; /* Center horizontally */
+            justify-content: center; /* Center vertically */
+            gap: 20px; /* Space between buttons */
+            margin-top: 50px; /* Distance from top */
+        }
+
+        /* Style for the logout button */
+        .logout-btn {
+            padding: 5px 13px;
+            font-size: 13px;
+            border: none;
+            background-color: #D4EEAE;
+            color: rgb(0, 0, 0);
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .logout-btn:hover {
+            background-color: #b1d182;
+        }
+
+        /* Menu principale (nav) */
+        .main-menu {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 15px 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 80px; /* Altezza dell'header circa (15px top/bottom padding + altezza font) */
+            position: fixed;
+            top: 45px;
+            left: 0;
+            z-index: 15;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            box-sizing: border-box;
+        }
+
+        .card-container {
+            background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background for text */
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 900px; /* Adjusted max-width for better content flow */
+            box-sizing: border-box;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Softer shadow for the container */
+        }
+
+        /* Style for large buttons */
+        .big-button {
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            background-color: #9abeec;
+            color: rgb(0, 0, 0);
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .big-button:hover {
+            background-color: #6699cf;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .imgCopertina {
+            width: 50px;
+        }
+
+        .top-libri-section {
+            margin-top: 20px;
+        }
+
+        .top-libri-title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            position: relative; /* Changed from fixed to relative for better content flow */
+            width: 90%; /* Occupy 90% width */
+            margin: 30px auto 0; /* Center horizontally, space from content above, no margin at bottom */
+            background-color: #D4EEAE;
+            color: #757f91;
+            gap: 50px;
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        /* Accordion Specific Styles */
+        .accordion-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 2em;
+            color: #8D99AE; /* Green for section titles */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .accordion-item {
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden; /* Ensures content stays within rounded corners */
+        }
+
+        .accordion-button {
+            background-color: #D4EEAE;
+            color: #333;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            transition: background-color 0.3s ease;
+            font-size: 1.1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-button:hover {
+            background-color: #b1d182;
+        }
+
+        .accordion-button.active {
+            background-color: #9abeec;
+            color: #000;
+        }
+
+        .accordion-button::after {
+            content: '🠗'; /* Plus sign */
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .accordion-button.active::after {
+            content: "🠕"; /* Minus sign */
+        }
+
+        .accordion-content {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+        }
+
+        .accordion-content p {
+            padding: 10px 0;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+
+            h2 {
+                font-size: 1em;
+            }
+
+            .card-container {
+                width: 95%;
+                padding: 15px;
+            }
+
+            .accordion-button {
+                font-size: 1em;
+                padding: 15px;
+            }
+
+            .accordion-content {
+                padding: 0 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 0.9em;
+            }
+
+            .accordion-button {
+                font-size: 0.9em;
+                padding: 12px;
+            }
+
+            .accordion-content {
+                padding: 0 12px;
+            }
+        }
+        /* CSS styles end here */
+    </style>
+</head>
+<body>
+     <nav class="main-menu">
+        <form th:action="@{/preProfilo}" method="get" style="display: inline;">
+        <button type="submit" id="profileBtn" class="menu-button">
+        Profilo
+        </button>
+        </form>
+
+        <form th:action="@{/libri}" method="get" style="display: inline;">
+            <button type="submit" id="profileBtn" class="menu-button">
+            Libri
+        </button>
+        </form>
+
+        <form th:action="@{/preChallenge}" method="get" style="display: inline;">
+        <button type="submit" id="challengeBtn" class="menu-button">
+        Challenge
+        </button>
+        </form>
+
+    </nav>
+
+    <header>
+        <h1>FAQ & SUPPORT</h1>
+        <h2>Domande Frequenti e Assistenza Tecnica</h2>
+    </header>
+
+    <main class="card-container">
+        <section class="accordion-section">
+            <h3 class="section-title">FAQ</h3>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-button">
+                        La piattaforma
+                    </button>
+                    <div class="accordion-content">
+                        <p>Siamo aperti dal Lunedì al Venerdì, dalle 9:00 alle 18:00.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-button">
+                        Chi siamo
+                    </button>
+                    <div class="accordion-content">
+                        <p>Siamo un team di professionisti dedicati a fornire soluzioni tecnologiche innovative. La nostra missione è semplificare la vita dei nostri utenti attraverso la tecnologia.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-button">
+                        Obiettivo della piattaforma
+                    </button>
+                    <div class="accordion-content">
+                        <p>Il nostro obiettivo è fornire una piattaforma intuitiva e accessibile che semplifichi la gestione delle attività quotidiane per i nostri utenti.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-button">
+                        Come accumulo punti?
+                    </button>
+                    <div class="accordion-content">
+                        <p>Puoi accumulare punti completando attività sulla piattaforma, come la partecipazione a corsi o la condivisione di contenuti. I punti possono essere utilizzati per ottenere sconti e premi.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-button">
+                        Come aggiungo un libro?
+                    </button>
+                    <div class="accordion-content">
+                        <p>Per aggiungere un libro, vai sul tuo profilo e poi alla sezione "Libreria", qui clicca su "Aggiungi Libro". Compila i dettagli richiesti e clicca su "Salva".</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-button">
+                        Come rimuovo un libro dalla mia libreria?
+                    </button>
+                    <div class="accordion-content">
+                        <p>Per rimuovere un libro dalla tua libreria, vai alla sezione "Biblioteca", trova il libro che desideri rimuovere e clicca su "Rimuovi".</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-button">
+                        Come funziona una challenge?
+                    </button>
+                    <div class="accordion-content">
+                        <p>Una challenge è un'attività che gli utenti possono completare per guadagnare punti o premi. Per partecipare, vai alla sezione "Challenge" e segui le istruzioni per iscriverti. Una volta completata la challenge, i punti verranno accreditati automaticamente sul tuo account.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-button">
+                        Come creo una challenge?
+                    </button>
+                    <div class="accordion-content">
+                        <p>Per creare una challenge, vai alla sezione "Challenge" e clicca su "Crea Challenge". Compila i dettagli richiesti, come il titolo, la descrizione e i requisiti per partecipare. Una volta salvata, la tua challenge sarà visibile agli utenti.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-button">
+                        Come partecipo ad una challenge?
+                    </button>
+                    <div class="accordion-content">
+                        <p>Per partecipare a una challenge, vai alla sezione "Challenge" e trova la challenge a cui desideri iscriverti. Clicca su "Partecipa" e segui le istruzioni per completare la registrazione. Una volta iscritto, riceverai tutte le informazioni necessarie per partecipare.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-button">
+                        Quando termina una challenge?
+                    </button>
+                    <div class="accordion-content">
+                        <p>Le challenge hanno una data di inizio e una data di fine specificate al momento della creazione. Puoi trovare queste informazioni nella sezione "Challenge" sotto i dettagli della challenge a cui sei interessato.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-button">
+                        Come creo un profilo?
+                    </button>
+                    <div class="accordion-content">
+                        <p>Per creare un profilo, vai alla sezione "Profilo" e clicca su "Crea Profilo". Compila i dettagli richiesti, come il nome, l'email e una password sicura. Una volta salvato, il tuo profilo sarà attivo e potrai iniziare a utilizzarlo.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-button">
+                        Come elimino il mio profilo?
+                    </button>
+                    <div class="accordion-content">
+                        <p>Per eliminare il tuo profilo, vai alla sezione "Profilo" e clicca su "Elimina Profilo". Segui le istruzioni per confermare l'eliminazione. Tieni presente che questa azione è irreversibile e tutti i tuoi dati saranno persi.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="accordion-section">
+            <h3 class="section-title">ASSISTENZA TECNICA</h3>
+            <h2>Per domande o problemi tecnici contatta Tech Worms.</h2>
+            <h4>Contattaci <br> Email: <a href="mailto:tech-worms@gmail.com">tech-worms@gmail.com</a> <br> Telefono:+39 3772602317</h4>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-button">
+                        Chi è Tech Worms?
+                    </button>
+                    <div class="accordion-content">
+                        <p>Tech Worms è un'azienda specializzata in soluzioni software e supporto tecnico. Offriamo una vasta gamma di servizi per aiutarti a risolvere i tuoi problemi tecnologici e migliorare la tua esperienza utente.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-button">
+                        Come posso segnalare un bug?
+                    </button>
+                    <div class="accordion-content">
+                        <p>Per segnalare un bug, invia un email al nostro indirizzo tech-worms@gmail.com. Descrivi il problema in dettaglio, includendo i passaggi per riprodurlo.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-button">
+                        Come funziona la moderazione?
+                    </button>
+                    <div class="accordion-content">
+                        <p>La moderazione viene effettuata dal nostro Amministratore, che controlla i contenuti inviati dagli utenti per garantire il rispetto delle nostre linee guida. Se un contenuto viene segnalato, verrà esaminato e, se necessario, rimosso.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-button">
+                        Il mio dispositivo non si connette alla rete.
+                    </button>
+                    <div class="accordion-content">
+                        <p>Verifica le impostazioni di rete del tuo dispositivo e assicurati che il Wi-Fi sia attivo e connesso alla rete corretta. Riprova a riavviare il router e il dispositivo. Se il problema persiste, contatta il tuo fornitore di servizi internet.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 FAQ & Supporto. Tutti i diritti riservati.</p>
+    </footer>
+
+    <script>
+        // JavaScript starts here
+        document.addEventListener('DOMContentLoaded', function() {
+            // Selects all elements with the class 'accordion-button'
+            var accordionButtons = document.querySelectorAll('.accordion-button');
+
+            // Loops through each accordion button
+            accordionButtons.forEach(function(button) {
+                // Adds a click event listener to each button
+                button.addEventListener('click', function() {
+                    // Toggles the 'active' class on the clicked button
+                    // The 'active' class can be used for styling (e.g., changing background color)
+                    this.classList.toggle('active');
+
+                    // Selects the next sibling element, which is the 'accordion-content' div
+                    var content = this.nextElementSibling;
+
+                    // Checks if the content is currently visible (maxHeight is not 0px)
+                    if (content.style.maxHeight) {
+                        // If visible, set maxHeight to 0 to hide it
+                        content.style.maxHeight = null;
+                    } else {
+                        // If hidden, set maxHeight to its scrollHeight to reveal it
+                        // scrollHeight is the actual height of the content, even if it's hidden
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                });
+            });
+        });
+        // JavaScript ends here
+    </script>
+</body>
+</html>
+```

@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Between the Lines</title>
-    <meta name="description" content="Registrazione">
-    <meta name="author" content="Tech-Worms">
+    <title>Registrati a Between the Lines</title>
     <link rel="stylesheet" href="style/registrati.css">
 </head>
 <body class="signup-page">
@@ -27,22 +25,33 @@
             <div class="input-group">
                 <label for="confirmPassword">Conferma Password</label>
                 <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <small id="passwordError" style="color: red; display: none;">Le password non coincidono</small>
             </div>
             <button type="submit" class="signup-button">Registrati</button>
         </form>
+
         <p class="login-link">
             Hai già un account? <a th:href="@{/loginPage}">Accedi ora!</a>
-            
         </p>
-        
-  </form>
-    
+
         <form th:action="@{/}" method="get" style="display: inline;">
-        <button type="submit" class="secondary-button">
-        Torna alla pagina iniziale
-        </button>
+            <button type="submit" class="secondary-button">Torna alla pagina iniziale</button>
+        </form>
     </div>
-    
-    <script src="registrati.js"></script>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function (e) {
+            const password = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const error = document.getElementById('passwordError');
+
+            if (password !== confirmPassword) {
+                e.preventDefault(); // blocca il form
+                error.style.display = 'block';
+            } else {
+                error.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
