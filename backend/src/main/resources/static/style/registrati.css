@@ -1,0 +1,210 @@
+body {
+    font-family: 'Arial', sans-serif;
+    /* Sfondo con gradiente pastello rilassante */
+    background: linear-gradient(135deg, #FFD1DC 0%, #BFE7E2 30%, #D4EEAE 60%, #AEC6CF 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    color: #333; /* Colore del testo più scuro per contrasto su sfondi chiari */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Ombra più leggera per il testo */
+    position: relative;
+    overflow: hidden;
+}
+
+.logo-button {
+    height: 50px;
+    cursor: pointer;
+}
+
+
+/* --- Stili per la pagina di Benvenuto (Welcome Page) --- */
+.header-buttons {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    z-index: 10;
+}
+
+.header-buttons button {
+    padding: 12px 25px;
+    font-size: 17px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    margin-left: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); /* Ombra più leggera per i bottoni */
+}
+
+#accediBtn {
+    background-color: #AEC6CF; /* Blu pastello */
+    color: white;
+}
+
+#accediBtn:hover {
+    background-color: #9EC0C7; /* Blu pastello leggermente più scuro al hover */
+    transform: translateY(-2px);
+}
+
+#registratiBtn {
+    background-color: #FFB3BA; /* Rosa pastello */
+    color: white;
+}
+
+#registratiBtn:hover {
+    background-color: #FFA3AA; /* Rosa pastello leggermente più scuro al hover */
+    transform: translateY(-2px);
+}
+
+.content-wrapper {
+    text-align: center;
+    max-width: 900px;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.7); /* Sfondo semi-trasparente bianco per il testo */
+    border-radius: 20px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Ombra più soft per il contenitore */
+}
+
+h1, h2, h3 {
+    margin: 15px 0;
+}
+
+h1 {
+    font-size: 4.5em;
+    color: #8D99AE; /* Grigio-blu pastello per il titolo principale */
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+h2 {
+    font-size: 2.8em;
+    color: #4CAF50; /* Verde menta, ancora vibrante ma in palette */
+}
+
+h3 {
+    font-size: 1.8em;
+    color: #778899; /* Grigio-blu più scuro per la leggibilità */
+    line-height: 1.7;
+    font-style: italic;
+}
+
+/* --- Stili per le pagine di Autenticazione (Sign-in e Sign-up) --- */
+.signin-page, .signup-page {
+    /* Per assicurare che le pagine di auth abbiano il gradiente pastello come background */
+    background: linear-gradient(135deg, #FFD1DC 0%, #BFE7E2 30%, #D4EEAE 60%, #AEC6CF 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.signin-container, .signup-container {
+    background-color: rgba(255, 255, 255, 0.85); /* Sfondo bianco semi-trasparente per il form */
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Ombra più pronunciata per il container del form */
+    text-align: center;
+    width: 100%;
+    max-width: 400px; /* Larghezza massima del form */
+}
+
+.signin-container h1, .signup-container h1 {
+    font-size: 2.5em;
+    color: #8D99AE; /* Colore pastello per il titolo del form */
+    margin-bottom: 30px;
+    text-shadow: none; /* Rimuove l'ombra dal titolo del form per pulizia */
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1.1em;
+    color: #555;
+    font-weight: bold;
+}
+
+.input-group input[type="email"],
+.input-group input[type="password"],
+.input-group input[type="text"] { /* Aggiunto input[type="text"] */
+    width: calc(100% - 20px); /* Regola la larghezza per il padding */
+    padding: 12px 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    color: #333;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-group input[type="email"]:focus,
+.input-group input[type="password"]:focus,
+.input-group input[type="text"]:focus { /* Aggiunto input[type="text"]:focus */
+    border-color: #AEC6CF; /* Bordo blu pastello al focus */
+    box-shadow: 0 0 8px rgba(174, 198, 207, 0.4); /* Ombra al focus */
+    outline: none;
+}
+
+.signin-button, .signup-button { /* Stile comune per i bottoni di submit */
+    background-color: #FFB3BA; /* Rosa pastello per il bottone di submit */
+    color: rgb(0, 0, 0);
+    padding: 15px 30px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%; /* Bottone a larghezza piena */
+    margin-top: 20px;
+}
+
+.signin-button:hover, .signup-button:hover {
+    background-color: #FFA3AA; /* Rosa pastello più scuro al hover */
+    transform: translateY(-2px);
+}
+
+.secondary-button {
+    background-color: #D4EEAE; /* Verde pastello per il bottone secondario */
+    color: #000000; /* Testo più scuro per contrasto */
+    padding: 8px 18px;
+    border: none;
+    border-radius: 30px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    margin-top: 15px; /* Spazio dal link superiore */
+}
+
+.secondary-button:hover {
+    background-color: #C0E09A; /* Verde pastello leggermente più scuro al hover */
+    transform: translateY(-2px);
+    color: #333; /* Testo leggermente più scuro al hover */
+}
+
+.register-link, .login-link { /* Stile comune per i link */
+    margin-top: 20px;
+    font-size: 0.95em;
+    color: #666;
+}
+
+.register-link a, .login-link a {
+    color: #AEC6CF; /* Link blu pastello */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.register-link a:hover, .login-link a:hover {
+    color: #8D99AE; /* Colore più scuro al hover */
+    text-decoration: underline;
+}

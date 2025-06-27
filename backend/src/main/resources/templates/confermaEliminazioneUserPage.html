@@ -3,46 +3,57 @@
 <head>
     <title>Conferma Eliminazione Utente</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="style/profilo.css">
+   
 </head>
-<body>
-  <nav style="background-color: #007bff; padding: 10px;">
-      <form th:action="@{/}" method="get" style="display: inline;">
-        <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-          Home
-        </button>
-      </form>
-
-      <form th:action="@{/preProfilo}" method="get" style="display: inline;">
-        <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-          Profilo
-        </button>
-      </form>
-
-      <form th:action="@{/preChallenge}" method="get" style="display: inline;">
-        <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
-          Challenge
-        </button>
-      </form>
+<body class="profile-page">
+    <div class="vice-capo">
+        <div class="header-main">
       
-    </nav>
+    <a th:href="@{/}">
+    <img src="/img/logo.jpg" alt="Logo Home" class="logo-button" />
+    </a>
 
-    <div class="header">
+        
+        
         <form th:action="@{/logout}" method="post">
-            <button type="submit" class="logout-btn">Logout</button>
+            <button type="submit" id="logoutBtn" class="header-button logout-button">Esci</button>
         </form>
+        
     </div>
+
+    <nav class="main-menu">
+        <form th:action="@{/preProfilo}" method="get" style="display: inline;">
+        <button type="submit" id="profileBtn" class="menu-button">
+        Profilo
+        </button>
+        </form>
+
+        <form th:action="@{/libri}" method="get" style="display: inline;">
+            <button type="submit" id="profileBtn" class="menu-button">
+            Libri
+        </button>
+        </form>
+
+        <form th:action="@{/preChallenge}" method="get" style="display: inline;">
+        <button type="submit" id="challengeBtn" class="menu-button">
+        Challenge
+        </button>
+        </form>
+
+    </nav>
     
-    <div class="container">
+    <div class="libreria-info-container">
         <h2>Conferma Eliminazione</h2>
         <p>Sei sicuro di voler eliminare questo utente?</p>
         <p><strong>Questa azione eliminerà l'utente e tutti i dati collegati, inclusa la sua libreria.</strong></p>
 
         <form th:action="@{/eliminazioneConfermata}" method="post">
             
-            <button type="submit">Sì, elimina</button>
-            <a th:href="@{/profilo}"><button type="button">No, annulla</button></a>
+            <button class="action-button" type="submit">Sì, elimina</button>
+            <a th:href="@{/profilo}"><button class="safe-button" type="button">No, annulla</button></a>
         </form>
     </div>
+</div>
 </body>
 </html>

@@ -3,67 +3,55 @@
 <head>
     <meta charset="UTF-8" />
     <title>Libro Letto - Conferma</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            text-align: center;
-        }
-        .message {
-            margin-top: 50px;
-            font-size: 24px;
-            color: #2c3e50;
-        }
-        .btn {
-            margin-top: 30px;
-            padding: 12px 25px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            border-radius: 6px;
-        }
-        .btn:hover {
-            background-color: #218838;
-        }
-        nav {
-            background-color: #007bff;
-            padding: 10px;
-            text-align: left;
-        }
-        nav button {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 16px;
-            margin-right: 20px;
-            cursor: pointer;
-        }
-    </style>
+     <link rel="stylesheet" href="style/profilo.css">
+   
 </head>
-<body>
+<body class="profile-page">
+     <div class="vice-capo">
+    <div class="header-main">
+        
+      
+    <a th:href="@{/}">
+    <img src="/img/logo.jpg" alt="Logo Home" class="logo-button" />
+    </a>
+        
+        
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" id="logoutBtn" class="header-button logout-button">Esci</button>
+        </form>
+        
+    </div>
 
-    <!-- NAV BAR -->
-    <nav>
-        <form th:action="@{/}" method="get" style="display: inline;">
-            <button type="submit">Home</button>
+     <nav class="main-menu">
+        <form th:action="@{/preProfilo}" method="get" style="display: inline;">
+        <button type="submit" id="profileBtn" class="menu-button">
+        Profilo
+        </button>
         </form>
-        <form th:action="@{/logout}" method="post" style="display: inline;">
-            <button type="submit">Logout</button>
+
+        <form th:action="@{/libri}" method="get" style="display: inline;">
+            <button type="submit" id="profileBtn" class="menu-button">
+            Libri
+        </button>
         </form>
+
+        <form th:action="@{/preChallenge}" method="get" style="display: inline;">
+        <button type="submit" id="challengeBtn" class="menu-button">
+        Challenge
+        </button>
+        </form>
+
     </nav>
-
     <!-- MESSAGGIO DI CONFERMA -->
-    <div class="message">
+   <div class="libreria-info-container">
         <p th:text="'Complimenti ' + ${userLoggato.username} + '! Hai letto un libro con successo.'"></p>
         <p>Hai guadagnato 1 punto globale</p>
         <p>E 1 punto per ogni challenge a cui partecipi</p>
 
         <form th:action="@{/libreria}" method="get">
-            <button class="btn" type="submit">Torna alla Libreria</button>
+            <button class="standard-button" type="submit">Torna alla Libreria</button>
         </form>
     </div>
-
+</div>
 </body>
 </html>

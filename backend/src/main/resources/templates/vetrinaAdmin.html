@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Vetrina Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <meta name="description" content="Pagina iniziale per Between the Lines">
+    <meta name="author" content="Tech-Worms">
       <style>
+        
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
@@ -11,6 +15,19 @@
 
         h1 {
             text-align: center;
+            font-size: 3em;
+            color: #8D99AE; /* Grigio-blu pastello per il titolo principale */
+            letter-spacing: 4px;
+
+        }
+        
+        h2 {
+            text-align: center;
+            font-size: 1.2em;
+            color: #778899; /* Grigio-blu più scuro per la leggibilità */
+            line-height: 1.7;
+            font-style: italic;
+            margin: 15px 0;
         }
 
         .container {
@@ -21,21 +38,49 @@
             gap: 20px;                    /* spazio tra i pulsanti */
             margin-top: 50px;             /* distanza dall’alto */
         }
+        
+        /* Stile per il pulsante di logout */
+        .logout-btn {
+            padding: 5px 13px;
+            font-size: 13px;
+            border: none;
+            background-color: #D4EEAE;
+            color: rgb(0, 0, 0);
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .logout-btn:hover {
+            background-color: #b1d182;
+        }
+
+        .card-container {
+            background-color: rgba(255, 255, 255, 0.7); /* Sfondo semi-trasparente bianco per il testo */
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 1200px;
+            box-sizing: border-box;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Ombra più soft per il contenitore */
+        }
 
         /* Stile per i pulsanti grandi */
         .big-button {
             padding: 15px 30px;
             font-size: 16px;
             border: none;
-            background-color: #007BFF;
-            color: white;
+            background-color: #9abeec;
+            color: rgb(0, 0, 0);
             cursor: pointer;
             border-radius: 5px;
             transition: background-color 0.3s ease;
         }
 
         .big-button:hover {
-            background-color: #0056b3;
+            background-color: #6699cf;
         }
 
         table {
@@ -65,6 +110,24 @@
             font-size: 1.5em;
             margin-bottom: 15px;
         }
+
+        footer {
+            position: fixed;
+            width: 90%;     /* Fa sì che non occupi l'intera larghezza dello schermo */
+            margin: auto;    /* Questo centra orizzontalmente l'elemento */
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #D4EEAE;
+            color: #757f91;
+            gap: 50px;
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            margin-bottom: 0;
+        }
+
     </style>
 </head>
 <body>
@@ -76,51 +139,62 @@
         
     </div>  
 
-    <nav style="background-color: #007bff; padding: 10px;">
+    <nav style="background-color: #9abeec; padding: 10px; border-radius: 8px;">
   <form th:action="@{/}" method="get" style="display: inline;">
-    <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
+    <button type="submit" style="background: none; border: none; color: rgb(0, 0, 0); font-size: 16px; margin-right: 20px; cursor: pointer;">
       Home
     </button>
   </form>
 
   <form th:action="@{/adminUsers}" method="get" style="display: inline;">
-    <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
+    <button type="submit" style="background: none; border: none; color: rgb(0, 0, 0); font-size: 16px; margin-right: 20px; cursor: pointer;">
       Utenti
     </button>
   </form>
 
   <form th:action="@{/adminLibri}" method="get" style="display: inline;">
-    <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
+    <button type="submit" style="background: none; border: none; color: rgb(0, 0, 0); font-size: 16px; cursor: pointer;">
       Libri
     </button>
   </form>
 
   <form th:action="@{/adminChallenge}" method="get" style="display: inline;">
-    <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
+    <button type="submit" style="background: none; border: none; color: rgb(0, 0, 0); font-size: 16px; cursor: pointer;">
       Challenge
     </button>
   </form>
   
 </nav>
 
- <div><h1>Benvenuto, <span th:text="${userLoggato.username}">Utente</span>!</h1></div>
-
-     <!-- Pulsanti in linea -->
-    <div class="container">
-        <form th:action="@{/adminUsers}" method="get">
-            <button class="big-button" type="submit">Utenti</button>
-        </form>
-
-        <form th:action="@{/adminLibri}" method="get">
-            <button class="big-button" type="submit">Libri</button>
-        </form>
-
-        <form th:action="@{/adminChallenge}" method="get">
-            <button class="big-button" type="submit">Challenge</button>
-        </form>
+<div class="card-container">
+    <div>
+        <h1>Bentornato, <span th:text="${userLoggato.username}">Amministratore</span>!</h1>
+        <h2>Questa è la tua area personale, qui hai il pieno controllo della tua piattaforma.<br/>
+            Gestisci le pagine di tutti gli utenti,<br/>
+            inserisci nuovi libri nel catalogo, oppure esamina le proposte degli utenti.<br/>
+            Crea nuove e stimolanti challenge per la nostra community, o modera quelle proposte dagli utenti.<br/>
+            Buon lavoro!</h2>
     </div>
 
-    
+        <!-- Pulsanti in linea -->
+    <div class="container">
+            <form th:action="@{/adminUsers}" method="get">
+                <button class="big-button" type="submit">Utenti</button>
+            </form>
+
+            <form th:action="@{/adminLibri}" method="get">
+                <button class="big-button" type="submit">Libri</button>
+            </form>
+
+            <form th:action="@{/adminChallenge}" method="get">
+                <button class="big-button" type="submit">Challenge</button>
+            </form>
+    </div>
+</div>
+
+    <footer>
+        <p>&copy; 2025 Tech-Worms</p>
+    </footer>
 
 </body>
 </html>

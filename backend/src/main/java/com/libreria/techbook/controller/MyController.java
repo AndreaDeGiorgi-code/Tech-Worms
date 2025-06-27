@@ -341,6 +341,8 @@ public class MyController {
         model.addAttribute("listaLibri", listaLibri);
         return "libriPage";
     }
+
+    
     
    
     /**
@@ -362,7 +364,7 @@ public class MyController {
     }
      ArrayList<Prodotto> listaLibri = prodottoJDBCTemp.ritornaProdotto();
         model.addAttribute("listaLibri", listaLibri);
-    return "/libriPage"; // oppure altra vista
+    return "/aggiungiLibroConfermaPage"; // oppure altra vista
     }
     
     
@@ -413,7 +415,8 @@ public class MyController {
         
       
         Prodotto libro = prodottoJDBCTemp.getLibroById(idLibro);
-            
+
+        model.addAttribute("userLoggato", user);    
         model.addAttribute("libro", libro);
         
 

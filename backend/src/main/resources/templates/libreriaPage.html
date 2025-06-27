@@ -2,86 +2,81 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Profilo Utente</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <title>Libreria Utente</title>
+    <link rel="stylesheet" href="style/profilo.css">
+   
 </head>
-<body>
-<nav style="background-color: #007bff; padding: 10px;">
-      <form th:action="@{/}" method="get" style="display: inline;">
-        <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-          Home
-        </button>
-      </form>
-
-      <form th:action="@{/preProfilo}" method="get" style="display: inline;">
-        <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-          Profilo
-        </button>
-      </form>
-
-      <form th:action="@{/preChallenge}" method="get" style="display: inline;">
-        <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
-          Challenge
-        </button>
-      </form>
+<body class="profile-page">
+    <div class="header-main">
       
-    </nav>
-
-    <div class="header">
+    <a th:href="@{/}">
+    <img src="/img/logo.jpg" alt="Logo Home" class="logo-button" />
+    </a>
+        <div class="profile-info-header">
+            
+            <h1 id="usernameDisplay" th:text="${userLoggato.username}">Username</h1><p id="userScore" th:text="'Punteggio: ' + ${userLoggato.punteggio} + ' punti'">Punteggio: 1250 punti</p>
+        </div>
+        
         <form th:action="@{/logout}" method="post">
-            <button type="submit" class="logout-btn">Logout</button>
+            <button type="submit" id="logoutBtn" class="header-button logout-button">Esci</button>
         </form>
+        
     </div>
 
-<div class="header">
-    <h2>Benvenuto, <span th:text="${userLoggato.username}">Utente</span></h2>
-    <form th:action="@{/logout}" method="post">
-        <button type="submit" class="logout-btn">Logout</button>
-    </form>
-</div>
-
-    <h2>Proponi libro all'amministratore</h2>
-
-        <form th:action="@{/proponiLibro}" method="get">
-            <button type="submit" style="background-color:rgb(23, 183, 195); color: black; border: none; padding: 6px 12px; cursor: pointer;">Aggiungi Libro</button>
+     <nav class="main-menu">
+        <form th:action="@{/preProfilo}" method="get" style="display: inline;">
+        <button type="submit" id="profileBtn" class="menu-button">
+        Profilo
+        </button>
         </form>
 
+        <form th:action="@{/libri}" method="get" style="display: inline;">
+            <button type="submit" id="profileBtn" class="menu-button">
+            Libri
+        </button>
+        </form>
 
-<h3>Libri nella tua Libreria</h3>
-<table>
-    <thead>
-        <tr>
-            <th>Titolo</th>
-            <th>Genere</th>
-            <th>Autore</th>
-            <th>Copertina</th>
-            <th>Rimuovi</th>
-            <th>Leggi</th> <!-- Nuova colonna per il bottone "Leggi Libro" -->
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="libro : ${listaLibrerie}">
-            <td th:text="${libro.titoloLibro}">Titolo</td>
-            <td th:text="${libro.genereLibro}">Genere</td>
-            <td th:text="${libro.autoreLibro}">Autore</td>
-            <td>
-                <img th:src="${libro.copertinaLibro}" alt="Copertina" width="60"/>
-            </td>
-            <td>
+        <form th:action="@{/preChallenge}" method="get" style="display: inline;">
+        <button type="submit" id="challengeBtn" class="menu-button">
+        Challenge
+        </button>
+        </form>
+
+    </nav>
+
+
+    <div class="libreria-info-container">
+    <h2>Proponi libro all'amministratore</h2>
+    <form th:action="@{/proponiLibro}" method="get">
+        <button class="details-button">Aggiungi Libro</button>
+    </form>
+    
+    <h3>Libri nella tua Libreria</h3>
+
+    <div class="card-container-grid">
+        <div class="book-card" th:each="libro : ${listaLibrerie}">
+            <div><h4><strong><span class="title-name" th:text="${libro.titoloLibro}">Titolo</span></strong></h4></div>
+            <div class="card-row">
+                <img th:src="${libro.copertinaLibro}" alt="Copertina" class="book-cover" />
+            </div>
+            <div class="card-row"><strong>Genere:</strong> <span th:text="${libro.genereLibro}">Genere</span></div>
+            <div class="card-row"><strong>Autore:</strong> <span th:text="${libro.autoreLibro}">Autore</span></div>
+            
+            <div class="details-form">
                 <form th:action="@{/rimuoviLibro}" method="post">
                     <input type="hidden" name="idLibro" th:value="${libro.idLibro}">
-                    <button type="submit" style="background-color: #e74c3c; color: white; border: none; padding: 6px 12px; cursor: pointer;">Rimuovi Libro</button>
+                    <button class="safe-button">Rimuovi</button>
                 </form>
-            </td>
-            <td>
                 <form th:action="@{/leggiLibro}" method="get">
                     <input type="hidden" name="idLibro" th:value="${libro.idLibro}">
-                    <button type="submit" style="background-color: #ffc107; color: black; border: none; padding: 6px 12px; cursor: pointer;">Leggi Libro</button>
+                    <button class="ok-button">Leggi</button>
                 </form>
-            </td>
-        </tr>
-    </tbody>
-</table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 </body>
 </html>
