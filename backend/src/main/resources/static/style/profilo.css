@@ -89,12 +89,15 @@ body {
 }
 
 .logout-button {
-    background-color: #FFB3BA; /* Rosa pastello */
-    color: white;
+    background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
 }
 
 .logout-button:hover {
-    background-color: #FFA3AA;
+    background-color: #e74c3c;
     color: black;
     transform: translateY(-1px);
 }
