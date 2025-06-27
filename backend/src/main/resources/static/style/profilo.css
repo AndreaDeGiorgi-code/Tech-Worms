@@ -89,12 +89,24 @@ body {
 }
 
 .logout-button {
+<<<<<<< HEAD
     background-color: #FFB3BA; /* Rosa pastello */
     color: white;
 }
 
 .logout-button:hover {
     background-color: #FFA3AA;
+=======
+    background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+}
+
+.logout-button:hover {
+    background-color: #e74c3c;
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
     color: black;
     transform: translateY(-1px);
 }
@@ -110,7 +122,11 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     margin-top: 80px; /* Altezza dell'header circa (15px top/bottom padding + altezza font) */
     position: fixed;
+<<<<<<< HEAD
     top: 45px;
+=======
+    top: 40px;
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
     left: 0;
     z-index: 15;
     border-bottom-left-radius: 10px;
@@ -254,6 +270,10 @@ body {
 }
 
 .card-container {
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -263,6 +283,10 @@ body {
 }
 
 .challenge-card {
+<<<<<<< HEAD
+=======
+   
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
     background-color: rgba(255, 255, 255, 0.85);
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
@@ -283,7 +307,11 @@ body {
     width: 80%;
     background-color: rgba(255, 255, 255, 0.85);
     border-radius: 15px;
+<<<<<<< HEAD
     border: #333 2px solid;
+=======
+    
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     padding: 3px 25px;
     text-align: left;
@@ -292,13 +320,21 @@ body {
 
 .card-row {
     margin: 8px 0;
+<<<<<<< HEAD
     font-size: 1.05em;
+=======
+    font-size: 0.8em;
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
     color: #444;
 }
 
 .card-row strong {
     color: #8D99AE;
+<<<<<<< HEAD
     width: 120px;
+=======
+    width: 85px;
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
     display: inline-block;
 }
 
@@ -466,6 +502,38 @@ body {
     box-sizing: border-box;
 }
 
+<<<<<<< HEAD
+=======
+.default-button {
+    width: 60px;
+    margin-top: 40px;
+    padding: 15px 25px;
+    font-size: 1.1em;
+    border-radius: 25px;
+    border: 1px solid #AEC6CF;
+    background-color: white;
+    color: #AEC6CF;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+}
+.default-button:hover {
+    width: 60px;
+    margin-top: 40px;
+    padding: 15px 25px;
+    font-size: 1.1em;
+    border-radius: 25px;
+    border: 1px solid white;
+    background-color: #AEC6CF;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+}
+
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
 
 .title-name {
     text-align: center;
@@ -476,6 +544,10 @@ body {
 }
 
 .libreria-info-container {
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
     width: 80%;
     margin: 0 auto;
     margin-top: 240px;
@@ -492,7 +564,11 @@ body {
 }
 
 .book-cover {
+<<<<<<< HEAD
     width: 280px;
+=======
+    width: 100%;
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
   height: 380px;
   object-fit: cover; /* o contain */
   border-radius: 8px;
@@ -505,8 +581,144 @@ body {
             margin-bottom: 30px;
         }
 
+<<<<<<< HEAD
 /* --- RESPONSIVE --- */
 @media (max-width: 768px) {
+=======
+
+
+
+.signin-container {
+    margin-top: 240px;
+    background-color: rgba(255, 255, 255, 0.85); /* Sfondo bianco semi-trasparente per il form */
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Ombra più pronunciata per il container del form */
+    text-align: center;
+    width: 100%;
+    max-width: 400px; /* Larghezza massima del form */
+}
+
+.signin-container h1 {
+    font-size: 2.5em;
+    color: #8D99AE; /* Colore pastello per il titolo del form */
+    margin-bottom: 30px;
+    text-shadow: none; /* Rimuove l'ombra dal titolo del form per pulizia */
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1.1em;
+    color: #555;
+    font-weight: bold;
+}
+
+
+.input-group input {
+    width: calc(100% - 20px); /* Regola la larghezza per il padding */
+    padding: 12px 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    color: #333;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.input-group input:focus {
+    border-color: #AEC6CF; /* Bordo blu pastello al focus */
+    box-shadow: 0 0 8px rgba(174, 198, 207, 0.4); /* Ombra al focus */
+    outline: none;
+}
+
+.signin-button {
+    background-color: #FFB3BA; /* Rosa pastello per il bottone di submit */
+    color: rgb(0, 0, 0);
+    padding: 15px 30px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%; /* Bottone a larghezza piena */
+    margin-top: 20px;
+}
+
+.signin-button:hover {
+    background-color: #FFA3AA; /* Rosa pastello più scuro al hover */
+    transform: translateY(-2px);
+}
+
+.filter-menu {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    padding: 15px 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    
+  
+    top: 45px;
+    left: 0;
+    z-index: 15;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+   
+}
+.contenitore-principale {
+    justify-items: center;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 240px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.spazio {
+    margin-bottom: 15px;
+}
+
+select {
+    width: 100%;
+    padding: 12px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+    font-size: 16px;
+    font-family: inherit;
+    color: #333;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    appearance: none; /* Remove default arrow in some browsers */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%204%205'%3E%3Cpath%20fill='gray'%20d='M2%205L0%200h4z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px 10px;
+}
+
+select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+}
+
+
+/* --- RESPONSIVE --- */
+@media (max-width: 800px) {
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
 
     .header-main {
         flex-wrap: wrap;
@@ -533,6 +745,11 @@ body {
         padding: 10px 5px;
         border-radius: 0;
     }
+<<<<<<< HEAD
+=======
+      
+    
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
 
     body {
         padding-top: 160px; /* header + menu ridimensionati */
@@ -546,6 +763,19 @@ body {
         margin: 140px 30px auto;
     }
 
+<<<<<<< HEAD
+=======
+    .filter-menu {
+        
+        justify-content: center;
+        flex-direction: column;
+        
+        text-align: center;
+        gap: 10px;
+        padding: 10px 5px;
+     } 
+
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
     .menu-button {
         width: auto;
         min-width: 150px;
@@ -586,6 +816,19 @@ body {
         flex-wrap: column;
     }
 
+<<<<<<< HEAD
+=======
+    .filter-menu {
+        
+        justify-content: center;
+        flex-direction: column;
+        
+        text-align: center;
+        gap: 10px;
+        padding: 10px 5px;
+     }  
+
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
     body {
         padding-top: 180px; /* header + menu più alti su piccoli schermi */
         

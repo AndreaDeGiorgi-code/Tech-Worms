@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <title>Admin</title>
     <meta name="description" content="Pagina iniziale per Between the Lines">
     <meta name="author" content="Tech-Worms">
@@ -129,14 +130,30 @@
         }
 
     </style>
+=======
+    <title>Between the Lines</title>
+    <meta name="description" content="Vetrina Login">
+    <meta name="author" content="Tech-Worms">
+       <link rel="stylesheet" href="style/profilo.css">
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
 </head>
-<body>
-
-    <div class="header">
-   <form th:action="@{/logout}" method="post">
-            <button type="submit" class="logout-btn">Logout</button>
+<body class="profile-page">
+    <div class="vice-capo">
+    <div class="header-main">
+      
+    <a th:href="@{/}">
+    <img src="/img/logo.jpg" alt="Logo Home" class="logo-button" />
+    </a>
+        <div class="profile-info-header">
+            
+          <h1><span th:text="${userLoggato.username}">Utente</span></h1>
+        </div>
+        
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" id="logoutBtn" class="header-button logout-button">Esci</button>
         </form>
         
+<<<<<<< HEAD
     </div>  
 
     <nav style="background-color: #9abeec; padding: 10px; border-radius: 8px;">
@@ -195,6 +212,47 @@
     <footer>
         <p>&copy; 2025 Tech-Worms</p>
     </footer>
+=======
+    </div>
+
+     <!--<nav class="main-menu">
+        <form th:action="@{/adminUsers}" method="get" style="display: inline;">
+        <button type="submit" id="profileBtn" class="menu-button">
+        Utenti
+        </button>
+        </form>
+
+        <form th:action="@{/adminLibri}" method="get" style="display: inline;">
+            <button type="submit" id="profileBtn" class="menu-button">
+            Libri
+        </button>
+        </form>
+
+        <form th:action="@{/adminChallenge}" method="get" style="display: inline;">
+        <button type="submit" id="challengeBtn" class="menu-button">
+        Challenge
+        </button>
+        </form>
+
+    </nav>-->
+
+    <div class="contenitore-principale">
+        <nav class="profile-vertical-menu">
+            <form th:action="@{/adminUsers}" method="get">
+            <button type="submit" id="libraryBtn" class="menu-button">Utenti</button>
+        </form>
+        <form th:action="@{/adminLibri}" method="get">
+            <button type="submit" id="myChallengeBtn" class="menu-button">Libri</button>
+        </form>
+        <form th:action="@{/adminChallenge}" method="get">
+            <button type="submit" id="userDataBtn" class="menu-button">Challenge</button>
+        </form>
+            
+        </nav>
+    </div>
+
+    </div>
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
 
 </body>
 </html>

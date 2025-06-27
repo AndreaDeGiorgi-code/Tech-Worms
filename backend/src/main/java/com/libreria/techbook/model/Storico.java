@@ -8,8 +8,8 @@ public class Storico {
     private int idChallange;
     private LocalDate data;
     private LocalDate dataFine;
-   
     private String nomeChallange;
+    private String soprannome;
     private String condizione;
     private String nomeVincitore;
     private int punti;
@@ -42,6 +42,13 @@ public class Storico {
     public void setNomeChallange(String nomeChallange) {
         this.nomeChallange = nomeChallange;
     }
+     public String getSoprannome() {
+        return soprannome;
+    }
+
+    public void setSoprannome(String soprannome) {
+        this.soprannome = soprannome;
+    }
     public String getCondizione() {
         return condizione;
     }
@@ -66,6 +73,8 @@ public class Storico {
     public void setStato(int stato) {
         this.stato = stato;
     }
+
+   
     
     
     

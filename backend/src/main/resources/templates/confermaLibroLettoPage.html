@@ -2,7 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
+<<<<<<< HEAD
     <title>Libro Letto - Conferma</title>
+=======
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Between the Lines</title>
+    <meta name="description" content="Libro Letto - Conferma">
+    <meta name="author" content="Tech-Worms">
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
      <link rel="stylesheet" href="style/profilo.css">
    
 </head>
@@ -47,6 +54,7 @@
         <p th:text="'Complimenti ' + ${userLoggato.username} + '! Hai letto un libro con successo.'"></p>
         <p>Hai guadagnato 1 punto globale</p>
         <p>E 1 punto per ogni challenge a cui partecipi</p>
+        <p>che rispetti i requisiti richiesti</p>
 
         <form th:action="@{/libreria}" method="get">
             <button class="standard-button" type="submit">Torna alla Libreria</button>

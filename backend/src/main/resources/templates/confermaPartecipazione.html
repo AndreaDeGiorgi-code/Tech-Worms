@@ -2,79 +2,59 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>Conferma Partecipazione</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f7f9fc;
-            color: #333;
-        }
-        .container {
-            max-width: 600px;
-            margin: auto;
-            padding: 30px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        h1 {
-            color: #28a745;
-        }
-        p {
-            font-size: 1.2rem;
-            margin-top: 20px;
-        }
-        a.button {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 12px 25px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-        }
-        a.button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Between the Lines</title>
+    <meta name="description" content="Conferma Partecipazione">
+    <meta name="author" content="Tech-Worms">
+    <link rel="stylesheet" href="style/profilo.css">
+   
 </head>
-<body>
-    <nav style="background-color: #007bff; padding: 10px;">
-      <form th:action="@{/}" method="get" style="display: inline;">
-        <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-          Home
-        </button>
-      </form>
-
-      <form th:action="@{/preProfilo}" method="get" style="display: inline;">
-        <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-          Profilo
-        </button>
-      </form>
-
-      <form th:action="@{/preChallenge}" method="get" style="display: inline;">
-        <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
-          Challenge
-        </button>
-      </form>
+<body class="profile-page">
+    <div class="vice-capo">
+        <div class="header-main">
       
-    </nav>
+    <a th:href="@{/}">
+    <img src="/img/logo.jpg" alt="Logo Home" class="logo-button" />
+    </a>
 
-    <div class="header">
-        <form th:action="@{/logout}" method="post">
-            <button type="submit" class="logout-btn">Logout</button>
-        </form>
-    </div>
-    <div class="container">
-        <h1>Complimenti <span th:text="${userLoggato.username}">Utente</span>!</h1>
-        <p>Adesso stai partecipando alla <strong th:text="${nomeChallange}">Nome Challenge</strong> che durerà fino al 
-            <span th:text="${#temporals.format(fineChallange, 'dd/MM/yyyy')}">10/06/2025</span>.</p>
         
-        <a class="button" th:href="@{/vediChallange}">Vai alla pagina Challenge</a>
+        
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" id="logoutBtn" class="header-button logout-button">Esci</button>
+        </form>
+        
+    </div>
+
+    <nav class="main-menu">
+        <form th:action="@{/preProfilo}" method="get" style="display: inline;">
+        <button type="submit" id="profileBtn" class="menu-button">
+        Profilo
+        </button>
+        </form>
+
+        <form th:action="@{/libri}" method="get" style="display: inline;">
+            <button type="submit" id="profileBtn" class="menu-button">
+            Libri
+        </button>
+        </form>
+
+        <form th:action="@{/preChallenge}" method="get" style="display: inline;">
+        <button type="submit" id="challengeBtn" class="menu-button">
+        Challenge
+        </button>
+        </form>
+
+    </nav>
+    
+    <div class="contenitore-principale">
+      
+        <h1>Complimenti <span th:text="${userLoggato.username}">Utente</span>!</h1>
+        <p >Adesso stai partecipando alla <strong th:text="${nomeChallange}">Nome Challenge</strong> che durerà fino al 
+            <span  th:text="${#temporals.format(fineChallange, 'dd/MM/yyyy')}">10/06/2025</span>.</p>
+            
+        <form th:action="@{/vediChallange}" method="get">
+        <button type="submit" class="standard-button">Vai alla pagina Challenge</button>
+    </form>
     </div>
 </body>
 </html>

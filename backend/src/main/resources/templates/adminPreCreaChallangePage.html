@@ -2,60 +2,113 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>Crea Challenge</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Between the Lines</title>
+    <meta name="description" content="Crea Challenge">
+    <meta name="author" content="Tech-Worms">
+ <link rel="stylesheet" href="style/profilo.css">
+</head>
+<body class="profile-page">
+    <div class="vice-capo">
+    <div class="header-main">
+      
+    <a th:href="@{/}">
+    <img src="/img/logo.jpg" alt="Logo Home" class="logo-button" />
+    </a>
+    <div class="profile-info-header">
+          <h1>
+          <span th:text="${userLoggato.username}">Utente</span>
+          </h1>
+        </div>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" id="logoutBtn" class="header-button logout-button">Esci</button>
+        </form>
+        
+    </div>
 
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 45%;
-            margin: 10px;
-            float: left;
-        }
-        th, td {
-            border: 1px solid #999;
-            padding: 8px;
-            text-align: left;
-        }
-        caption {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .clear {
-            clear: both;
-        }
-        form {
-            margin-top: 30px;
-            max-width: 500px;
-        }
-        label {
-            display: block;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-        input[type="text"], select {
-            width: 100%;
-            padding: 6px;
-            margin-top: 5px;
-            box-sizing: border-box;
-        }
-        button {
-            margin-top: 20px;
-            padding: 10px 15px;
-            background-color: #007bff;
-            border: none;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+     <nav class="main-menu">
+        <form th:action="@{/adminUsers}" method="get" style="display: inline;">
+        <button type="submit" id="profileBtn" class="menu-button">
+        Utenti
+        </button>
+        </form>
 
-  <script>
+        <form th:action="@{/adminLibri}" method="get" style="display: inline;">
+            <button type="submit" id="profileBtn" class="menu-button">
+            Libri
+        </button>
+        </form>
+
+        <form th:action="@{/adminChallenge}" method="get" style="display: inline;">
+        <button type="submit" id="challengeBtn" class="menu-button">
+        Challenge
+        </button>
+        </form>
+
+    </nav>
+
+ 
+
+       <div class="signin-container">
+
+<!-- FORM -->
+<h2>Crea la tua Challenge</h2>
+
+<form th:action="@{/adminCreaChallenge}" method="get">
+    <!-- NOME CHALLENGE -->
+    <div class="input-group">
+        <label for="challange">Nome Challenge:</label>
+        <input type="text" id="challange" name="challange" required />
+    </div>
+
+    <!-- CONDIZIONE -->
+    <div class="input-group">
+        <label for="condizione">Condizione:</label>
+        <select id="condizioneSelect" name="condizione" onchange="aggiornaVisibilitaCondizione()" required>
+            <option value="nessuna">Nessuna</option>
+            <option value="autore">Autore</option>
+            <option value="genere">Genere</option>
+            <input type="hidden" id="sceltaHidden" name="scelta" value="nessuna" />
+        </select>
+    </div>
+
+    <!-- SELECT AUTORE -->
+    <div id="autoreDiv" class="input-group" style="display: none;">
+        <label for="autoreSelect">Seleziona Autore:</label>
+        <select id="autoreSelect" name="scelta">
+            <option value="">-- Seleziona un autore --</option>
+            <option th:each="a : ${autoreLibri}" th:value="${a}" th:text="${a}"></option>
+        </select>
+    </div>
+
+    <!-- SELECT GENERE -->
+    <div id="genereDiv" class="input-group" style="display: none;">
+        <label for="genereSelect">Seleziona Genere:</label>
+        <select id="genereSelect" name="scelta">
+            <option value="">-- Seleziona un genere --</option>
+            <option th:each="g : ${genereLibri}" th:value="${g}" th:text="${g}"></option>
+        </select>
+    </div>
+
+    <!-- TEMPO -->
+    <div class="input-group">
+        <label for="tempoSelect">Seleziona Tempo:</label>
+        <select id="tempoSelect" name="tempo" required>
+            <option value="settimana">7 giorni</option>
+            <option value="dieci">10 giorni</option>
+            <option value="mese">30 giorni</option>
+        </select>
+    </div>
+
+    <!-- SUBMIT -->
+    <button class="standard-button" type="submit">Crea Challenge</button>
+</form>
+</div>
+
+<!-- ✅ Script corretto -->
+<script>
     function aggiornaVisibilitaCondizione() {
-        const condizione = document.querySelector('input[name="condizione"]:checked').value;
-
+        const condizione = document.getElementById("condizioneSelect").value;
         const autoreDiv = document.getElementById("autoreDiv");
         const genereDiv = document.getElementById("genereDiv");
         const sceltaHidden = document.getElementById("sceltaHidden");
@@ -88,13 +141,13 @@
     }
 
     window.onload = function () {
-        aggiornaVisibilitaCondizione();
+      aggiornaVisibilitaCondizione();
 
         const radioButtons = document.querySelectorAll('input[name="condizione"]');
         radioButtons.forEach(rb => rb.addEventListener('change', aggiornaVisibilitaCondizione));
 
         document.querySelector('form').addEventListener('submit', function (e) {
-            const condizione = document.querySelector('input[name="condizione"]:checked').value;
+            const condizione = document.querySelector("condizioneSelect").value;
             const autoreSelect = document.getElementById("autoreSelect");
             const genereSelect = document.getElementById("genereSelect");
 
@@ -110,120 +163,6 @@
         });
     }
 </script>
-
-
-</head>
-<body>
-
-    <div class="header">
-        <form th:action="@{/logout}" method="post">
-            <button type="submit" class="logout-btn">Logout</button>
-        </form>
-    </div>  
-
-            <nav style="background-color: #007bff; padding: 10px;">
-        <form th:action="@{/}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-            Home
-            </button>
-        </form>
-
-        <form th:action="@{/adminUsers}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-            Utenti
-            </button>
-        </form>
-
-        <form th:action="@{/adminLibri}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
-            Libri
-            </button>
-        </form>
-
-        <form th:action="@{/adminChallenge}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
-            Challenge
-            </button>
-        </form>
-        
-        </nav>
-
-<h1>Generi e Autori disponibili</h1>
-
-<!-- TABELLA GENERI -->
-<table>
-    <caption>Generi</caption>
-    <thead>
-        <tr><th>Genere</th></tr>
-    </thead>
-    <tbody>
-        <tr th:each="genere : ${genereLibri}">
-            <td th:text="${genere}"></td>
-        </tr>
-    </tbody>
-</table>
-
-<!-- TABELLA AUTORI -->
-<table>
-    <caption>Autori</caption>
-    <thead>
-        <tr><th>Autore</th></tr>
-    </thead>
-    <tbody>
-        <tr th:each="autore : ${autoreLibri}">
-            <td th:text="${autore}"></td>
-        </tr>
-    </tbody>
-</table>
-
-<div class="clear"></div>
-
-<!-- FORM -->
-<h2>Crea la tua Challenge</h2>
-
-<form th:action="@{/adminCreaChallenge}" method="get">
-
-    <!-- NOME CHALLENGE -->
-    <label for="challange">Nome Challenge:</label>
-    <input type="text" id="challange" name="challange" required />
-
-    <!-- CONDIZIONE (NESSUNA, AUTORE, GENERE) -->
-    <label>Condizione:</label>
-    <input type="radio" name="condizione" value="nessuna" checked /> Nessuna<br/>
-    <input type="radio" name="condizione" value="autore" /> Autore<br/>
-    <input type="radio" name="condizione" value="genere" /> Genere
-    <input type="hidden" id="sceltaHidden" name="scelta" value="nessuna" />
-
-    <!-- SELECT AUTORE (visibile solo se condizione === "autore") -->
-    <div id="autoreDiv" style="display: none;">
-        <label for="autoreSelect">Seleziona Autore:</label>
-        <select id="autoreSelect" name="scelta">
-            <option value="">-- Seleziona un autore --</option>
-            <option th:each="a : ${autoreLibri}" th:value="${a}" th:text="${a}"></option>
-        </select>
-    </div>
-
-    <!-- SELECT GENERE (visibile solo se condizione === "genere") -->
-    <div id="genereDiv" style="display: none;">
-        <label for="genereSelect">Seleziona Genere:</label>
-        <select id="genereSelect" name="scelta">
-            <option value="">-- Seleziona un genere --</option>
-            <option th:each="g : ${genereLibri}" th:value="${g}" th:text="${g}"></option>
-        </select>
-    </div>
-
-    <!-- TEMPO -->
-    <label for="tempoSelect">Seleziona Tempo:</label>
-    <select id="tempoSelect" name="tempo" required>
-        <option value="settimana">7 giorni</option>
-        <option value="dieci">10 giorni</option>
-        <option value="mese">30 giorni</option>
-    </select>
-
-    <!-- SUBMIT -->
-    <button type="submit">Crea Challenge</button>
-
-</form>
 
 </body>
 </html>

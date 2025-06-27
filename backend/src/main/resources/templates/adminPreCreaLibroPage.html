@@ -1,124 +1,78 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Libri disponibili</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/style.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-        }
-        .contenitore {
-            width: 600px
-        }
-
-        h2 {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        form div {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    label {
-        flex: 0 0 160px;
-        text-align: right;
-        font-weight: 600;
-        color: #555;
-    }
-
-    input[type="text"] {
-        flex: 1;
-        padding: 10px;
-        font-size: 16px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        transition: border 0.3s ease;
-    }
-
-        button {
-            padding: 10px;
-            font-size: 16px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #218838;
-        }
-        
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Between the Lines</title>
+    <meta name="description" content="Libri disponibiili">
+    <meta name="author" content="Tech-Worms">
+     <link rel="stylesheet" href="style/profilo.css">
+   
 </head>
-<body>
-
-        <div class="header">
+<body class="profile-page">
+     <div class="vice-capo">
+    <div class="header-main">
+        
+      
+    <a th:href="@{/}">
+    <img src="/img/logo.jpg" alt="Logo Home" class="logo-button" />
+    </a>
+        <div class="profile-info-header">
+          <h1>
+          <span th:text="${userLoggato.username}">Utente</span>
+          </h1>
+        </div>
+        
         <form th:action="@{/logout}" method="post">
-                    <button type="submit" class="logout-btn">Logout</button>
-                </form>
-                
-            </div>  
-
-            <nav style="background-color: #007bff; padding: 10px;">
-        <form th:action="@{/}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-            Home
-            </button>
+            <button type="submit" id="logoutBtn" class="header-button logout-button">Esci</button>
         </form>
+        
+    </div>
 
+    <nav class="main-menu">
         <form th:action="@{/adminUsers}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-            Utenti
-            </button>
+        <button type="submit" id="profileBtn" class="menu-button">
+        Utenti
+        </button>
         </form>
 
         <form th:action="@{/adminLibri}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
+            <button type="submit" id="profileBtn" class="menu-button">
             Libri
-            </button>
+        </button>
         </form>
 
         <form th:action="@{/adminChallenge}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
-            Challenge
-            </button>
+        <button type="submit" id="challengeBtn" class="menu-button">
+        Challenge
+        </button>
         </form>
-        
-        </nav>
 
-
+    </nav>
+          <div class="signin-container">
         <h2>Aggiungi i Dati Del Libro Che Vuoi Inserire</h2>
-
-    <div class="contenitore">
-
         <form th:action="@{/adminCrealibro}" method="post">
-    <div>
+    <div class="input-group">
         <label for="titolo">Titolo:</label>
         <input type="text" id="titolo" name="titolo" required />
     </div>
 
-    <div>
+    <div class="input-group">
         <label for="genere">Genere:</label>
         <input type="text" id="genere" name="genere" required>
     </div>
 
-    <div>
+    <div class="input-group">
         <label for="autore">Autore:</label>
         <input type="text" id="autore" name="autore" required>
     </div>
 
-    <div>
+    <div class="input-group">
         <label for="immagineCopertina">URL Immagine Copertina:</label>
         <input type="text" id="immagineCopertina" name="immagineCopertina" required>
     </div>
 
-    <button type="submit">Salva</button>
+    <button type="submit" class="signin-button">Salva</button>
 </form>
 
 </div>

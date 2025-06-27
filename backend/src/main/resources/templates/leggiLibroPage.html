@@ -2,6 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Between the Lines</title>
+    <meta name="description" content="Leggi Libro">
+    <meta name="author" content="Tech-Worms">
     <title th:text="'Leggi: ' + ${libro.titolo}">Leggi Libro</title>
        <link rel="stylesheet" href="style/profilo.css">
    
@@ -45,7 +49,11 @@
 
     </nav>
 
+<<<<<<< HEAD
    <div class="libreria-info-container">
+=======
+   <div class="contenitore-principale">
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
         
     <h1 class="title-pink" th:text="${libro.titolo}">Titolo Libro</h1>
 
@@ -54,12 +62,22 @@
     <div class="info">
         <p class="card-row"><strong>Autore:</strong> <span th:text="${libro.autore}">Autore</span></p>
         <p class="card-row"><strong>Genere:</strong> <span th:text="${libro.genere}">Genere</span></p>
+<<<<<<< HEAD
     </div>
 
     <div class="letture">
         <p class="card-row"><strong>Letture totali:</strong> <span th:text="${libro.letture}">0</span></p>
        
     </div>
+=======
+        <p class="card-row"><strong>Letture:</strong> <span th:text="${libro.letture}">0</span></p>
+    </div>
+
+    
+        
+       
+    
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
     <form th:action="@{/confermaLibroLetto}" method="post">
         <input type="hidden" name="idLibro" th:value="${libro.id}">
         <button type="submit" class="standard-button">Conferma Lettura</button>

@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
+=======
+    <title>Between the Lines</title>
+    <meta name="description" content="Dati Utente">
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
     <title>Dati Utente - Between the Lines</title>
     <link rel="stylesheet" href="style/profilo.css">
    
@@ -16,13 +21,21 @@
     </a>
         <div class="profile-info-header">
             
+<<<<<<< HEAD
             <h1><span th:text="${userLoggato.username}">Utente</span></h1>
+=======
+            <h1>Dati, <span th:text="${userLoggato.username}">Utente</span></h1>
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
         </div>
         
         <form th:action="@{/logout}" method="post">
             <button type="submit" id="logoutBtn" class="header-button logout-button">Esci</button>
         </form>
+<<<<<<< HEAD
         -
+=======
+        
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
     </div>
 
     <nav class="main-menu">
@@ -45,7 +58,11 @@
         </form>
 
     </nav>
+<<<<<<< HEAD
 <div class="libreria-info-container">
+=======
+<div class="contenitore-principale">
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
 
     <h3 class="profile-title">Informazioni Profilo</h3>
     <p><strong>Username:</strong> <span class="profile-info" th:text="${userLoggato.username}">username</span></p>

@@ -213,6 +213,7 @@ public class ProdottoJDBCTemp {
                         storico.setData(rs.getDate("data").toLocalDate());
                         storico.setDataFine(rs.getDate("data_fine").toLocalDate());
                         storico.setNomeChallange(rs.getString("nome_challange"));
+                        storico.setSoprannome(rs.getString("soprannome"));
                         storico.setCondizione(rs.getString("condizione"));
                         storico.setNomeVincitore(rs.getString("nome_vincitore"));
                         storico.setPunti(rs.getInt("punti"));
@@ -420,6 +421,7 @@ public class ProdottoJDBCTemp {
                 "data DATE," +
                 "data_fine DATE," +
                 "nome_challange VARCHAR(50)," +
+                "soprannome VARCHAR(50)," +
                 "condizione VARCHAR(50)," +
                 "nome_vincitore VARCHAR(50)," +
                 "punti INT," +
@@ -609,8 +611,9 @@ public class ProdottoJDBCTemp {
                         user.setPassword(rs.getString("password"));
                         user.setNomeLibreria(rs.getString("nomelibreria"));
                         user.setPunteggio(rs.getInt("punteggio"));
-                     
+                        
                         listUsers.add(user);
+                        
                     }
                     return listUsers;
                 }
@@ -692,10 +695,10 @@ public class ProdottoJDBCTemp {
      * @param punteggio il punteggio del vincitore
      * @param stato lo stato della challenge
      */
-     public void insertStoricoCallange(Storico storico, LocalDate data, LocalDate dataFine,  String nomeChallange, String condizione, String nomeVincitore, int punteggio, int stato) {
+     public void insertStoricoCallange(Storico storico, LocalDate data, LocalDate dataFine,  String nomeChallange, String soprannome, String condizione, String nomeVincitore, int punteggio, int stato) {
         
-        String query = "INSERT INTO storico_challange (data, data_fine, nome_challange, condizione, nome_vincitore, punti, stato) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        jdbcTemplateObject.update(query, storico.getData(), storico.getDataFine(), storico.getNomeChallange(), storico.getCondizione(), storico.getNomeVincitore(), storico.getPunti(), storico.getStato());
+        String query = "INSERT INTO storico_challange (data, data_fine, nome_challange, soprannome, condizione, nome_vincitore, punti, stato) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplateObject.update(query, storico.getData(), storico.getDataFine(), storico.getNomeChallange(), storico.getSoprannome(), storico.getCondizione(), storico.getNomeVincitore(), storico.getPunti(), storico.getStato());
     }
 
     /**

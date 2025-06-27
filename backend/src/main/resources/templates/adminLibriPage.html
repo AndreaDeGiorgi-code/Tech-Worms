@@ -1,122 +1,182 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Libri disponibili</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Between the Lines</title>
+    <meta name="description" content="Libri disponibili">
+    <meta name="author" content="Tech-Worms">
+   <link rel="stylesheet" href="style/profilo.css">
+   <style>
+
+    h1 {
+        text-align: center;
+        color:  #007bff;
+    }
+
+.card-contenitore {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+
+    width: 90%;
+    margin: 0 auto;
+    
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.card {
+    width: 300px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card img {
+    width: 300px;
+    height: 450px;
+    object-fit: cover;
+    display: block;
+}
+
+
+.card-body {
+    padding: 5px;
+    width: 100%;
+}
+
+.card-title {
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: #007bff;
+    text-align: center;
+}
+
+.card-text {
+    font-size: 14px;
+    margin: 2px 0;
+    color: #333;
+    text-align: center;
+}
+
+
+        .card-btn {
+            width: 100%;
+            margin-top: 15px;
+            padding: 10px 16px;
+            background-color:rgb(245, 9, 9);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .card-btn:hover {
+            border: 1px solid rgb(245, 9, 9);
+            background-color:rgb(255, 217, 0);
+            color: rgb(245, 9, 9);
+        }
+    </style>
 </head>
-<body>
-
-        <div class="header">
+<body class="profile-page">
+    <div class="vice-capo">
+    <div class="header-main">
+      
+    <a th:href="@{/}">
+    <img src="/img/logo.jpg" alt="Logo Home" class="logo-button" />
+    </a>
+        <div class="profile-info-header">
+            
+          <h1><span th:text="${userLoggato.username}">Utente</span></h1>
+        </div>
+        
         <form th:action="@{/logout}" method="post">
-                    <button type="submit" class="logout-btn">Logout</button>
-                </form>
-                
-            </div>  
-
-            <nav style="background-color: #007bff; padding: 10px;">
-        <form th:action="@{/}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-            Home
-            </button>
+            <button type="submit" id="logoutBtn" class="header-button logout-button">Esci</button>
         </form>
+        
+    </div>
 
+     <nav class="main-menu">
         <form th:action="@{/adminUsers}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-            Utenti
-            </button>
+        <button type="submit" id="profileBtn" class="menu-button">
+        Utenti
+        </button>
         </form>
 
         <form th:action="@{/adminLibri}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
+            <button type="submit" id="profileBtn" class="menu-button">
             Libri
-            </button>
+        </button>
         </form>
 
         <form th:action="@{/adminChallenge}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
-            Challenge
-            </button>
+        <button type="submit" id="challengeBtn" class="menu-button">
+        Challenge
+        </button>
         </form>
-        
-        </nav>
 
-    
+    </nav>
 
-    <h1>Libri disponibili</h1>
+    <div class="contenitore-principale">
+      
+    <h1>Libri in attesa di approvazione</h1>
 
-    <h2>Libri in attesa di approvazione</h2>
+    <div class="card-container" th:if="${not #lists.isEmpty(listaModeratore)}">
+        <div class="challenge-card" th:each="libroMod : ${listaModeratore}">
+            <div class="card-row"><strong>Proposto da:</strong> <span class="challenge-name" th:text="${libroMod.userMod}">Nome</span></div>
+            <div class="card-row"><strong>Titolo:</strong> <span th:text="${libroMod.titoloMod}">Titolo</span></div>
+            <div class="card-row"><strong>Autore:</strong> <span th:text="${libroMod.autoreMod}">Autore</span></div>
+            <div class="card-row"><strong>Genere:</strong> <span th:text="${libroMod.genereMod}">Genere</span></div>
 
-    <table border="1" cellpadding="10">
-        <thead>
-            <tr>
-                <th>Proposto da</th>
-                <th>Titolo</th>
-                <th>Autore</th>
-                <th>Genere</th>
-            
-                <th>Copertina</th>
-                <th>Dettagli</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="libroMod : ${listaModeratore}">
-                <td th:text="${libroMod.userMod}">Titolo</td>
-                <td th:text="${libroMod.titoloMod}">Titolo</td>
-                <td th:text="${libroMod.autoreMod}">Autore</td>
-                <td th:text="${libroMod.genereMod}">Genere</td>
-             
-                
-                <td><img class="imgCopertina" th:src="${libroMod.copertinaMod}"></td>
-                <td>
-                    <form th:action="@{/adminDettagliLibro}" method="post">
-                        <input type="hidden" name="idLibroModeratore" th:value="${libroMod.id}">
-                        <button type="submit">Seleziona</button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+            <form th:action="@{/adminDettagliLibro}" method="post" class="details-form">
+                <input type="hidden" name="idLibroModeratore" th:value="${libroMod.id}">
+                <button type="submit" class="details-button">Dettagli</button>
+            </form>    
+        </div>
+    </div>
+    <!-- Messaggio se la lista è vuota -->
+    <p th:if="${#lists.isEmpty(listaModeratore)}">Nessun libro proposto.</p>
 
 
-   <h2>Libri Disponibili</h2>
+        <h1>Libri disponibili</h1>
 
-    <!-- Tabella dei libri -->
-    <table border="1" cellpadding="10">
-        <thead>
-            <tr>
-                <th>Titolo</th>
-                <th>Autore</th>
-                <th>Genere</th>
-                <th>Letture utenti</th>
-                <th>Copertina</th>
-                <th>Aggiungi alla tua libreria</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="libro : ${listaLibri}">
-                <td th:text="${libro.titolo}">Titolo</td>
-                <td th:text="${libro.autore}">Autore</td>
-                <td th:text="${libro.genere}">Genere</td>
-                <td th:text="${libro.letture}">Letture</td>
-                
-                <td><img class="imgCopertina" th:src="${libro.copertina}"></td>
-                <td>
-                    <form th:action="@{/eliminaLibro}" method="post">
+        <!-- Card per ogni libro -->
+<div class="card-contenitore">
+    <div class="card" th:each="libro : ${listaLibri}">
+        <img th:src="${libro.copertina}" alt="Copertina libro">
+
+        <div class="card-body">
+            <h2 class="card-title" th:text="${libro.titolo}">Titolo</h2>
+            <p class="card-text"><strong>Autore:</strong> <span th:text="${libro.autore}">Autore</span></p>
+            <p class="card-text"><strong>Genere:</strong> <span th:text="${libro.genere}">Genere</span></p>
+            <p class="card-text"><strong>Letture:</strong> <span th:text="${libro.letture}">0</span></p>
+
+            <form th:action="@{/eliminaLibro}" method="post">
                         <input type="hidden" name="idLibro" th:value="${libro.id}">
-                        <button type="submit" class="delete-profile-btn"> Elimina</button>
+                        <button type="submit" class="card-btn"> Elimina</button>
                     </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
 
+        </div>
+    </div>
+</div>
     <h2>Crea nuovo libro</h2>
 
     <form th:action="@{/adminPreCreaLibro}" method="get">
-        <button type="submit">Aggiungi</button>
+        <button class="standard-button" type="submit">Aggiungi</button>
     </form>
 
-
+</div>
+</div>
 </body>
 </html>

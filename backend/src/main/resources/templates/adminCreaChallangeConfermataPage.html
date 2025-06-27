@@ -2,98 +2,79 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Conferma Creazione Challenge</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 30px;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 50%;
-            margin-bottom: 20px;
-        }
-
-        th, td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .buttons {
-            display: flex;
-            gap: 20px;
-        }
-
-        .buttons a {
-            text-decoration: none;
-            padding: 10px 20px;
-            background-color: #4285f4;
-            color: white;
-            border-radius: 5px;
-        }
-
-        .buttons a:hover {
-            background-color: #3367d6;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Between the Lines</title>
+    <meta name="description" content="Conferma Creazione Challenge">
+    <meta name="author" content="Tech-Worms">
+     <link rel="stylesheet" href="style/profilo.css">
 </head>
-<body>
-  <div class="header">
+<body class="profile-page">
+    <div class="vice-capo">
+    <div class="header-main">
+      
+    <a th:href="@{/}">
+    <img src="/img/logo.jpg" alt="Logo Home" class="logo-button" />
+    </a>
+    <div class="profile-info-header">
+          <h1>
+          <span th:text="${userLoggato.username}">Utente</span>
+          </h1>
+        </div>
         <form th:action="@{/logout}" method="post">
-            <button type="submit" class="logout-btn">Logout</button>
+            <button type="submit" id="logoutBtn" class="header-button logout-button">Esci</button>
         </form>
-    </div>  
+        
+    </div>
 
-            <nav style="background-color: #007bff; padding: 10px;">
-        <form th:action="@{/}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-            Home
-            </button>
-        </form>
-
+     <nav class="main-menu">
         <form th:action="@{/adminUsers}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-            Utenti
-            </button>
+        <button type="submit" id="profileBtn" class="menu-button">
+        Utenti
+        </button>
         </form>
 
         <form th:action="@{/adminLibri}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
+            <button type="submit" id="profileBtn" class="menu-button">
             Libri
-            </button>
+        </button>
         </form>
 
         <form th:action="@{/adminChallenge}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
-            Challenge
-            </button>
+        <button type="submit" id="challengeBtn" class="menu-button">
+        Challenge
+        </button>
         </form>
-        
-        </nav>
+
+    </nav>
+    <div class="contenitore-principale">
 
     <h2>Challenge creata con successo!</h2>
 
-    <table>
-        <tr>
+        <div class="card-container">
+        <div class="challenge-card">
             
-            <th>Data Inizio</th>
-            <th>Nome Partecipante</th>
-            <th>Punteggio</th>
-        </tr>
-        <tr>
+            <div class="card-row">
+                <strong>Partecipante:</strong> <span class="challenge-name">Nessuno</span>
+            </div>
+            <div class="card-row">
+                <strong>Data Inizio:</strong> <span th:text="${#temporals.format(newChallange.dataInizio, 'dd/MM/yyyy')}">02/06/2025</span>
+            </div>
             
-            <td th:text="${#temporals.format(newChallange.dataInizio, 'dd/MM/yyyy')}">02/06/2025</td>
-            <td>nessuno</td>
-            <td>0</td>
-        </tr>
-    </table>
-       <h3>Questa Challange sarà attiva fino al <span th:text="${#temporals.format(dataFine, 'dd/MM/yyyy')}"></span></h3>
-    <div class="buttons">
-        
-        <a th:href="@{/adminChallenge}">Vai alla Challenge Page</a>
+            <div class="card-row">
+                <strong>Punteggio:</strong> <span>0</span>
+            </div>
+        </div>
     </div>
 
+    <h3 class="profile-title" style="margin-top: 40px;">
+        Questa Challenge sarà attiva fino al
+        <span th:text="${#temporals.format(dataFine, 'dd/MM/yyyy')}">10/06/2025</span>
+    </h3>
+
+    <div class="profile-vertical-menu">
+        <a class="standard-button" th:href="@{/adminChallenge}">Vai alla Challenge Page</a>
+    </div>
+</div>
+</div>
 </body>
 </html>

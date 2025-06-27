@@ -1,140 +1,129 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title> Approva Libro</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            text-align: center;
-            background-color: #f8f9fa;
-        }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Between the Lines</title>
+    <meta name="description" content="Approva Libro">
+    <meta name="author" content="Tech-Worms">
+    <link rel="stylesheet" href="style/profilo.css" />
+  </head>
+  <body class="profile-page">
+    <div class="vice-capo">
+      <div class="header-main">
+        <a th:href="@{/}">
+          <img src="/img/logo.jpg" alt="Logo Home" class="logo-button" />
+        </a>
+        <div class="profile-info-header">
+          <h1>
+          <span th:text="${userLoggato.username}">Utente</span>
+          </h1>
+        </div>
 
-        .libro-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .copertina {
-            width: 100%;
-            max-height: 500px;
-            object-fit: contain;
-            margin-bottom: 30px;
-        }
-
-        .info {
-            margin-bottom: 20px;
-            font-size: 1.2em;
-        }
-
-        .letture {
-            font-weight: bold;
-            font-size: 1.1em;
-            margin-top: 40px;
-        }
-
-        .btn-conferma {
-            margin-top: 30px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 18px;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: background-color 0.3s;
-        }
-
-        .btn-conferma:hover {
-            background-color: #218838;
-        }
-    </style>
-</head>
-<body>
-    <div class="header">
         <form th:action="@{/logout}" method="post">
-            <button type="submit" class="logout-btn">Logout</button>
+          <button
+            type="submit"
+            id="logoutBtn"
+            class="header-button logout-button"
+          >
+            Esci
+          </button>
         </form>
-    </div>  
+      </div>
 
-            <nav style="background-color: #007bff; padding: 10px;">
-        <form th:action="@{/}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-            Home
-            </button>
-        </form>
-
-        <form th:action="@{/adminUsers}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
+      <nav class="main-menu">
+        <form th:action="@{/adminUsers}" method="get" style="display: inline">
+          <button type="submit" id="profileBtn" class="menu-button">
             Utenti
-            </button>
+          </button>
         </form>
 
-        <form th:action="@{/adminLibri}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
+        <form th:action="@{/adminLibri}" method="get" style="display: inline">
+          <button type="submit" id="profileBtn" class="menu-button">
             Libri
-            </button>
+          </button>
         </form>
 
-        <form th:action="@{/adminChallenge}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
+        <form
+          th:action="@{/adminChallenge}"
+          method="get"
+          style="display: inline"
+        >
+          <button type="submit" id="challengeBtn" class="menu-button">
             Challenge
-            </button>
+          </button>
         </form>
-        
-        </nav>
+      </nav>
+      <div class="contenitore-principale">
+        <h1 class="card-title">Lista Challenge</h1>
+
+        <div class="card-container" th:if="${not #lists.isEmpty(listaStorico)}">
+          <div class="challenge-card" th:each="challange : ${listaStorico}">
+            <div class="card-row">
+              <strong>Nome:</strong>
+              <span class="challenge-name" th:text="${challange.soprannome}"
+                >Nome Challenge</span
+              >
+            </div>
+            <div class="card-row">
+              <strong>Data Inizio:</strong>
+              <span th:text="${challange.data}">Data</span>
+            </div>
+            <div class="card-row">
+              <strong>Data Fine:</strong>
+              <span th:text="${challange.dataFine}">Data Fine</span>
+            </div>
+
+            <div class="card-row">
+              <strong>Condizione:</strong>
+              <span th:text="${challange.condizione}">Condizione</span>
+            </div>
+            <div class="card-row">
+              <strong>Vincitore:</strong>
+              <span th:text="${challange.nomeVincitore}">Vincitore</span>
+            </div>
+            <div class="card-row">
+              <strong>Punti:</strong>
+              <span th:text="${challange.punti}">Punti</span>
+            </div>
+            <div class="card-row">
+              <strong>Stato:</strong>
+              <span th:text="${challange.stato == 0 ? 'In corso' : 'Terminata'}"
+                >Stato</span
+              >
+            </div>
+
+            <form
+              th:action="@{/adminRimuoviChallange}"
+              method="post"
+              class="details-form"
+            >
+              <input
+                type="hidden"
+                name="nomeChallange"
+                th:value="${challange.nomeChallange}"
+              />
+              <input
+                type="hidden"
+                name="fineChallange"
+                th:value="${#temporals.format(challange.dataFine, 'yyyy-MM-dd')}"
+              />
+              <button type="submit" class="action-button">Rimuovi</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Messaggio se la lista è vuota -->
+        <p th:if="${#lists.isEmpty(listaStorico)}">
+          Nessuna challenge presente.
+        </p>
 
         <h2>Crea nuova challenge</h2>
 
         <form th:action="@{/adminPreCreaChallange}" method="get">
-            <button type="submit" class="big-button">Crea Challenge</button>
+          <button type="submit" class="standard-button">Crea Challenge</button>
         </form>
-
-        <h2>Lista Challenge</h2>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Data</th>
-                <th>Data Fine</th>
-                <th>Nome challange</th>
-                <th>Condizione</th>
-                <th>Vincitore</th>
-                <th>Punti</th>
-                <th>Stato</th>
-                <th>Dettagli</th> <!-- nuova colonna -->
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Riga per ogni challenge -->
-            <tr th:each="challange : ${listaStorico}">
-                <td th:text="${challange.data}">Data</td>
-                <td th:text="${challange.dataFine}">Data Fine</td>
-                <td th:text="${challange.nomeChallange}">nome</td>
-                <td th:text="${challange.condizione}">Condizione</td>
-                <td th:text="${challange.nomeVincitore}">Vincitore</td>
-                <td th:text="${challange.punti}">Punti</td>
-                <td th:text="${challange.stato == 0 ? 'in corso' : 'terminata'}">Stato</td>
-                <td>
-                    <form th:action="@{/adminRimuoviChallange}" method="post">
-                        <input type="hidden" name="nomeChallange" th:value="${challange.nomeChallange}"/>
-                        <input type="hidden" name="fineChallange" th:value="${#temporals.format(challange.dataFine, 'yyyy-MM-dd')}"/>
-                        <button type="submit" class="delete-profile-btn">Rimuovi</button>
-                    </form>
-                </td>
-            </tr>
-
-            <!-- Riga visibile solo se la lista è vuota -->
-            <tr th:if="${#lists.isEmpty(listaStorico)}">
-                <td colspan="8">Nessuna challenge presente.</td>
-            </tr>
-        </tbody>
-    </table>
-
-
-</div>
-
-</body>
+      </div>
+    </div>
+  </body>
 </html>

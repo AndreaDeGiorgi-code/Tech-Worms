@@ -2,9 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+<<<<<<< HEAD
     <title>Libreria Utente</title>
     <link rel="stylesheet" href="style/profilo.css">
    
+=======
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Between the Lines</title>
+    <meta name="description" content="Libreria Utente">
+    <meta name="author" content="Tech-Worms">
+    <link rel="stylesheet" href="style/profilo.css">
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
 </head>
 <body class="profile-page">
     <div class="header-main">
@@ -46,17 +54,30 @@
 
 
     <div class="libreria-info-container">
+<<<<<<< HEAD
+=======
+    <div style="justify-items:center">
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
     <h2>Proponi libro all'amministratore</h2>
     <form th:action="@{/proponiLibro}" method="get">
         <button class="details-button">Aggiungi Libro</button>
     </form>
+<<<<<<< HEAD
     
     <h3>Libri nella tua Libreria</h3>
+=======
+    </div>
+    <h1 style="text-align:center">Libri nella tua Libreria</h1>
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
 
     <div class="card-container-grid">
         <div class="book-card" th:each="libro : ${listaLibrerie}">
             <div><h4><strong><span class="title-name" th:text="${libro.titoloLibro}">Titolo</span></strong></h4></div>
+<<<<<<< HEAD
             <div class="card-row">
+=======
+            <div>
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
                 <img th:src="${libro.copertinaLibro}" alt="Copertina" class="book-cover" />
             </div>
             <div class="card-row"><strong>Genere:</strong> <span th:text="${libro.genereLibro}">Genere</span></div>
@@ -65,11 +86,19 @@
             <div class="details-form">
                 <form th:action="@{/rimuoviLibro}" method="post">
                     <input type="hidden" name="idLibro" th:value="${libro.idLibro}">
+<<<<<<< HEAD
                     <button class="safe-button">Rimuovi</button>
                 </form>
                 <form th:action="@{/leggiLibro}" method="get">
                     <input type="hidden" name="idLibro" th:value="${libro.idLibro}">
                     <button class="ok-button">Leggi</button>
+=======
+                    <button class="standard-button">Rimuovi</button>
+                </form>
+                <form th:action="@{/leggiLibro}" method="get">
+                    <input type="hidden" name="idLibro" th:value="${libro.idLibro}">
+                    <button class="standard-button">Leggi</button>
+>>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
                 </form>
             </div>
         </div>
