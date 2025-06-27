@@ -1,0 +1,330 @@
+/* Stili base */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #FFD1DC 10%, #BFE7E2 30%, #D4EEAE 60%, #AEC6CF 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    color: #333;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow-x: hidden; /* Impedisce lo scroll orizzontale */
+    /* NUOVO: Aggiungi box-sizing globalmente per un migliore controllo del layout */
+    box-sizing: border-box;
+}
+
+.logo-button {
+    height: 50px;
+    cursor: pointer;
+}
+
+
+/* Tutti gli elementi ereditano box-sizing: border-box */
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+/* Header unificato */
+.header-main {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px; /* Ridotto leggermente per coerenza con altre pagine */
+    background-color: rgba(255, 255, 255, 0.9); /* Reso leggermente più opaco */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Ombra più pronunciata */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    border-bottom-left-radius: 20px; /* Aumentato il raggio per coerenza */
+    border-bottom-right-radius: 20px;
+    box-sizing: border-box; /* Assicura che il padding sia incluso nella larghezza */
+}
+
+.header-title {
+    flex-grow: 1;
+    text-align: center;
+    margin: 0 20px; /* Aggiunto margine orizzontale per separare dai bottoni */
+}
+
+.header-main h1 { /* Selezionato direttamente il tag h1 dentro header-main */
+    font-size: 2.2em; /* Dimensione del font come le altre pagine */
+    color: #8D99AE;
+    letter-spacing: 1px; /* Ridotto leggermente il letter-spacing */
+    text-transform: uppercase;
+    margin: 0;
+    text-shadow: none;
+}
+
+.header-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    white-space: nowrap; /* Evita che il testo vada a capo */
+    /* Larghezza minima per evitare che si schiaccino troppo */
+    min-width: 80px;
+    box-sizing: border-box; /* Importante per i bottoni */
+}
+
+.search-button {
+    background-color: #D4EEAE;
+    color: #333;
+}
+
+.search-button:hover {
+    background-color: #C0E09A;
+    color: black;
+    transform: translateY(-1px);
+}
+
+.logout-button {
+    background-color: #FFB3BA;
+    color: white;
+}
+
+.logout-button:hover {
+    background-color: #FFA3AA;
+    color: black;
+    transform: translateY(-1px);
+}
+
+/* Menu principale (nav) */
+.main-menu {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 15px 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 80px; /* Altezza dell'header circa (15px top/bottom padding + altezza font) */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 15;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-sizing: border-box;
+}
+
+.menu-button {
+    padding: 15px 25px;
+    font-size: 1.1em;
+    border-radius: 25px;
+    border: 1px solid #AEC6CF;
+    background-color: white;
+    color: #AEC6CF;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+}
+
+.menu-button:hover {
+    background-color: #AEC6CF;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Contenuto principale */
+.main-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 900px;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 20px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    margin-top: 180px; /* Spazio sotto il menu fisso */
+    margin-bottom: 50px; /* Spazio dal fondo */
+    flex-grow: 1; /* Permette al contenuto di espandersi */
+    min-height: auto; /* Lasciamo che si adatti al contenuto */
+    box-sizing: border-box; /* Assicurati che il padding sia incluso */
+    position: relative; /* Per posizionamento corretto in caso di scroll */
+}
+
+.main-content h2 {
+    font-size: 2.5em;
+    color: #FFA3AA;
+    margin-bottom: 20px;
+}
+
+.main-content p {
+    font-size: 1.1em; /* Leggermente aumentato per leggibilità */
+    color: #555;
+    margin-bottom: 25px;
+}
+
+.main-content h1 { /* Il "Le ultime tendenze" */
+    font-size: 2em;
+    color: #4CAF50;
+    line-height: 1.6;
+    margin-top: 30px; /* Spazio sopra questo titolo */
+    margin-bottom: 20px;
+}
+
+.top-libri-title {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #2200fc;
+}
+
+/* Stili per la nuova sezione "tendenze" (esempio) */
+.trends-section {
+    display: flex;
+    flex-wrap: wrap; /* Permette alle card di andare a capo */
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.trend-card {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+   
+    max-width: 300px; /* Larghezza massima per le card */
+    box-sizing: border-box;
+}
+
+.trend-card img {
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.trend-card h3 {
+    color: #8D99AE;
+    font-size: 1.3em;
+    margin-bottom: 10px;
+}
+
+.trend-card p {
+    font-size: 0.9em;
+    color: #666;
+}
+
+
+/* Media Queries per la responsività */
+@media (max-width: 768px) {
+    .header-main {
+        flex-direction: column;
+        padding: 15px;
+        position: static; /* Non fisso su schermi piccoli per non occupare troppo spazio */
+        border-radius: 0;
+    }
+
+    .header-title {
+        margin: 10px 0 15px 0; /* Centrato e con margine inferiore */
+        flex-grow: 0;
+    }
+
+    .header-main h1 {
+        font-size: 1.8em;
+    }
+
+    .header-button {
+        width: 100%; /* I bottoni occupano tutta la larghezza */
+        margin: 5px 0; /* Spazio verticale tra i bottoni */
+    }
+
+    .main-menu {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centra i bottoni orizzontalmente */
+        gap: 10px;
+        padding: 10px;
+        position: static; /* Rimuove il comportamento fixed su mobile */
+        margin-top: 0;
+        border-radius: 0;
+    }
+
+    .menu-button {
+        width: auto;
+        min-width: 150px;
+        text-align: center;
+    }
+
+
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;     /* Centra orizzontalmente */
+        justify-content: center; /* Centra verticalmente */
+        padding: 20px;
+        margin-top: 20px;
+        min-height: auto;
+        width: 95%;
+        text-align: center;      /* Centra anche il testo */
+    }
+
+
+    .main-content h2 {
+        font-size: 1.8em;
+    }
+
+    .main-content p {
+        font-size: 1em;
+    }
+
+    .trends-section {
+        flex-direction: column; /* Le card delle tendenze si impilano */
+        align-items: center;
+    }
+
+    .trend-card {
+        width: auto; /* Occupa più larghezza su mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .header-main {
+        padding: 10px 15px;
+    }
+
+    .header-main h1 {
+        font-size: 1.5em;
+    }
+
+    .header-button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+
+    .main-menu {
+        padding: 8px 0;
+    }
+
+    .menu-button {
+        font-size: 1em;
+        padding: 8px 15px;
+    }
+
+    .main-content {
+        padding: 15px;
+        margin-top: 15px; /* Ulteriore adeguamento */
+        width: 98%;
+    }
+
+    .main-content h2 {
+        font-size: 1.5em;
+    }
+    .main-content h1 {
+        font-size: 1.8em;
+    }
+}

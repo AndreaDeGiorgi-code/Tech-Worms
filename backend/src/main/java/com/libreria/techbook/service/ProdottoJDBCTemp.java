@@ -609,8 +609,9 @@ public class ProdottoJDBCTemp {
                         user.setPassword(rs.getString("password"));
                         user.setNomeLibreria(rs.getString("nomelibreria"));
                         user.setPunteggio(rs.getInt("punteggio"));
-                     
+                        
                         listUsers.add(user);
+                        
                     }
                     return listUsers;
                 }

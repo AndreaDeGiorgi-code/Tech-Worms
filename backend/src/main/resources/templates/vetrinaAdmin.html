@@ -3,124 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <title>Vetrina Login</title>
-      <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;       /* metti i form in colonna */
-            align-items: center;          /* centra orizzontalmente */
-            justify-content: center;      /* centra verticalmente */
-            gap: 20px;                    /* spazio tra i pulsanti */
-            margin-top: 50px;             /* distanza dall’alto */
-        }
-
-        /* Stile per i pulsanti grandi */
-        .big-button {
-            padding: 15px 30px;
-            font-size: 16px;
-            border: none;
-            background-color: #007BFF;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .big-button:hover {
-            background-color: #0056b3;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 40px;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        .imgCopertina {
-            width: 50px;
-        }
-
-        .top-libri-section {
-            margin-top: 20px;
-        }
-
-        .top-libri-title {
-            font-size: 1.5em;
-            margin-bottom: 15px;
-        }
-    </style>
+       <link rel="stylesheet" href="style/profilo.css">
 </head>
-<body>
-
-    <div class="header">
-   <form th:action="@{/logout}" method="post">
-            <button type="submit" class="logout-btn">Logout</button>
+<body class="profile-page">
+    <div class="vice-capo">
+    <div class="header-main">
+      
+    <a th:href="@{/}">
+    <img src="/img/logo.jpg" alt="Logo Home" class="logo-button" />
+    </a>
+        <div class="profile-info-header">
+            
+          <h1>Benvenuto, <span th:text="${userLoggato.username}">Utente</span>!</h1>
+        </div>
+        
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" id="logoutBtn" class="header-button logout-button">Esci</button>
         </form>
         
-    </div>  
-
-    <nav style="background-color: #007bff; padding: 10px;">
-  <form th:action="@{/}" method="get" style="display: inline;">
-    <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-      Home
-    </button>
-  </form>
-
-  <form th:action="@{/adminUsers}" method="get" style="display: inline;">
-    <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-      Utenti
-    </button>
-  </form>
-
-  <form th:action="@{/adminLibri}" method="get" style="display: inline;">
-    <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
-      Libri
-    </button>
-  </form>
-
-  <form th:action="@{/adminChallenge}" method="get" style="display: inline;">
-    <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
-      Challenge
-    </button>
-  </form>
-  
-</nav>
-
- <div><h1>Benvenuto, <span th:text="${userLoggato.username}">Utente</span>!</h1></div>
-
-     <!-- Pulsanti in linea -->
-    <div class="container">
-        <form th:action="@{/adminUsers}" method="get">
-            <button class="big-button" type="submit">Utenti</button>
-        </form>
-
-        <form th:action="@{/adminLibri}" method="get">
-            <button class="big-button" type="submit">Libri</button>
-        </form>
-
-        <form th:action="@{/adminChallenge}" method="get">
-            <button class="big-button" type="submit">Challenge</button>
-        </form>
     </div>
 
-    
+     <nav class="main-menu">
+        <form th:action="@{/adminUsers}" method="get" style="display: inline;">
+        <button type="submit" id="profileBtn" class="menu-button">
+        Utenti
+        </button>
+        </form>
+
+        <form th:action="@{/adminLibri}" method="get" style="display: inline;">
+            <button type="submit" id="profileBtn" class="menu-button">
+            Libri
+        </button>
+        </form>
+
+        <form th:action="@{/adminChallenge}" method="get" style="display: inline;">
+        <button type="submit" id="challengeBtn" class="menu-button">
+        Challenge
+        </button>
+        </form>
+
+    </nav>
+
+    <div class="contenitore-principale">
+        <nav class="profile-vertical-menu">
+            <form th:action="@{/adminUsers}" method="get">
+            <button type="submit" id="libraryBtn" class="menu-button">Utenti</button>
+        </form>
+        <form th:action="@{/adminLibri}" method="get">
+            <button type="submit" id="myChallengeBtn" class="menu-button">Libri</button>
+        </form>
+        <form th:action="@{/adminChallenge}" method="get">
+            <button type="submit" id="userDataBtn" class="menu-button">Challenge</button>
+        </form>
+            
+        </nav>
+    </div>
+
+    </div>
 
 </body>
 </html>

@@ -3,74 +3,68 @@
 <head>
     <title>Utenti disponibili</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/style.css">
+     <link rel="stylesheet" href="style/profilo.css">
 </head>
-<body>
-
-    <div class="header">
+<body class="profile-page">
+    <div class="vice-capo">
+    <div class="header-main">
+      
+    <a th:href="@{/}">
+    <img src="/img/logo.jpg" alt="Logo Home" class="logo-button" />
+    </a>
+        <div class="profile-info-header">
+            
+          <h1>Benvenuto, <span th:text="${userLoggato.username}">Utente</span>!</h1>
+        </div>
+        
         <form th:action="@{/logout}" method="post">
-            <button type="submit" class="logout-btn">Logout</button>
+            <button type="submit" id="logoutBtn" class="header-button logout-button">Esci</button>
         </form>
-    </div>  
+        
+    </div>
 
-    <nav style="background-color: #007bff; padding: 10px;">
-        <form th:action="@{/}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-                Home
-            </button>
-        </form>
-
+     <nav class="main-menu">
         <form th:action="@{/adminUsers}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-                Utenti
-            </button>
+        <button type="submit" id="profileBtn" class="menu-button">
+        Utenti
+        </button>
         </form>
 
         <form th:action="@{/adminLibri}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
-                Libri
-            </button>
+            <button type="submit" id="profileBtn" class="menu-button">
+            Libri
+        </button>
         </form>
 
         <form th:action="@{/adminChallenge}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
-                Challenge
-            </button>
+        <button type="submit" id="challengeBtn" class="menu-button">
+        Challenge
+        </button>
         </form>
+
     </nav>
 
-    <h1>Lista Utenti</h1>
+    <div class="contenitore-principale">
+<h1>Lista Utenti del sito</h1>
+<div class="card-container">
+    <div class="challenge-card" th:each="user : ${listaUsers}">
+        <div class="card-row">
+            <strong>Username:</strong> <span class="challenge-name" th:text="${user.username}">Mario Rossi</span>
+        </div>
+        <div class="card-row">
+            <strong>Email:</strong> <span th:text="${user.email}">email@email</span>
+        </div>
+        <div class="card-row">
+            <strong>Punteggio:</strong> <span th:text="${user.punteggio}">10</span>
+        </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Password</th>
-                <th>nomeLibreria</th>
-                <th>Punteggio</th>
-                <th>Azioni</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="user : ${listaUsers}">
-                <td th:text="${user.userId}">ID</td>
-                <td th:text="${user.username}">Username</td>
-                <td th:text="${user.email}">Email</td>
-                <td th:text="${user.password}">Password</td>
-                <td th:text="${user.nomeLibreria}">nomeLibreria</td>
-                <td th:text="${user.punteggio}">Punteggio</td>
-                <td>
-                    <form th:action="@{/adminRimuoviUtente}" method="post" th:object="${user}">
-                        <input type="hidden" name="nomeLibreria" th:value="${user.nomeLibreria}" />
-                        <input type="hidden" name="username" th:value="${user.username}" />
-                        <button type="submit" class="delete-profile-btn">Rimuovi</button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+        <form th:action="@{/adminRimuoviUtente}" method="post">
+            <input type="hidden" name="username" th:value="${user.username}" />
+            <input type="hidden" name="nomeLibreria" th:value="${user.nomeLibreria}" />
+            <button type="submit" class="action-button">Rimuovi</button>
+        </form>
+    </div>
+</div>
 
 </body>
 </html>

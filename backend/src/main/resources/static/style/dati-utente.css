@@ -1,0 +1,292 @@
+/* Stili base replicati da style.css e home.css per coerenza */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #FFD1DC 10%, #BFE7E2 30%, #D4EEAE 60%, #AEC6CF 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    color: #333;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow-x: hidden;
+}
+
+.logo-button {
+    height: 50px;
+    cursor: pointer;
+}
+
+
+/* Stili per l'header (simili a profile.css, ma con titolo generico al centro) */
+.header-main {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-sizing: border-box;
+}
+
+.header-title {
+    flex-grow: 1;
+    text-align: center;
+    margin: 0 20px;
+}
+
+.header-title h1 {
+    font-size: 2.2em;
+    color: #8D99AE;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 0;
+    text-shadow: none;
+}
+
+.header-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+}
+
+.back-button { /* Colore per il bottone "Torna al profilo" */
+    background-color: #AEC6CF; /* Blu pastello */
+    color: white;
+}
+
+.back-button:hover {
+    background-color: #9EC0C7;
+    color: black;
+    transform: translateY(-1px);
+}
+
+.logout-button {
+    background-color: #FFB3BA; /* Rosa pastello */
+    color: white;
+}
+
+.logout-button:hover {
+    background-color: #FFA3AA;
+    color: black;
+    transform: translateY(-1px);
+}
+
+/* Menu principale (nav) */
+.main-menu {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 15px 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 80px; /* Altezza dell'header circa (15px top/bottom padding + altezza font) */
+    position: fixed;
+    top: 0px;
+    left: 0;
+    z-index: 15;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-sizing: border-box;
+}
+
+.menu-button {
+    padding: 15px 25px;
+    font-size: 1.1em;
+    border-radius: 25px;
+    border: 1px solid #AEC6CF;
+    background-color: white;
+    color: #AEC6CF;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+}
+
+.menu-button:hover {
+    background-color: #AEC6CF;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Stili per il contenuto principale */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    max-width: 800px;
+    width: 90%;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 20px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    margin-top: 130px; /* Spazio sotto l'header */
+    margin-bottom: 50px;
+    flex-grow: 1;
+    min-height: calc(80vh - 180px);
+    box-sizing: border-box;
+}
+
+/* Stili per la card dei dettagli utente */
+.user-details-card {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px; /* Spazio sotto la card */
+    width: 90%;
+    max-width: 500px;
+    text-align: left; /* Allinea il testo a sinistra all'interno della card */
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee; /* Linea sottile per separare le voci */
+    padding-bottom: 10px;
+}
+
+.detail-item:last-child {
+    border-bottom: none; /* Rimuovi la linea dall'ultimo elemento */
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.detail-item label {
+    font-weight: bold;
+    color: #555;
+    width: 140px; /* Larghezza fissa per le label */
+    flex-shrink: 0; /* Impedisce alla label di restringersi */
+    margin-right: 15px;
+}
+
+.detail-item span {
+    color: #333;
+    flex-grow: 1; /* Permette allo span di occupare lo spazio rimanente */
+    word-break: break-all; /* Per evitare overflow di email lunghe */
+}
+
+/* Stili per il bottone "Modifica Profilo" */
+.action-button {
+    background-color: #D4EEAE; /* Verde pastello */
+    color: #333;
+    padding: 12px 25px;
+    margin: 20px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.action-button:hover {
+    background-color: #C0E09A;
+    transform: translateY(-2px);
+}
+
+/* Media Queries per la responsività */
+@media (max-width: 768px) {
+    .header-main {
+        flex-direction: column;
+        padding: 15px;
+        position: static;
+        border-radius: 0;
+    }
+
+    .header-title {
+        margin-top: 10px;
+        margin-bottom: 15px;
+        flex-grow: 0;
+    }
+
+    .header-title h1 {
+        font-size: 1.8em;
+    }
+
+    .header-button {
+        width: calc(100% - 40px);
+        margin: 5px auto;
+    }
+
+    .main-content {
+        padding: 20px;
+        margin-top: 20px;
+        min-height: auto;
+    }
+
+    .user-details-card {
+        padding: 20px;
+        width: 100%;
+    }
+
+    .detail-item {
+        flex-direction: column; /* Impila label e span su schermi piccoli */
+        align-items: flex-start; /* Allinea a sinistra */
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+    }
+
+    .detail-item label {
+        width: auto; /* Rimuovi larghezza fissa */
+        margin-right: 0;
+        margin-bottom: 5px; /* Spazio sotto la label */
+        font-size: 0.95em;
+    }
+
+    .detail-item span {
+        font-size: 1em;
+    }
+
+    .action-button {
+        width: calc(100% - 40px);
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-main {
+        padding: 10px 15px;
+    }
+
+    .header-title h1 {
+        font-size: 1.5em;
+    }
+
+    .header-button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    
+    .main-content {
+        padding: 15px;
+    }
+
+    .user-details-card {
+        padding: 15px;
+    }
+
+    .detail-item {
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+    }
+}

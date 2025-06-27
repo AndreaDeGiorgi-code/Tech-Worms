@@ -1,111 +1,72 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Home Utente</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #007BFF;
-            color: white;
-            padding: 15px 30px;
-        }
-
-        .logout-btn {
-            background-color: #dc3545;
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 14px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .logout-btn:hover {
-            background-color: #c82333;
-        }
-
-        .main-content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: calc(100vh - 80px); /* Full height minus header */
-        }
-
-        .button-group {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .main-btn {
-            padding: 15px 30px;
-            font-size: 18px;
-            border: none;
-            background-color: #28a745;
-            color: white;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: background-color 0.3s ease;
-        }
-
-        .main-btn:hover {
-            background-color: #218838;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Il Mio Profilo - Between the Lines</title>
+    <link rel="stylesheet" href="style/profilo.css">
 </head>
-<body>
-    <nav style="background-color: #007bff; padding: 10px;">
-  <form th:action="@{/}" method="get" style="display: inline;">
-    <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-      Home
-    </button>
-  </form>
+<body class="profile-page">
+    <div class="vice-capo">
+    <div class="header-main">
+      
+    <a th:href="@{/}">
+    <img src="/img/logo.jpg" alt="Logo Home" class="logo-button" />
+    </a>
+        <div class="profile-info-header">
+            
+            <h1 id="usernameDisplay" th:text="${userLoggato.username}">Username</h1><p id="userScore" th:text="'Punteggio: ' + ${userLoggato.punteggio} + ' punti'">Punteggio: 1250 punti</p>
+        </div>
+        
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" id="logoutBtn" class="header-button logout-button">Esci</button>
+        </form>
+        
+    </div>
 
-  <form th:action="@{/preProfilo}" method="get" style="display: inline;">
-    <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-      Profilo
-    </button>
-  </form>
+     <nav class="main-menu">
+        <form th:action="@{/preProfilo}" method="get" style="display: inline;">
+        <button type="submit" id="profileBtn" class="menu-button">
+        Profilo
+        </button>
+        </form>
 
-  <form th:action="@{/preChallenge}" method="get" style="display: inline;">
-    <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
-      Challenge
-    </button>
-  </form>
-  
-</nav>
+        <form th:action="@{/libri}" method="get" style="display: inline;">
+            <button type="submit" id="profileBtn" class="menu-button">
+            Libri
+        </button>
+        </form>
 
-<div class="header">
-    <div>Benvenuto, <span th:text="${userLoggato.username}">Utente</span>!</div>
-    <form th:action="@{/logout}" method="post">
-        <button type="submit" class="logout-btn">Logout</button>
-    </form>
-</div>
+        <form th:action="@{/preChallenge}" method="get" style="display: inline;">
+        <button type="submit" id="challengeBtn" class="menu-button">
+        Challenge
+        </button>
+        </form>
 
-<div class="main-content">
-    <div class="button-group">
-        <form th:action="@{/profilo}" method="get">
-            <button class="main-btn" type="submit">Dati Utente</button>
+    </nav>
+
+    <div class="contenitore-principale">
+        <nav class="profile-vertical-menu">
+            <form th:action="@{/libreria}" method="get">
+            <button type="submit" id="libraryBtn" class="menu-button">Libreria</button>
         </form>
         <form th:action="@{/mieChallange}" method="get">
-            <button class="main-btn" type="submit">Mie Challenge</button>
+            <button type="submit" id="myChallengeBtn" class="menu-button">Mie Challenge</button>
         </form>
-        <form th:action="@{/libreria}" method="get">
-            <button class="main-btn" type="submit">Libreria</button>
+        <form th:action="@{/profilo}" method="get">
+            <button type="submit" id="userDataBtn" class="menu-button">Dati Utente</button>
         </form>
+            
+        </nav>
+       <!-- informazioni non ancora implementate
+        <div class="profile-summary">
+            <h3>Riepilogo Attività</h3>
+            <p>Libri letti questo mese: 5</p>
+            <p>Challenge completate: 2</p>
+        </div>
+        -->
     </div>
-</div>
 
+    </div>
 </body>
 </html>

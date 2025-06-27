@@ -2,53 +2,63 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Profilo Utente</title>
-    
-    <link rel="stylesheet" href="/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dati Utente - Between the Lines</title>
+    <link rel="stylesheet" href="style/profilo.css">
    
 </head>
-<body>
-    <nav style="background-color: #007bff; padding: 10px;">
-  <form th:action="@{/}" method="get" style="display: inline;">
-    <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-      Home
-    </button>
-  </form>
+<body class="profile-page">
+    <div class="vice-capo">
+        <div class="header-main">
 
-  <form th:action="@{/preProfilo}" method="get" style="display: inline;">
-    <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-      Profilo
-    </button>
-  </form>
+    <a th:href="@{/}">
+    <img src="/img/logo.jpg" alt="Logo Home" class="logo-button" />
+    </a>
+        <div class="profile-info-header">
+            
+            <h1>Dati, <span th:text="${userLoggato.username}">Utente</span></h1>
+        </div>
+        
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" id="logoutBtn" class="header-button logout-button">Esci</button>
+        </form>
+        
+    </div>
 
-  <form th:action="@{/preChallenge}" method="get" style="display: inline;">
-    <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
-      Challenge
-    </button>
-  </form>
-  
-</nav>
+    <nav class="main-menu">
+        <form th:action="@{/preProfilo}" method="get" style="display: inline;">
+        <button type="submit" id="profileBtn" class="menu-button">
+        Profilo
+        </button>
+        </form>
 
-<div class="header">
-    <h2>Benvenuto, <span th:text="${userLoggato.username}">Utente</span></h2>
-    <form th:action="@{/logout}" method="post">
-        <button type="submit" class="logout-btn">Logout</button>
-    </form>
-</div>
+        <form th:action="@{/libri}" method="get" style="display: inline;">
+            <button type="submit" id="profileBtn" class="menu-button">
+            Libri
+        </button>
+        </form>
 
-<div class="user-info">
-    <h3>Informazioni Profilo</h3>
-    <p><strong>Username:</strong> <span th:text="${userLoggato.username}">username</span></p>
-    <p><strong>Email:</strong> <span th:text="${userLoggato.email}">email</span></p>
-    <p><strong>Nome Libreria:</strong> <span th:text="${userLoggato.nomeLibreria}">nomeLibreria</span></p>
-    <p><strong>Punteggio:</strong> <span th:text="${userLoggato.punteggio}">0</span></p>
-</div>
+        <form th:action="@{/preChallenge}" method="get" style="display: inline;">
+        <button type="submit" id="challengeBtn" class="menu-button">
+        Challenge
+        </button>
+        </form>
+
+    </nav>
+<div class="contenitore-principale">
+
+    <h3 class="profile-title">Informazioni Profilo</h3>
+    <p><strong>Username:</strong> <span class="profile-info" th:text="${userLoggato.username}">username</span></p>
+    <p><strong>Email:</strong> <span class="profile-info" th:text="${userLoggato.email}">email</span></p>
+    <p><strong>Nome Libreria:</strong> <span class="profile-info" th:text="${userLoggato.nomeLibreria}">nomeLibreria</span></p>
+    <p><strong>Punteggio:</strong> <span class="profile-info" th:text="${userLoggato.punteggio}">0</span></p>
+
 
 <!-- Bottone per eliminare il profilo -->
 <form th:action="@{/eliminaProfilo}" method="post">
     <input type="hidden" name="userId" th:value="${userLoggato.userId}">
-    <button type="submit" class="delete-profile-btn">Elimina Profilo</button>
+    <button type="submit" id="editProfileBtn" class="action-button">Elimina Profilo</button>
 </form>
-
+    </div>
 </body>
 </html>

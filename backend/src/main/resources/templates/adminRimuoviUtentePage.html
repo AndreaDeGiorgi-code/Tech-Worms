@@ -3,43 +3,45 @@
 <head>
     <title>Utenti disponibili</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="style/profilo.css">
 </head>
-<body>
-
-    <div class="header">
+<body class="profile-page">
+    <div class="vice-capo">
+    <div class="header-main">
+      
+    <a th:href="@{/}">
+    <img src="/img/logo.jpg" alt="Logo Home" class="logo-button" />
+    </a>
+        
+        
         <form th:action="@{/logout}" method="post">
-            <button type="submit" class="logout-btn">Logout</button>
+            <button type="submit" id="logoutBtn" class="header-button logout-button">Esci</button>
         </form>
-    </div>  
+        
+    </div>
 
-    <nav style="background-color: #007bff; padding: 10px;">
-        <form th:action="@{/}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-                Home
-            </button>
-        </form>
-
+     <nav class="main-menu">
         <form th:action="@{/adminUsers}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; margin-right: 20px; cursor: pointer;">
-                Utenti
-            </button>
+        <button type="submit" id="profileBtn" class="menu-button">
+        Utenti
+        </button>
         </form>
 
         <form th:action="@{/adminLibri}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
-                Libri
-            </button>
+            <button type="submit" id="profileBtn" class="menu-button">
+            Libri
+        </button>
         </form>
 
         <form th:action="@{/adminChallenge}" method="get" style="display: inline;">
-            <button type="submit" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">
-                Challenge
-            </button>
+        <button type="submit" id="challengeBtn" class="menu-button">
+        Challenge
+        </button>
         </form>
+
     </nav>
 
-    <div class="container">
+    <div class="contenitore-principale">
         <h2>Conferma Eliminazione</h2>
         <p>Sei sicuro di voler eliminare l'utente <strong><span th:text="${username}">Username</span></strong></p>
         <p>Questa azione eliminerà l'utente e tutti i dati collegati, inclusa la sua libreria.</p>
@@ -48,9 +50,10 @@
             <input type="hidden" name="nomeLibreria" th:value="${nomeLibreria}" />
             <input type="hidden" name="username" th:value="${username}" />
             
-            <button type="submit">Sì, elimina</button>
-            <a th:href="@{/adminUsers}"><button type="button">No, annulla</button></a>
+            <button class="action-button" type="submit">Sì, elimina</button>
+            <a th:href="@{/adminUsers}"><button class="safe-button" type="button">No, annulla</button></a>
         </form>
+
     </div>
 
 </body>
