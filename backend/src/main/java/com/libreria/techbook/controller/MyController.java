@@ -380,10 +380,6 @@ public class MyController {
         return "libriPage";
     }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 635bf906270e31d13b1b76ffea1489c47ef9fc14
     
     
    
