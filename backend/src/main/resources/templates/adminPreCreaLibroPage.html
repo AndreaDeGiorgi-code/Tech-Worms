@@ -14,7 +14,11 @@
     <a th:href="@{/}">
     <img src="/img/logo.jpg" alt="Logo Home" class="logo-button" />
     </a>
-        
+        <div class="profile-info-header">
+          <h1>
+          <span th:text="${userLoggato.username}">Utente</span>
+          </h1>
+        </div>
         
         <form th:action="@{/logout}" method="post">
             <button type="submit" id="logoutBtn" class="header-button logout-button">Esci</button>

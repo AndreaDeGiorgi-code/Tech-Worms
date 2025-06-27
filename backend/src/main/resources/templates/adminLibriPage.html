@@ -95,7 +95,7 @@
     </a>
         <div class="profile-info-header">
             
-          <h1>Benvenuto, <span th:text="${userLoggato.username}">Utente</span>!</h1>
+          <h1><span th:text="${userLoggato.username}">Utente</span></h1>
         </div>
         
         <form th:action="@{/logout}" method="post">

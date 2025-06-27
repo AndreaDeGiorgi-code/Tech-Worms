@@ -973,7 +973,8 @@ public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idL
      */
     @PostMapping("/adminRimuoviUtente")
     public String postRimuoviUtente(Model model, HttpSession session, @RequestParam("nomeLibreria") String nomeLibreria, @RequestParam("username") String username) {
-        
+        User userLoggato = (User) session.getAttribute("userLoggato");
+        model.addAttribute("userLoggato", userLoggato);
         model.addAttribute("nomeLibreria", nomeLibreria);
         model.addAttribute("username", username);
         return "adminRimuoviUtentePage";
@@ -1040,9 +1041,11 @@ public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idL
      */
     @PostMapping("/eliminaLibro")
     public String postMethodName(Model model, HttpSession session, @RequestParam("idLibro") int idLibro) {
+        User userLoggato = (User) session.getAttribute("userLoggato");
+        
 
         prodottoJDBCTemp.eliminaModLibro(idLibro);
-      
+        model.addAttribute("userLoggato", userLoggato);
         
         return "redirect:/adminLibri";
     }
@@ -1059,6 +1062,8 @@ public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idL
      */
     @GetMapping("/adminPreCreaLibro")
     public String getAdminPreCreaLibro(Model model, HttpSession session) {
+        User userLoggato = (User) session.getAttribute("userLoggato");
+        model.addAttribute("userLoggato", userLoggato);
         return "adminPreCreaLibroPage";
     }
     
@@ -1077,7 +1082,7 @@ public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idL
      */
     @PostMapping("/adminCrealibro")
     public String postAdminCrealibro(Model model, HttpSession session, @RequestParam("titolo") String titolo, @RequestParam("autore") String autore, @RequestParam("genere") String genere, @RequestParam("immagineCopertina") String immagineCopertina) {
-
+        User userLoggato = (User) session.getAttribute("userLoggato");
         Prodotto entity = new Prodotto();
         entity.setTitolo(titolo);
         entity.setGenere(genere);
@@ -1085,6 +1090,8 @@ public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idL
         entity.setLetture(0);
         entity.setCopertina(immagineCopertina);
         prodottoJDBCTemp.creaLibro(entity);
+
+        model.addAttribute("userLoggato", userLoggato);
         
         return "redirect:/adminLibri";
     }
@@ -1110,6 +1117,7 @@ public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idL
         Moderatore libro = prodottoJDBCTemp.getLibroModeratoreById(idLibro);
             
         model.addAttribute("libro", libro);
+        model.addAttribute("userLoggato", user);
 
         return "adminDettagliLibroPage";
     }
@@ -1286,6 +1294,7 @@ public String getLeggiLibro(Model model, HttpSession session, @RequestParam("idL
         model.addAttribute("newChallange", newChallange);
         model.addAttribute("storico", storico);
         model.addAttribute("alertStato", alertStato);
+        model.addAttribute("userLoggato", userLoggato);
 
 
 
