@@ -48,20 +48,26 @@
         <p>Qui puoi esplorare nuove storie, gestire la tua libreria e partecipare a fantastiche challenge di lettura.</p>
         <h1>Le ultime tendenze:</h1>
         <div class="trends-section">
-            <div class="top-libri-section">
-                <div class="top-libri-title">Top 3 Libri più letti</div>
-                    <div class="trend-card">
-                        <div class="book-card" th:each="libro : ${topLibri}">
-                            <img class="book-cover" th:src="${libro.copertina}" alt="Copertina libro" />
-                        <div class="book-info">
-                            <h3 th:text="${libro.titolo}">Titolo</h3>
-                            <p><strong>Autore:</strong> <span th:text="${libro.autore}">Autore</span></p>
-                            <p><strong>Genere:</strong> <span th:text="${libro.genere}">Genere</span></p>
-                            <p><strong>Letture:</strong> <span th:text="${libro.letture}">Letture</span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+           <div class="top-libri-section">
+  <div class="top-libri-title">Top 3 Libri più letti</div>
+
+  <!-- Questo è il contenitore FLEX -->
+  <div class="trend-card">
+    <!-- Questo è l'elemento da ripetere -->
+    <div class="book-card" th:each="libro : ${topLibri}">
+      <img class="book-cover" th:src="${libro.copertina}" alt="Copertina libro" />
+      <div class="book-info">
+        <h3 th:text="${libro.titolo}">Titolo</h3>
+        <p><strong>Autore:</strong> <span th:text="${libro.autore}">Autore</span></p>
+        <p><strong>Genere:</strong> <span th:text="${libro.genere}">Genere</span></p>
+        <p><strong>Letture:</strong> <span th:text="${libro.letture}">Letture</span></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
             
         </div>
     </div>

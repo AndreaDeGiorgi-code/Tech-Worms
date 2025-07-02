@@ -10,7 +10,17 @@ box-sizing: inherit;
 
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #FFD1DC 0%, #BFE7E2 30%, #D4EEAE 60%, #AEC6CF 100%);
+    /* Set the background image using the URL to your image */
+    background-image: url('/img/sfondo.jpg');
+    /* Cover the entire background area, maintaining aspect ratio */
+    background-size: cover;
+    /* Center the background image */
+    background-position: center;
+    /* Fix the background image so it doesn't scroll with the content */
+    background-attachment: fixed;
+    /* Optional: Add a fallback background color */
+    background-color: #f0f0f0; /* A light grey fallback */
+    background-repeat: no-repeat; /* This is the command to prevent the image from repeating */
     
     display: flex;
     flex-direction: column;
@@ -63,12 +73,12 @@ body {
 }
 
 #registratiBtn {
-    background-color: #FFB3BA; /* Rosa pastello */
+    background-color:#9EC0C7; /* Rosa pastello */
     color: white;
 }
 
 #registratiBtn:hover {
-    background-color: #FFA3AA; /* Rosa pastello leggermente più scuro al hover */
+    background-color:#9EC0C7; /* Rosa pastello leggermente più scuro al hover */
     transform: translateY(-2px);
 }
 
@@ -126,7 +136,7 @@ h3 {
 
 .signin-container h1 {
     font-size: 2.5em;
-    color: #8D99AE; /* Colore pastello per il titolo del form */
+    color: #5883d3; /* Colore pastello per il titolo del form */
     margin-bottom: 30px;
     text-shadow: none; /* Rimuove l'ombra dal titolo del form per pulizia */
 }
@@ -164,10 +174,10 @@ h3 {
 }
 
 .signin-button {
-    background-color: #FFB3BA; /* Rosa pastello per il bottone di submit */
+    background-color:#a9c7ee; /* Blu pastello per il bottone di submit */
     color: rgb(0, 0, 0);
     padding: 15px 30px;
-    border: none;
+    border: 1px solid #7d9dd8;
     border-radius: 30px;
     font-size: 1.2em;
     cursor: pointer;
@@ -178,15 +188,15 @@ h3 {
 }
 
 .signin-button:hover {
-    background-color: #FFA3AA; /* Rosa pastello più scuro al hover */
+    background-color:#7d9dd8; /* Blu pastello più scuro al hover */
     transform: translateY(-2px);
 }
 
 .secondary-button {
-    background-color: #D4EEAE; /* Verde pastello per il bottone secondario */
+    background-color: #a9c7ee; /* Verde pastello per il bottone secondario */
     color: #000000; /* Testo più scuro per contrasto */
     padding: 8px 18px;
-    border: none;
+    border: 1px solid #7d9dd8;
     border-radius: 30px;
     font-size: 0.9em;
     cursor: pointer;
@@ -197,7 +207,7 @@ h3 {
 }
 
 .secondary-button:hover {
-    background-color: #C0E09A; /* Verde pastello leggermente più scuro al hover */
+    background-color: #7d9dd8; /* Verde pastello leggermente più scuro al hover */
     transform: translateY(-2px);
     color: #333; /* Testo leggermente più scuro al hover */
 }
@@ -205,26 +215,27 @@ h3 {
 .register-link {
     margin-top: 20px;
     font-size: 0.95em;
-    color: #666;
+    color: #90a3aa; /* Blu pastello per il link di registrazione */
 }
 
 .register-link a {
-    color: #AEC6CF; /* Link blu pastello */
+    color: #8D99AE; /* Link grigio pastello */
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .register-link a:hover {
-    color: #8D99AE; /* Colore più scuro al hover */
+    color: #5883d3; /* Colore blu più scuro al hover */
     text-decoration: underline;
 }
+
 footer {
-    position: relative;
-    background-color: #a4caf5;
-    color: #757f91;
+    position: relative; /* Changed from fixed to relative for better content flow */
+    width: 90%; /* Occupy 90% width */
+    margin: 30px auto 0; /* Center horizontally, space from content above, no margin at bottom */
+    color: #ffffff;
     gap: 50px;
     text-align: center;
     padding: 20px;
     border-radius: 8px;
-    margin-top: 30px;
-} 
+}

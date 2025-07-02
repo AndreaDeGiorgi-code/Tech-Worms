@@ -1,7 +1,17 @@
 /* Stili base replicati per coerenza */
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #FFD1DC 10%, #BFE7E2 30%, #D4EEAE 60%, #AEC6CF 100%);
+    /* Set the background image using the URL to your image */
+    background-image: url('/img/sfondo.jpg');
+    /* Cover the entire background area, maintaining aspect ratio */
+    background-size: cover;
+    /* Center the background image */
+    background-position: center;
+    /* Fix the background image so it doesn't scroll with the content */
+    background-attachment: fixed;
+    /* Optional: Add a fallback background color */
+    background-color: #f0f0f0; /* A light grey fallback */
+    background-repeat: no-repeat; /* This is the command to prevent the image from repeating */
     
     min-height: 100vh;
     margin: 0;
@@ -60,7 +70,7 @@ body {
 
 .profile-info-header p {
     font-size: 1.1em;
-    color: #4CAF50; /* Colore verde menta per il punteggio */
+    color: #7d9dd8; /* Colore blu per il punteggio */
     margin-top: 5px;
     text-shadow: none;
     font-weight: bold;
@@ -125,9 +135,9 @@ body {
     padding: 15px 25px;
     font-size: 1.1em;
     border-radius: 25px;
-    border: 1px solid #AEC6CF;
-    background-color: white;
-    color: #AEC6CF;
+    border: 1px solid #7d9dd8;
+    background-color: #a9c7ee;
+    color: #000000;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
@@ -135,8 +145,8 @@ body {
 }
 
 .menu-button:hover {
-    background-color: #AEC6CF;
-    color: white;
+    background-color: #7d9dd8;
+    color: rgb(0, 0, 0);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
@@ -164,7 +174,7 @@ body {
 
 .main-content h2 { /* Se in futuro userai un h2, avrà questo stile */
     font-size: 2.5em;
-    color: #4CAF50;
+    color: #7d9dd8;
     margin-bottom: 20px;
 }
 
@@ -189,9 +199,9 @@ body {
     padding: 15px 25px; /* Padding aumentato per bottoni più grandi */
     font-size: 1.2em; /* Testo più grande */
     border-radius: 30px;
-    border: 1px solid #AEC6CF;
-    background-color: white;
-    color: #AEC6CF;
+    border: 1px solid #7d9dd8;
+    background-color: #a9c7ee;
+    color: #000000;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
@@ -200,8 +210,8 @@ body {
 }
 
 .profile-vertical-menu .menu-button:hover {
-    background-color: #AEC6CF;
-    color: white;
+    background-color: #7d9dd8;
+    color: rgb(0, 0, 0);
     transform: translateY(-2px);
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }

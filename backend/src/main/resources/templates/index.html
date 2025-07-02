@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Between the Lines</title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+    <div class="main-content-wrapper"> <div class="header-buttons">
+        
+         <form th:action="@{/loginPage}" method="get">
+            <button type="submit" id="accediBtn" class="header-button logout-button">Accedi</button>
+        </form>
+         <form th:action="@{/registerPage}" method="get">
+            <button type="submit" id="registratiBtn" class="header-button logout-button">Registrati</button>
+        </form>
+        <form th:action="@{/faq}" method="get">
+            <button type="submit" id="accediBtn" class="header-button logout-button">Informazioni</button>
+        </form>
+    </div>
+
+    <div class="content-wrapper">
+        <h1>Between the Lines</h1>
+        <h2>Benvenuti nella vostra nuova libreria digitale, il luogo perfetto per tenere traccia dei libri che amate e scoprire nuove avventure letterarie. Qui, ogni pagina letta conta e ogni storia diventa un passo nel vostro viaggio personale.</h2>
+        <h3>Unitevi a una community di lettori appassionati, dove la curiosità è premiata. Lasciatevi invogliare a leggere di più partecipando a stimolanti challenge con altri utenti e scoprite libri ancora sconosciuti che aspettano solo di essere letti. È il vostro rifugio digitale per perdersi tra le pagine e vivere la lettura, oltre le righe.</h3>
+    </div>
+
+    <script src="JavaScript/main.js"></script>
+
+    <footer>
+        <p>&copy; 2025 TBR s.p.a</p>
+    </footer>
+    
+</body>
+</html>

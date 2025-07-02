@@ -9,7 +9,18 @@ html {
 /* ==== Base Styles ==== */
 body {
   font-family: 'Arial', sans-serif;
-  background: linear-gradient(to right, #FFDEE9, #B5FFFC);
+  font-family: 'Arial', sans-serif;
+    /* Set the background image using the URL to your image */
+    background-image: url('/img/sfondo.jpg');
+    /* Cover the entire background area, maintaining aspect ratio */
+    background-size: cover;
+    /* Center the background image */
+    background-position: center;
+    /* Fix the background image so it doesn't scroll with the content */
+    background-attachment: fixed;
+    /* Optional: Add a fallback background color */
+    background-color: #f0f0f0; /* A light grey fallback */
+    background-repeat: no-repeat; /* This is the command to prevent the image from repeating */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -45,7 +56,7 @@ body {
 }
 
 .header-title {
-  font-size: 2.2em;
+  font-size: 1.2em;
   color: #6C5B7B;
   font-weight: bold;
 }
@@ -67,7 +78,7 @@ body {
 }
 
 .logout-button {
-  background-color: #FFB3BA;
+  background-color: #AEC6CF;
   color: #000;
 }
 
@@ -79,28 +90,34 @@ body {
 
 /* ==== Header Buttons (Welcome Page) ==== */
 .header-buttons {
-  position: absolute;
-  top: 30px;
-  right: 30px;
-  z-index: 10;
+  display: flex;
+  gap: 10px;              /* spazio tra i pulsanti */
+  justify-content: center; /* centra i pulsanti orizzontalmente */
+  flex-wrap: wrap;        /* fa andare a capo se manca spazio */
+  margin-bottom: 5px;
+}
+
+/* Stile per i form dentro header-buttons per togliere margini e farli comportare come inline-block */
+.header-buttons form {
+  margin: 0;
 }
 
 .header-buttons button {
-  padding: 12px 25px;
-  font-size: 17px;
-  border-radius: 30px;
-  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
   cursor: pointer;
-  margin-left: 15px;
-  transition: all 0.3s ease;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  flex: 1 1 auto; /* lascia che si ridimensionino */
+  min-width: 120px; /* larghezza minima */
 }
 
 #accediBtn {
   background-color: #AEC6CF;
   color: white;
 }
-
+#logoutBtn {
+  background-color: #AEC6CF;
+  color: white;
+}
 #accediBtn:hover {
   background-color: #9EC0C7;
   transform: translateY(-2px);
@@ -120,26 +137,26 @@ body {
 .main-content, .content-wrapper {
   text-align: center;
   max-width: 900px;
-  padding: 40px;
+  padding: 20px 40px;
   background-color: rgba(255, 255, 255, 0.7);
   border-radius: 20px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 h1 {
-  font-size: 4.5em;
+  font-size: 4em;
   color: #8D99AE;
   letter-spacing: 4px;
   text-transform: uppercase;
 }
 
 h2 {
-  font-size: 2.8em;
+  font-size: 2em;
   color: #4CAF50;
 }
 
 h3 {
-  font-size: 1.8em;
+  font-size: 1.3em;
   color: #778899;
   line-height: 1.7;
   font-style: italic;
@@ -288,6 +305,25 @@ footer {
     right: 15px;
   }
 }
+@media (max-width: 600px) {
+  .header-buttons {
+    flex-direction: column;
+    align-items: center; /* centra i pulsanti */
+    width: 100%;         /* container prende tutta la larghezza */
+  }
+  
+  .header-buttons form {
+    width: 100%;         /* ogni form prende tutta la larghezza del container */
+    margin-bottom: 10px; /* spazio verticale tra i bottoni */
+  }
+  
+  .header-buttons button {
+    width: 100%;         /* bottoni pieni larghezza form */
+    min-width: unset;    
+    box-sizing: border-box; /* include padding nel calcolo della larghezza */
+  }
+}
+
 
 @media (max-width: 480px) {
   h1 {

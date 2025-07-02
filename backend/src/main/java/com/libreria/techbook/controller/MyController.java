@@ -71,7 +71,7 @@ public class MyController {
             model.addAttribute("listaStorico", listaStorico);
             model.addAttribute("listUsers", listUsers);
             model.addAttribute("lista", lista);
-            return "vetrinaLogout";
+            return "index";
         } else if (userLoggato.getUsername().equals("admin")) {
             // Utente loggato come admin
             model.addAttribute("userLoggato", userLoggato);
@@ -92,6 +92,12 @@ public class MyController {
             return "vetrinaLogin";
         }
     }
+
+    @GetMapping("/faq")
+    public String getFaq() {
+        return "faqSupport";
+    }
+    
 
     /* rotta che posta alla pagina di login senza effettuare nessuna operazione */
     /**

@@ -1,7 +1,18 @@
 /* Stili base */
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #FFD1DC 10%, #BFE7E2 30%, #D4EEAE 60%, #AEC6CF 100%);
+    /* Set the background image using the URL to your image */
+    background-image: url('/img/sfondo.jpg');
+    /* Cover the entire background area, maintaining aspect ratio */
+    background-size: cover;
+    /* Center the background image */
+    background-position: center;
+    /* Fix the background image so it doesn't scroll with the content */
+    background-attachment: fixed;
+    /* Optional: Add a fallback background color */
+    background-color: #f0f0f0; /* A light grey fallback */
+    background-repeat: no-repeat; /* This is the command to prevent the image from repeating */
+
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -73,7 +84,7 @@ body {
     min-width: 80px;
     box-sizing: border-box; /* Importante per i bottoni */
 }
-
+s
 .search-button {
     background-color: #D4EEAE;
     color: #333;
@@ -86,13 +97,13 @@ body {
 }
 
 .logout-button {
-    background-color: #FFB3BA;
+    background-color: #ff0019;
     color: white;
 }
 
 .logout-button:hover {
-    background-color: #FFA3AA;
-    color: black;
+    background-color: #eb0518;
+    color: white;
     transform: translateY(-1px);
 }
 
@@ -105,7 +116,7 @@ body {
     padding: 15px 0;
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin-top: 80px; /* Altezza dell'header circa (15px top/bottom padding + altezza font) */
+    margin-top: 90px; /* Altezza dell'header circa (15px top/bottom padding + altezza font) */
     position: fixed;
     top: 0;
     left: 0;
@@ -119,9 +130,9 @@ body {
     padding: 15px 25px;
     font-size: 1.1em;
     border-radius: 25px;
-    border: 1px solid #AEC6CF;
-    background-color: white;
-    color: #AEC6CF;
+    border: 1px solid #7d9dd8;
+    background-color: #a9c7ee;
+    color: #000000;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
@@ -129,8 +140,8 @@ body {
 }
 
 .menu-button:hover {
-    background-color: #AEC6CF;
-    color: white;
+    background-color: #7d9dd8;
+    color: rgb(0, 0, 0);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
@@ -155,7 +166,7 @@ body {
 
 .main-content h2 {
     font-size: 2.5em;
-    color: #FFA3AA;
+    color: #5883d3;
     margin-bottom: 20px;
 }
 
@@ -167,7 +178,7 @@ body {
 
 .main-content h1 { /* Il "Le ultime tendenze" */
     font-size: 2em;
-    color: #4CAF50;
+    color: #5883d3;
     line-height: 1.6;
     margin-top: 30px; /* Spazio sopra questo titolo */
     margin-bottom: 20px;
@@ -176,7 +187,7 @@ body {
 .top-libri-title {
     font-size: 1.5em;
     margin-bottom: 15px;
-    color: #2200fc;
+    color: #555;
 }
 
 /* Stili per la nuova sezione "tendenze" (esempio) */
@@ -190,14 +201,40 @@ body {
 }
 
 .trend-card {
+    display: flex !important;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap; /* utile se ci sono più di 3 */
     background-color: rgba(255, 255, 255, 0.8);
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
    
-    max-width: 300px; /* Larghezza massima per le card */
+    
     box-sizing: border-box;
+}
+.book-card {
+  width: 30%;
+  min-width: 200px;
+  background-color: #fff;
+  border: 1px solid #999;
+  border-radius: 8px;
+  padding: 10px;
+}
+/* Immagine copertina */
+.book-cover {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Info libro */
+.book-info {
+  margin-top: 10px;
+  text-align: center;
 }
 
 .trend-card img {
@@ -288,8 +325,14 @@ body {
     }
 
     .trend-card {
-        width: auto; /* Occupa più larghezza su mobile */
-    }
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .book-card {
+    width: 100%;
+    max-width: 400px;
+  }
 }
 
 @media (max-width: 480px) {

@@ -1,7 +1,17 @@
 body {
     font-family: 'Arial', sans-serif;
-    /* Sfondo con gradiente pastello rilassante */
-    background: linear-gradient(135deg, #FFD1DC 0%, #BFE7E2 30%, #D4EEAE 60%, #AEC6CF 100%);
+    /* Set the background image using the URL to your image */
+    background-image: url('/img/sfondo.jpg');
+    /* Cover the entire background area, maintaining aspect ratio */
+    background-size: cover;
+    /* Center the background image */
+    background-position: center;
+    /* Fix the background image so it doesn't scroll with the content */
+    background-attachment: fixed;
+    /* Optional: Add a fallback background color */
+    background-color: #f0f0f0; /* A light grey fallback */
+    background-repeat: no-repeat; /* This is the command to prevent the image from repeating */
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -63,7 +73,7 @@ body {
     text-align: center;
     max-width: 900px;
     padding: 40px;
-    background-color: rgba(255, 255, 255, 0.7); /* Sfondo semi-trasparente bianco per il testo */
+    background-color: rgba(255, 255, 255, 0.9); /* Sfondo semi-trasparente bianco per il testo */
     border-radius: 20px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Ombra più soft per il contenitore */
 }
@@ -94,7 +104,18 @@ h3 {
 /* --- Stili per le pagine di Autenticazione (Sign-in e Sign-up) --- */
 .signin-page, .signup-page {
     /* Per assicurare che le pagine di auth abbiano il gradiente pastello come background */
-    background: linear-gradient(135deg, #FFD1DC 0%, #BFE7E2 30%, #D4EEAE 60%, #AEC6CF 100%);
+        font-family: 'Arial', sans-serif;
+    /* Set the background image using the URL to your image */
+    background-image: url('/img/sfondo.jpg');
+    /* Cover the entire background area, maintaining aspect ratio */
+    background-size: cover;
+    /* Center the background image */
+    background-position: center;
+    /* Fix the background image so it doesn't scroll with the content */
+    background-attachment: fixed;
+    /* Optional: Add a fallback background color */
+    background-color: #f0f0f0; /* A light grey fallback */
+    background-repeat: no-repeat; /* This is the command to prevent the image from repeating */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -103,7 +124,7 @@ h3 {
 }
 
 .signin-container, .signup-container {
-    background-color: rgba(255, 255, 255, 0.85); /* Sfondo bianco semi-trasparente per il form */
+    background-color: rgba(255, 255, 255, 0.9); /* Sfondo bianco semi-trasparente per il form */
     padding: 40px;
     border-radius: 15px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Ombra più pronunciata per il container del form */
@@ -114,7 +135,7 @@ h3 {
 
 .signin-container h1, .signup-container h1 {
     font-size: 2.5em;
-    color: #8D99AE; /* Colore pastello per il titolo del form */
+    color: #5883d3; /* Colore pastello per il titolo del form */
     margin-bottom: 30px;
     text-shadow: none; /* Rimuove l'ombra dal titolo del form per pulizia */
 }
@@ -154,10 +175,10 @@ h3 {
 }
 
 .signin-button, .signup-button { /* Stile comune per i bottoni di submit */
-    background-color: #FFB3BA; /* Rosa pastello per il bottone di submit */
+    background-color: #a9c7ee; /* Blu pastello per il bottone di submit */
     color: rgb(0, 0, 0);
     padding: 15px 30px;
-    border: none;
+    border: 1px solid #7d9dd8; /* Bordo blu pastello */
     border-radius: 30px;
     font-size: 1.2em;
     cursor: pointer;
@@ -168,15 +189,15 @@ h3 {
 }
 
 .signin-button:hover, .signup-button:hover {
-    background-color: #FFA3AA; /* Rosa pastello più scuro al hover */
+    background-color: #7d9dd8; /* Blu pastello più scuro al hover */
     transform: translateY(-2px);
 }
 
 .secondary-button {
-    background-color: #D4EEAE; /* Verde pastello per il bottone secondario */
+    background-color: #a9c7ee; /* Blu pastello per il bottone secondario */
     color: #000000; /* Testo più scuro per contrasto */
     padding: 8px 18px;
-    border: none;
+    border: 1px solid #7d9dd8; /* Bordo blu pastello */
     border-radius: 30px;
     font-size: 0.9em;
     cursor: pointer;
@@ -187,7 +208,7 @@ h3 {
 }
 
 .secondary-button:hover {
-    background-color: #C0E09A; /* Verde pastello leggermente più scuro al hover */
+    background-color: #7d9dd8; /* Blu pastello leggermente più scuro al hover */
     transform: translateY(-2px);
     color: #333; /* Testo leggermente più scuro al hover */
 }
@@ -199,12 +220,12 @@ h3 {
 }
 
 .register-link a, .login-link a {
-    color: #AEC6CF; /* Link blu pastello */
+    color: #AEC6CF; /* Link grigio pastello */
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .register-link a:hover, .login-link a:hover {
-    color: #8D99AE; /* Colore più scuro al hover */
+    color: #5883d3; /* Colore più scuro al hover */
     text-decoration: underline;
 }
